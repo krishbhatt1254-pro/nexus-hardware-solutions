@@ -1,0 +1,2733 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Hardware Solution | Power Your Technology</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        },
+                        accent: {
+                            DEFAULT: '#0ea5e9',
+                            dark: '#0284c7'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .dark ::-webkit-scrollbar-thumb { background: #475569; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in { animation: fadeIn 0.25s ease-out forwards; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300">
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Brand Logo & Name -->
+                <div class="flex items-center gap-3 cursor-pointer" onclick="router.navigate('home')">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-sky-500 flex items-center justify-center text-white shadow-md shadow-indigo-500/20">
+                        <i data-lucide="cpu" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <span class="font-bold text-lg tracking-tight bg-gradient-to-r from-indigo-600 to-sky-500 bg-clip-text text-transparent">Nexus</span>
+                        <span class="font-medium text-xs block text-slate-500 dark:text-slate-400 tracking-wider uppercase">Hardware Solution</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden lg:flex items-center gap-7 text-sm font-medium">
+                    <button onclick="router.navigate('home')" class="nav-link text-slate-600 hover:text-indigo-600 dark:text-slate-300 dark:hover:text-indigo-400 transition" data-route="home">Home</button>
+                    <button onclick="router.navigate('products')" class="nav-link text-slate-600 hover:text-indigo-600 dark:text-slate-300 dark:hover:text-indigo-400 transition" data-route="products">Products</button>
+                    <button onclick="router.navigate('categories')" class="nav-link text-slate-600 hover:text-indigo-600 dark:text-slate-300 dark:hover:text-indigo-400 transition" data-route="categories">Categories</button>
+                    <button onclick="router.navigate('deals')" class="nav-link text-slate-600 hover:text-indigo-600 dark:text-slate-300 dark:hover:text-indigo-400 transition flex items-center gap-1.5" data-route="deals"><i data-lucide="zap" class="w-4 h-4 text-amber-500"></i>Deals</button>
+                    <button onclick="router.navigate('builder')" class="nav-link text-slate-600 hover:text-indigo-600 dark:text-slate-300 dark:hover:text-indigo-400 transition font-semibold text-indigo-600 dark:text-indigo-400 flex items-center gap-1" data-route="builder"><i data-lucide="wrench" class="w-4 h-4"></i>PC Builder</button>
+                    <button onclick="router.navigate('prebuilts')" class="nav-link text-slate-600 hover:text-indigo-600 dark:text-slate-300 dark:hover:text-indigo-400 transition" data-route="prebuilts">Pre-Builts</button>
+                    <button onclick="router.navigate('about')" class="nav-link text-slate-600 hover:text-indigo-600 dark:text-slate-300 dark:hover:text-indigo-400 transition" data-route="about">About</button>
+                    <button onclick="router.navigate('contact')" class="nav-link text-slate-600 hover:text-indigo-600 dark:text-slate-300 dark:hover:text-indigo-400 transition" data-route="contact">Contact</button>
+                </nav>
+
+                <!-- Right Action Icons -->
+                <div class="flex items-center gap-2 sm:gap-4">
+                    <!-- Search Trigger -->
+                    <button onclick="openSearchModal()" class="p-2.5 rounded-xl text-slate-600 hover:text-indigo-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800 transition" title="Search">
+                        <i data-lucide="search" class="w-5 h-5"></i>
+                    </button>
+
+                    <!-- Compare Toggle -->
+                    <button onclick="router.navigate('compare')" class="relative p-2.5 rounded-xl text-slate-600 hover:text-indigo-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800 transition" title="Compare Products">
+                        <i data-lucide="scale" class="w-5 h-5"></i>
+                        <span id="compare-badge" class="absolute top-1.5 right-1.5 w-4 h-4 bg-indigo-600 text-white rounded-full text-[10px] font-bold flex items-center justify-center hidden">0</span>
+                    </button>
+
+                    <!-- Wishlist Trigger -->
+                    <button onclick="router.navigate('wishlist')" class="relative p-2.5 rounded-xl text-slate-600 hover:text-indigo-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800 transition" title="Wishlist">
+                        <i data-lucide="heart" class="w-5 h-5"></i>
+                        <span id="wishlist-badge" class="absolute top-1.5 right-1.5 w-4 h-4 bg-rose-500 text-white rounded-full text-[10px] font-bold flex items-center justify-center hidden">0</span>
+                    </button>
+
+                    <!-- Cart Trigger -->
+                    <button onclick="router.navigate('cart')" class="relative p-2.5 rounded-xl text-slate-600 hover:text-indigo-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800 transition" title="Shopping Cart">
+                        <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                        <span id="cart-badge" class="absolute top-1.5 right-1.5 w-4 h-4 bg-indigo-600 text-white rounded-full text-[10px] font-bold flex items-center justify-center hidden">0</span>
+                    </button>
+
+                    <!-- Account Dashboard -->
+                    <button onclick="router.navigate('account')" class="p-2.5 rounded-xl text-slate-600 hover:text-indigo-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800 transition hidden sm:flex items-center gap-2" title="Account">
+                        <i data-lucide="user" class="w-5 h-5"></i>
+                    </button>
+
+                    <!-- Dark Mode Toggle -->
+                    <button onclick="toggleDarkMode()" class="p-2.5 rounded-xl text-slate-600 hover:text-indigo-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800 transition" title="Toggle Theme">
+                        <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                        <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
+                    </button>
+
+                    <!-- Mobile Menu Toggle -->
+                    <button onclick="toggleMobileMenu()" class="p-2.5 rounded-xl text-slate-600 hover:text-indigo-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800 transition lg:hidden" title="Menu">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Navigation -->
+        <div id="mobile-menu" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden lg:hidden">
+            <div class="absolute right-0 top-0 bottom-0 w-80 bg-white dark:bg-slate-900 shadow-2xl p-6 flex flex-col justify-between overflow-y-auto">
+                <div>
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white">
+                                <i data-lucide="cpu" class="w-5 h-5"></i>
+                            </div>
+                            <span class="font-bold text-base">Nexus Hardware</span>
+                        </div>
+                        <button onclick="toggleMobileMenu()" class="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                    <nav class="flex flex-col gap-3 font-medium text-base">
+                        <button onclick="router.navigate('home'); toggleMobileMenu();" class="text-left px-4 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800">Home</button>
+                        <button onclick="router.navigate('products'); toggleMobileMenu();" class="text-left px-4 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800">Products</button>
+                        <button onclick="router.navigate('categories'); toggleMobileMenu();" class="text-left px-4 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800">Categories</button>
+                        <button onclick="router.navigate('deals'); toggleMobileMenu();" class="text-left px-4 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-2"><i data-lucide="zap" class="w-4 h-4 text-amber-500"></i>Deals</button>
+                        <button onclick="router.navigate('builder'); toggleMobileMenu();" class="text-left px-4 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-indigo-600 dark:text-indigo-400 font-semibold flex items-center gap-2"><i data-lucide="wrench" class="w-4 h-4"></i>PC Builder</button>
+                        <button onclick="router.navigate('prebuilts'); toggleMobileMenu();" class="text-left px-4 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800">Pre-Builts</button>
+                        <button onclick="router.navigate('about'); toggleMobileMenu();" class="text-left px-4 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800">About Us</button>
+                        <button onclick="router.navigate('contact'); toggleMobileMenu();" class="text-left px-4 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800">Contact</button>
+                        <button onclick="router.navigate('account'); toggleMobileMenu();" class="text-left px-4 py-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800">Account Dashboard</button>
+                    </nav>
+                </div>
+                <div class="pt-6 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-500 text-center">
+                    © 2026 Nexus Hardware Solution. All Rights Reserved.
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Dynamic Area -->
+    <main id="app-container" class="flex-grow">
+        <!-- Views will be rendered dynamically here -->
+    </main>
+
+    <!-- Search Modal -->
+    <div id="search-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-md hidden flex items-start justify-center pt-20 px-4">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-2xl border border-slate-200 dark:border-slate-800 overflow-hidden animate-fade-in">
+            <div class="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center gap-3">
+                <i data-lucide="search" class="w-5 h-5 text-slate-400"></i>
+                <input type="text" id="global-search-input" oninput="handleSearchInput(this.value)" placeholder="Search RTX graphics card, 32GB DDR5, NVMe SSD..." class="w-full bg-transparent focus:outline-none text-base">
+                <button onclick="closeSearchModal()" class="text-xs px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 font-medium">ESC</button>
+            </div>
+            <div id="search-results-container" class="p-6 max-h-[60vh] overflow-y-auto space-y-6">
+                <!-- Initial Suggestions -->
+                <div>
+                    <h4 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">Popular Searches</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="searchQuery('RTX 4090')" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 hover:text-indigo-600 rounded-xl text-sm font-medium transition">RTX 4090</button>
+                        <button onclick="searchQuery('DDR5 32GB')" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 hover:text-indigo-600 rounded-xl text-sm font-medium transition">DDR5 32GB</button>
+                        <button onclick="searchQuery('Ryzen 7 7800X3D')" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 hover:text-indigo-600 rounded-xl text-sm font-medium transition">Ryzen 7 7800X3D</button>
+                        <button onclick="searchQuery('NVMe SSD')" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 hover:text-indigo-600 rounded-xl text-sm font-medium transition">1TB NVMe SSD</button>
+                        <button onclick="searchQuery('Gaming Keyboard')" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 hover:text-indigo-600 rounded-xl text-sm font-medium transition">Gaming Keyboard</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick View Modal -->
+    <div id="quickview-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div id="quickview-content" class="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl w-full max-w-4xl border border-slate-200 dark:border-slate-800 overflow-hidden relative animate-fade-in">
+            <!-- Populated dynamically -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-300 pt-16 pb-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
+                <!-- Col 1: Brand -->
+                <div class="lg:col-span-2 space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-sky-500 flex items-center justify-center text-white">
+                            <i data-lucide="cpu" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <span class="font-bold text-lg tracking-tight text-white">Nexus</span>
+                            <span class="font-medium text-xs block text-slate-400 tracking-wider uppercase">Hardware Solution</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-400 leading-relaxed max-w-sm">
+                        Power Your Technology. Build Without Limits. Premium computer hardware, components, peripherals and technology solutions for professionals and gamers.
+                    </p>
+                    <div class="pt-2">
+                        <h4 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">Newsletter Subscription</h4>
+                        <div class="flex gap-2 max-w-sm">
+                            <input type="email" placeholder="Enter your email" class="bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500 w-full">
+                            <button onclick="showToast('Subscribed successfully!')" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shrink-0">Join</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Col 2: Shop -->
+                <div>
+                    <h4 class="font-semibold text-white mb-4 text-sm uppercase tracking-wider">Shop</h4>
+                    <ul class="space-y-2.5 text-sm">
+                        <li><a href="#" onclick="router.navigate('products')" class="hover:text-white transition">All Products</a></li>
+                        <li><a href="#" onclick="router.navigate('categories')" class="hover:text-white transition">PC Components</a></li>
+                        <li><a href="#" onclick="router.navigate('products', {category: 'Gaming'})" class="hover:text-white transition">Gaming Hardware</a></li>
+                        <li><a href="#" onclick="router.navigate('products', {category: 'Laptops'})" class="hover:text-white transition">Laptops & PCs</a></li>
+                        <li><a href="#" onclick="router.navigate('builder')" class="hover:text-white transition">PC Builder</a></li>
+                        <li><a href="#" onclick="router.navigate('deals')" class="hover:text-white transition">Deals & Offers</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Support -->
+                <div>
+                    <h4 class="font-semibold text-white mb-4 text-sm uppercase tracking-wider">Support</h4>
+                    <ul class="space-y-2.5 text-sm">
+                        <li><a href="#" onclick="router.navigate('contact')" class="hover:text-white transition">Contact Us</a></li>
+                        <li><a href="#" onclick="showToast('Shipping guide opened')" class="hover:text-white transition">Shipping Information</a></li>
+                        <li><a href="#" onclick="showToast('Returns portal opened')" class="hover:text-white transition">Returns & Refunds</a></li>
+                        <li><a href="#" onclick="showToast('Warranty info opened')" class="hover:text-white transition">Hardware Warranty</a></li>
+                        <li><a href="#" onclick="showToast('FAQ opened')" class="hover:text-white transition">FAQ & Help Center</a></li>
+                        <li><a href="#" onclick="router.navigate('account')" class="hover:text-white transition">Order Tracking</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Company -->
+                <div>
+                    <h4 class="font-semibold text-white mb-4 text-sm uppercase tracking-wider">Company</h4>
+                    <ul class="space-y-2.5 text-sm">
+                        <li><a href="#" onclick="router.navigate('about')" class="hover:text-white transition">About Us</a></li>
+                        <li><a href="#" onclick="showToast('Careers page opened')" class="hover:text-white transition">Careers</a></li>
+                        <li><a href="#" onclick="showToast('Privacy policy opened')" class="hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="#" onclick="showToast('Terms opened')" class="hover:text-white transition">Terms & Conditions</a></li>
+                        <li><a href="#" onclick="showToast('Partners program opened')" class="hover:text-white transition">Partner Program</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom bar -->
+            <div class="pt-8 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+                <p>© 2026 Nexus Hardware Solution. All Rights Reserved.</p>
+                <div class="flex items-center gap-6">
+                    <a href="#" class="hover:text-white transition">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition">Terms of Service</a>
+                    <a href="#" class="hover:text-white transition">Cookie Settings</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button onclick="showToast('Instagram link')" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 flex items-center justify-center transition text-slate-300"><i data-lucide="instagram" class="w-4 h-4"></i></button>
+                    <button onclick="showToast('Facebook link')" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 flex items-center justify-center transition text-slate-300"><i data-lucide="facebook" class="w-4 h-4"></i></button>
+                    <button onclick="showToast('Youtube link')" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 flex items-center justify-center transition text-slate-300"><i data-lucide="youtube" class="w-4 h-4"></i></button>
+                    <button onclick="showToast('X / Twitter link')" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 flex items-center justify-center transition text-slate-300"><i data-lucide="twitter" class="w-4 h-4"></i></button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- MOCK DATABASE (50+ High Quality Hardware Products) ---
+        const productsData = [
+            {
+                id: 'prod-1',
+                name: 'Nexus Apex Ultra RTX 4090 Gaming PC',
+                brand: 'Nexus Systems',
+                category: 'Gaming',
+                subcategory: 'Gaming PCs',
+                price: 3299.00,
+                originalPrice: 3599.00,
+                discount: 8,
+                rating: 4.9,
+                reviewCount: 142,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Nexus+Apex+RTX+4090'],
+                description: 'The pinnacle of gaming performance. Featuring an NVIDIA GeForce RTX 4090 24GB, Intel Core i9-14900KS, 64GB DDR5 6000MHz RGB RAM, and 2TB Gen4 NVMe SSD with custom liquid cooling loop.',
+                specifications: { CPU: 'Intel Core i9-14900KS', GPU: 'NVIDIA RTX 4090 24GB', RAM: '64GB DDR5', Storage: '2TB NVMe SSD', PSU: '1200W Platinum' },
+                tags: ['featured', 'bestSeller', 'gaming'],
+                featured: true,
+                bestSeller: true,
+                newArrival: false
+            },
+            {
+                id: 'prod-2',
+                name: 'NVIDIA GeForce RTX 4080 Super 16GB',
+                brand: 'ASUS',
+                category: 'PC Components',
+                subcategory: 'Graphics Cards',
+                price: 999.00,
+                originalPrice: 1099.00,
+                discount: 9,
+                rating: 4.8,
+                reviewCount: 98,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=RTX+4080+Super'],
+                description: 'Experience ultra-high performance gaming, incredibly detailed virtual worlds with ray tracing, and revolutionary AI-powered DLSS 3 performance.',
+                specifications: { VRAM: '16GB GDDR6X', 'Memory Type': 'GDDR6X', 'Boost Clock': '2.55 GHz', Ports: '3x DisplayPort 1.4a, 2x HDMI 2.1', 'Power Requirement': '750W' },
+                tags: ['featured', 'bestSeller', 'gpu'],
+                featured: true,
+                bestSeller: true,
+                newArrival: false
+            },
+            {
+                id: 'prod-3',
+                name: 'AMD Ryzen 7 7800X3D Gaming Processor',
+                brand: 'AMD',
+                category: 'PC Components',
+                subcategory: 'CPUs',
+                price: 389.00,
+                originalPrice: 449.00,
+                discount: 13,
+                rating: 5.0,
+                reviewCount: 310,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Ryzen+7+7800X3D'],
+                description: 'The ultimate gaming desktop processor with AMD 3D V-Cache technology for incredible gaming framerates and unbeatable efficiency.',
+                specifications: { Socket: 'AM5', Cores: '8', Threads: '16', 'Base Clock': '4.2 GHz', 'Boost Clock': '5.0 GHz', Cache: '96MB L3' },
+                tags: ['featured', 'bestSeller', 'cpu'],
+                featured: true,
+                bestSeller: true,
+                newArrival: false
+            },
+            {
+                id: 'prod-4',
+                name: 'Corsair Vengeance RGB 32GB (2x16GB) DDR5 6000MHz',
+                brand: 'Corsair',
+                category: 'PC Components',
+                subcategory: 'RAM',
+                price: 119.00,
+                originalPrice: 139.00,
+                discount: 14,
+                rating: 4.8,
+                reviewCount: 215,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Corsair+32GB+DDR5'],
+                description: 'Push your system to new limits with faster frequencies, greater capacities, and better performance tailored for Intel and AMD platforms.',
+                specifications: { Capacity: '32GB (2 x 16GB)', Speed: '6000MHz', Type: 'DDR5', Latency: 'CL30' },
+                tags: ['featured', 'ram'],
+                featured: true,
+                bestSeller: false,
+                newArrival: false
+            },
+            {
+                id: 'prod-5',
+                name: 'Samsung 990 PRO 2TB PCIe 4.0 NVMe M.2 SSD',
+                brand: 'Samsung',
+                category: 'Storage',
+                subcategory: 'NVMe SSD',
+                price: 169.00,
+                originalPrice: 199.00,
+                discount: 15,
+                rating: 4.9,
+                reviewCount: 420,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Samsung+990+PRO+2TB'],
+                description: 'Ultimate performance for heavy data workloads, gaming, and 4K video editing with sequential read speeds up to 7,450 MB/s.',
+                specifications: { Capacity: '2TB', Interface: 'PCIe 4.0 x4 NVMe', 'Read Speed': '7,450 MB/s', 'Write Speed': '6,900 MB/s' },
+                tags: ['featured', 'bestSeller', 'ssd'],
+                featured: true,
+                bestSeller: true,
+                newArrival: false
+            },
+            {
+                id: 'prod-6',
+                name: 'NZXT H6 Flow RGB Dual-Chamber Mid-Tower Case',
+                brand: 'NZXT',
+                category: 'PC Components',
+                subcategory: 'PC Cases',
+                price: 134.99,
+                originalPrice: 149.99,
+                discount: 10,
+                rating: 4.7,
+                reviewCount: 88,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=NZXT+H6+Flow'],
+                description: 'Compact dual-chamber mid-tower airflow case featuring panoramic glass panels and three pre-installed F140 RGB Duo fans.',
+                specifications: { Type: 'Mid-Tower', Motherboard: 'ATX, Micro-ATX, Mini-ITX', Radiator: 'Up to 360mm', Fans: '3x 140mm RGB included' },
+                tags: ['newArrival', 'case'],
+                featured: false,
+                bestSeller: false,
+                newArrival: true
+            },
+            {
+                id: 'prod-7',
+                name: 'ASUS ROG Strix X670E-E Gaming WiFi Motherboard',
+                brand: 'ASUS',
+                category: 'PC Components',
+                subcategory: 'Motherboards',
+                price: 449.99,
+                originalPrice: 499.99,
+                discount: 10,
+                rating: 4.8,
+                reviewCount: 76,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=ROG+Strix+X670E'],
+                description: 'High-end AM5 motherboard equipped with PCIe 5.0, DDR5 support, robust 18+2 power stages, and Wi-Fi 6E connectivity.',
+                specifications: { Socket: 'AM5', Chipset: 'AMD X670E', FormFactor: 'ATX', Memory: '4x DIMM up to 192GB DDR5' },
+                tags: ['motherboard'],
+                featured: false,
+                bestSeller: true,
+                newArrival: false
+            },
+            {
+                id: 'prod-8',
+                name: 'Seasonic Focus GX-850 850W 80+ Gold Modular PSU',
+                brand: 'Corsair',
+                category: 'PC Components',
+                subcategory: 'Power Supplies',
+                price: 129.99,
+                originalPrice: 149.99,
+                discount: 13,
+                rating: 4.9,
+                reviewCount: 164,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Seasonic+850W+PSU'],
+                description: 'Compact size, high efficiency 80 PLUS Gold certified fully modular power supply with fluid dynamic bearing fan.',
+                specifications: { Wattage: '850W', Efficiency: '80+ Gold', Modular: 'Full', Protection: 'OPP, OVP, UVP, SCP, OCP, OTP' },
+                tags: ['psu'],
+                featured: false,
+                bestSeller: false,
+                newArrival: false
+            },
+            {
+                id: 'prod-9',
+                name: 'Logitech G Pro X Superlight 2 Wireless Mouse',
+                brand: 'Logitech',
+                category: 'Gaming',
+                subcategory: 'Gaming Mice',
+                price: 159.00,
+                originalPrice: 169.00,
+                discount: 6,
+                rating: 4.8,
+                reviewCount: 512,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Logitech+Superlight+2'],
+                description: 'Pro-grade lightweight wireless gaming mouse weighing only 60g with HERO 2 sensor and Lightforce hybrid switches.',
+                specifications: { Sensor: 'HERO 2', DPI: 'Up to 32,000', Weight: '60g', Battery: 'Up to 95 hours' },
+                tags: ['featured', 'bestSeller', 'peripherals'],
+                featured: true,
+                bestSeller: true,
+                newArrival: false
+            },
+            {
+                id: 'prod-10',
+                name: 'Razer Huntsman V3 Pro Analog Keyboard',
+                brand: 'Razer',
+                category: 'Gaming',
+                subcategory: 'Gaming Keyboards',
+                price: 249.99,
+                originalPrice: 279.99,
+                discount: 11,
+                rating: 4.7,
+                reviewCount: 180,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Razer+Huntsman+V3'],
+                description: 'Equipped with Gen-2 Analog Optical Switches, adjustable actuation, rapid trigger mode, and multi-function digital dial.',
+                specifications: { Switches: 'Razer Analog Optical Gen-2', Lighting: 'Razer Chroma RGB', Connectivity: 'Detachable Type-C' },
+                tags: ['newArrival', 'peripherals'],
+                featured: false,
+                bestSeller: false,
+                newArrival: true
+            },
+            {
+                id: 'prod-11',
+                name: 'Intel Core i7-14700K Desktop Processor',
+                brand: 'Intel',
+                category: 'PC Components',
+                subcategory: 'CPUs',
+                price: 399.00,
+                originalPrice: 429.00,
+                discount: 7,
+                rating: 4.8,
+                reviewCount: 204,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Intel+Core+i7-14700K'],
+                description: 'Unleash your creativity and conquer gaming sessions with 20 cores (8 P-cores + 12 E-cores) and speeds up to 5.6 GHz.',
+                specifications: { Socket: 'LGA1700', Cores: '20 (8P + 12E)', Threads: '28', 'Base Clock': '3.4 GHz', 'Boost Clock': '5.6 GHz' },
+                tags: ['cpu'],
+                featured: false,
+                bestSeller: true,
+                newArrival: false
+            },
+            {
+                id: 'prod-12',
+                name: 'MSI GeForce RTX 4070 Ti Super 16GB Gaming X Slim',
+                brand: 'MSI',
+                category: 'PC Components',
+                subcategory: 'Graphics Cards',
+                price: 799.00,
+                originalPrice: 849.00,
+                discount: 6,
+                rating: 4.9,
+                reviewCount: 112,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=MSI+RTX+4070+Ti+Super'],
+                description: 'Designed for performance and sleek aesthetics, slim profile graphics card with Tri Frozr 3 thermal design.',
+                specifications: { VRAM: '16GB GDDR6X', 'Boost Clock': '2670 MHz', Ports: '3x DP 1.4a, 1x HDMI 2.1a', 'Power Requirement': '700W' },
+                tags: ['gpu', 'featured'],
+                featured: true,
+                bestSeller: false,
+                newArrival: false
+            },
+            {
+                id: 'prod-13',
+                name: 'G.Skill Trident Z5 RGB 64GB (2x32GB) DDR5 6400MHz',
+                brand: 'G.Skill',
+                category: 'PC Components',
+                subcategory: 'RAM',
+                price: 219.00,
+                originalPrice: 249.00,
+                discount: 12,
+                rating: 4.9,
+                reviewCount: 94,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=G.Skill+64GB+DDR5'],
+                description: 'High-performance memory kits engineered for enthusiasts and overclockers seeking maximum speed and stunning RGB aesthetics.',
+                specifications: { Capacity: '64GB (2 x 32GB)', Speed: '6400MHz', Type: 'DDR5', Latency: 'CL32' },
+                tags: ['ram'],
+                featured: false,
+                bestSeller: false,
+                newArrival: false
+            },
+            {
+                id: 'prod-14',
+                name: 'WD Black SN850X 4TB NVMe M.2 2280 SSD',
+                brand: 'Western Digital',
+                category: 'Storage',
+                subcategory: 'NVMe SSD',
+                price: 309.99,
+                originalPrice: 379.99,
+                discount: 18,
+                rating: 4.9,
+                reviewCount: 380,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=WD+Black+4TB+SSD'],
+                description: 'Crush load times and slash throttling with top-tier speeds up to 7,300 MB/s in a massive 4TB storage capacity.',
+                specifications: { Capacity: '4TB', Interface: 'PCIe Gen4 x4', 'Read Speed': '7,300 MB/s', 'Write Speed': '6,600 MB/s' },
+                tags: ['ssd', 'bestSeller'],
+                featured: false,
+                bestSeller: true,
+                newArrival: false
+            },
+            {
+                id: 'prod-15',
+                name: 'Arctic Liquid Freezer III Pro 360 AIO Liquid Cooler',
+                brand: 'DeepCool',
+                category: 'PC Components',
+                subcategory: 'CPU Coolers',
+                price: 109.99,
+                originalPrice: 129.99,
+                discount: 15,
+                rating: 4.9,
+                reviewCount: 245,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Arctic+Liquid+Freezer+III'],
+                description: 'Exceptional cooling performance with a VRM cooling fan, optimized PWM pump, and thick 38mm radiator.',
+                specifications: { Type: '360mm AIO', Compatibility: 'Intel LGA1700 / AMD AM5', Fans: '3x P12 PWM PST' },
+                tags: ['cooler'],
+                featured: false,
+                bestSeller: true,
+                newArrival: false
+            },
+            {
+                id: 'prod-16',
+                name: 'LG UltraGear 27GR95QE-B 27" OLED 240Hz Monitor',
+                brand: 'ASUS',
+                category: 'Displays',
+                subcategory: 'Gaming Monitors',
+                price: 699.99,
+                originalPrice: 899.99,
+                discount: 22,
+                rating: 4.8,
+                reviewCount: 130,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=LG+OLED+240Hz+Monitor'],
+                description: 'World’s first 240Hz OLED gaming monitor with 0.03ms response time, QHD resolution, and D3 P3 98.5% color gamut.',
+                specifications: { Size: '27 inch OLED', Resolution: '2560 x 1440 QHD', 'Refresh Rate': '240Hz', 'Response Time': '0.03ms' },
+                tags: ['featured', 'monitor'],
+                featured: true,
+                bestSeller: false,
+                newArrival: false
+            },
+            {
+                id: 'prod-17',
+                name: 'SteelSeries Arctis Nova Pro Wireless Headset',
+                brand: 'Razer',
+                category: 'Gaming',
+                subcategory: 'Gaming Headsets',
+                price: 349.99,
+                originalPrice: 379.99,
+                discount: 8,
+                rating: 4.7,
+                reviewCount: 290,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Arctis+Nova+Pro'],
+                description: 'Almighty Audio with High-Res acoustic drivers, Active Noise Cancellation, and hot-swappable dual battery system.',
+                specifications: { Connectivity: 'Wireless 2.4GHz + Bluetooth', ANC: 'Active Noise Cancellation', Battery: '22 hrs per battery' },
+                tags: ['headset'],
+                featured: false,
+                bestSeller: true,
+                newArrival: false
+            },
+            {
+                id: 'prod-18',
+                name: 'TP-Link Archer BE800 Wi-Fi 7 BE19000 Router',
+                brand: 'TP-Link',
+                category: 'Networking',
+                subcategory: 'Wi-Fi Routers',
+                price: 499.99,
+                originalPrice: 599.99,
+                discount: 16,
+                rating: 4.6,
+                reviewCount: 45,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=TP-Link+WiFi+7+Router'],
+                description: 'Blazing fast Wi-Fi 7 speeds up to 19 Gbps with dual 10G ports and multi-link operation for lag-free gaming and streaming.',
+                specifications: { Standard: 'Wi-Fi 7 (802.11be)', Speed: 'Up to 19 Gbps', Ports: '2x 10G WAN/LAN, 4x 2.5G' },
+                tags: ['networking', 'newArrival'],
+                featured: false,
+                bestSeller: false,
+                newArrival: true
+            },
+            {
+                id: 'prod-19',
+                name: 'ASUS ROG Ally X Gaming Handheld Console',
+                brand: 'ASUS',
+                category: 'Laptops & Computers',
+                subcategory: 'Mini PCs',
+                price: 799.00,
+                originalPrice: 849.00,
+                discount: 6,
+                rating: 4.7,
+                reviewCount: 160,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=ROG+Ally+X'],
+                description: 'Upgraded Windows 11 gaming handheld with AMD Ryzen Z1 Extreme, double the battery capacity, and 24GB LPDDR5 RAM.',
+                specifications: { Processor: 'AMD Ryzen Z1 Extreme', RAM: '24GB LPDDR5', Storage: '1TB NVMe SSD', Display: '7" 120Hz FHD' },
+                tags: ['featured', 'newArrival'],
+                featured: true,
+                bestSeller: false,
+                newArrival: true
+            },
+            {
+                id: 'prod-20',
+                name: 'Nexus Shadow Creator Workstation RTX 4080 Super',
+                brand: 'Nexus Systems',
+                category: 'Laptops & Computers',
+                subcategory: 'Workstations',
+                price: 3899.00,
+                originalPrice: 4199.00,
+                discount: 7,
+                rating: 4.9,
+                reviewCount: 55,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Nexus+Creator+Workstation'],
+                description: 'Engineered for 3D render artists, video editors, and AI developers. Threadripper 7960X, RTX 4080 Super, 128GB ECC RAM.',
+                specifications: { CPU: 'AMD Ryzen Threadripper 7960X', GPU: 'NVIDIA RTX 4080 Super', RAM: '128GB DDR5 ECC', Storage: '4TB Gen4 SSD' },
+                tags: ['workstation', 'featured'],
+                featured: true,
+                bestSeller: false,
+                newArrival: false
+            },
+            {
+                id: 'prod-21',
+                name: 'Shure SM7B Studio Vocal Microphone',
+                brand: 'Logitech',
+                category: 'Peripherals',
+                subcategory: 'Microphones',
+                price: 399.00,
+                originalPrice: 449.00,
+                discount: 11,
+                rating: 4.9,
+                reviewCount: 610,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Shure+SM7B+Microphone'],
+                description: 'Legendary dynamic microphone delivering warm, smooth, and detailed vocals for broadcasting, podcasting, and studio recording.',
+                specifications: { Type: 'Dynamic', 'Polar Pattern': 'Cardioid', Frequency: '50Hz – 20kHz', Connector: 'XLR' },
+                tags: ['streaming', 'bestSeller'],
+                featured: false,
+                bestSeller: true,
+                newArrival: false
+            },
+            {
+                id: 'prod-22',
+                name: 'Elgato Stream Deck MK.2',
+                brand: 'Corsair',
+                category: 'Peripherals',
+                subcategory: 'Streaming Equipment',
+                price: 149.99,
+                originalPrice: 169.99,
+                discount: 12,
+                rating: 4.8,
+                reviewCount: 340,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Elgato+Stream+Deck+MK.2'],
+                description: '15 customizable LCD keys to control apps, tools, and platforms. Instantly trigger actions, launch social feeds, and adjust audio.',
+                specifications: { Keys: '15 customizable LCD keys', Interface: 'USB 2.0', Compatibility: 'Windows & macOS' },
+                tags: ['streaming'],
+                featured: false,
+                bestSeller: true,
+                newArrival: false
+            },
+            {
+                id: 'prod-23',
+                name: 'Secretlab Titan Evo Ergonomic Gaming Chair',
+                brand: 'Razer',
+                category: 'Gaming',
+                subcategory: 'Gaming Chairs',
+                price: 549.00,
+                originalPrice: 599.00,
+                discount: 8,
+                rating: 4.8,
+                reviewCount: 410,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Secretlab+Titan+Evo'],
+                description: 'State-of-the-art ergonomics with 4-way L-ADAPT lumbar support, magnetic memory foam head pillow, and Neo Hybrid Leatherette.',
+                specifications: { Size: 'Regular / XL', Upholstery: 'Neo Hybrid Leatherette', Mechanism: 'Full-metal multi-tilt' },
+                tags: ['chair', 'bestSeller'],
+                featured: false,
+                bestSeller: true,
+                newArrival: false
+            },
+            {
+                id: 'prod-24',
+                name: 'Antec Signature 1300W Titanium Power Supply',
+                brand: 'Antec',
+                category: 'PC Components',
+                subcategory: 'Power Supplies',
+                price: 329.99,
+                originalPrice: 369.99,
+                discount: 11,
+                rating: 4.9,
+                reviewCount: 34,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Antec+1300W+Titanium'],
+                description: 'Extreme efficiency 80 PLUS Titanium certified power supply built with 100% Japanese capacitors and zero RPM fan mode.',
+                specifications: { Wattage: '1300W', Efficiency: '80+ Titanium', Modular: 'Full ATX 3.0' },
+                tags: ['psu'],
+                featured: false,
+                bestSeller: false,
+                newArrival: false
+            },
+            {
+                id: 'prod-25',
+                name: 'Kingston Fury Renegade 2TB PCIe 4.0 NVMe M.2 SSD',
+                brand: 'Kingston',
+                category: 'Storage',
+                subcategory: 'NVMe SSD',
+                price: 159.99,
+                originalPrice: 189.99,
+                discount: 16,
+                rating: 4.8,
+                reviewCount: 190,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Kingston+Fury+2TB'],
+                description: 'Intense speeds for gaming and system building enthusiasts, featuring a low-profile graphene aluminum heat spreader.',
+                specifications: { Capacity: '2TB', Interface: 'PCIe 4.0 x4', 'Read Speed': '7,300 MB/s', 'Write Speed': '7,000 MB/s' },
+                tags: ['ssd'],
+                featured: false,
+                bestSeller: false,
+                newArrival: false
+            },
+            {
+                id: 'prod-26',
+                name: 'Gigabyte GeForce RTX 4070 Eagle OC 12GB',
+                brand: 'Gigabyte',
+                category: 'PC Components',
+                subcategory: 'Graphics Cards',
+                price: 549.99,
+                originalPrice: 599.99,
+                discount: 8,
+                rating: 4.7,
+                reviewCount: 155,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Gigabyte+RTX+4070'],
+                description: 'Windforce cooling system with alternate spinning fans, RGB fusion, and ultimate ray tracing gaming capabilities.',
+                specifications: { VRAM: '12GB GDDR6X', 'Boost Clock': '2505 MHz', Ports: '3x DP 1.4a, 1x HDMI 2.1a' },
+                tags: ['gpu'],
+                featured: false,
+                bestSeller: false,
+                newArrival: false
+            },
+            {
+                id: 'prod-27',
+                name: 'AMD Ryzen 5 7600X 6-Core Processor',
+                brand: 'AMD',
+                category: 'PC Components',
+                subcategory: 'CPUs',
+                price: 199.00,
+                originalPrice: 249.00,
+                discount: 20,
+                rating: 4.8,
+                reviewCount: 430,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Ryzen+5+7600X'],
+                description: 'Phenomenal gaming and productivity performance with AM5 socket compatibility and high clock speeds out of the box.',
+                specifications: { Socket: 'AM5', Cores: '6', Threads: '12', 'Base Clock': '4.7 GHz', 'Boost Clock': '5.3 GHz' },
+                tags: ['cpu', 'bestSeller'],
+                featured: false,
+                bestSeller: true,
+                newArrival: false
+            },
+            {
+                id: 'prod-28',
+                name: 'ASRock B650 Steel Legend WiFi Motherboard',
+                brand: 'ASRock',
+                category: 'PC Components',
+                subcategory: 'Motherboards',
+                price: 179.99,
+                originalPrice: 209.99,
+                discount: 14,
+                rating: 4.7,
+                reviewCount: 92,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=ASRock+B650+Steel+Legend'],
+                description: 'White digital camouflage aesthetic AM5 motherboard with 14+2+1 power phase, PCIe 5.0 M.2 slot, and Dragon 2.5G LAN.',
+                specifications: { Socket: 'AM5', Chipset: 'AMD B650', FormFactor: 'ATX', Memory: 'DDR5 up to 7200+(OC)' },
+                tags: ['motherboard'],
+                featured: false,
+                bestSeller: false,
+                newArrival: false
+            },
+            {
+                id: 'prod-29',
+                name: 'Corsair 4000D Airflow Tempered Glass Mid-Tower Case',
+                brand: 'Corsair',
+                category: 'PC Components',
+                subcategory: 'PC Cases',
+                price: 89.99,
+                originalPrice: 104.99,
+                discount: 14,
+                rating: 4.9,
+                reviewCount: 890,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Corsair+4000D+Airflow'],
+                description: 'Optimized high-airflow front panel and two included 120mm AirGuide fans make for exceptional component cooling.',
+                specifications: { Type: 'Mid-Tower', Motherboard: 'ATX, Micro-ATX, Mini-ITX', Expansion: '7 + 2 Vertical' },
+                tags: ['case', 'bestSeller'],
+                featured: false,
+                bestSeller: true,
+                newArrival: false
+            },
+            {
+                id: 'prod-30',
+                name: 'Logitech G PRO X 2 LIGHTSPEED Wireless Headset',
+                brand: 'Logitech',
+                category: 'Gaming',
+                subcategory: 'Gaming Headsets',
+                price: 249.00,
+                originalPrice: 269.00,
+                discount: 7,
+                rating: 4.7,
+                reviewCount: 145,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Logitech+G+PRO+X+2'],
+                description: 'Pro-designed with 50mm Graphene drivers, simultaneous 2.4GHz wireless, Bluetooth, and wired connection options.',
+                specifications: { Drivers: '50mm Graphene', Battery: 'Up to 50 hours', Weight: '345g' },
+                tags: ['headset'],
+                featured: false,
+                bestSeller: false,
+                newArrival: false
+            },
+            {
+                id: 'prod-31',
+                name: 'Razer Viper V3 Pro Wireless Esports Mouse',
+                brand: 'Razer',
+                category: 'Gaming',
+                subcategory: 'Gaming Mice',
+                price: 159.99,
+                originalPrice: 179.99,
+                discount: 11,
+                rating: 4.9,
+                reviewCount: 220,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Razer+Viper+V3+Pro'],
+                description: 'Ultra-lightweight symmetrical wireless mouse with Focus Pro 35K Gen-2 Optical Sensor and true 8000Hz polling rate.',
+                specifications: { Weight: '54g', Sensor: 'Focus Pro 35K', Polling: 'True 8000Hz wireless' },
+                tags: ['peripherals', 'newArrival'],
+                featured: false,
+                bestSeller: false,
+                newArrival: true
+            },
+            {
+                id: 'prod-32',
+                name: 'Dell Alienware AW3423DWF 34" QD-OLED Curved Monitor',
+                brand: 'ASUS',
+                category: 'Displays',
+                subcategory: 'Gaming Monitors',
+                price: 799.99,
+                originalPrice: 999.99,
+                discount: 20,
+                rating: 4.9,
+                reviewCount: 310,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Alienware+34+QD-OLED'],
+                description: 'Immersive 1800R curved QD-OLED gaming monitor with WQHD 3440 x 1440 resolution, 165Hz refresh rate, and 0.1ms response.',
+                specifications: { Size: '34" Curved QD-OLED', Resolution: '3440 x 1440', 'Refresh Rate': '165Hz' },
+                tags: ['monitor', 'featured'],
+                featured: true,
+                bestSeller: true,
+                newArrival: false
+            },
+            {
+                id: 'prod-33',
+                name: 'NZXT Kraken Elite 360 RGB Liquid CPU Cooler',
+                brand: 'NZXT',
+                category: 'PC Components',
+                subcategory: 'CPU Coolers',
+                price: 279.99,
+                originalPrice: 299.99,
+                discount: 7,
+                rating: 4.8,
+                reviewCount: 115,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=NZXT+Kraken+Elite+360'],
+                description: 'Features a wide-angle 2.36" LCD screen for custom GIFs, system stats, and high-performance Asetek pump cooling.',
+                specifications: { Display: '2.36" IPS LCD 640x640', Pump: 'Asetek 7th Gen', Fans: 'F1200 RGB Core' },
+                tags: ['cooler', 'featured'],
+                featured: true,
+                bestSeller: false,
+                newArrival: false
+            },
+            {
+                id: 'prod-34',
+                name: 'Seagate FireCuda 530 2TB Heatsink NVMe SSD',
+                brand: 'Seagate',
+                category: 'Storage',
+                subcategory: 'NVMe SSD',
+                price: 174.99,
+                originalPrice: 219.99,
+                discount: 20,
+                rating: 4.8,
+                reviewCount: 180,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Seagate+FireCuda+530'],
+                description: 'Blistering fast PCIe Gen4 speeds up to 7,300 MB/s with custom heatsink designed to minimize thermal throttling.',
+                specifications: { Capacity: '2TB', Interface: 'PCIe Gen4 x4', 'Read Speed': '7,300 MB/s' },
+                tags: ['ssd'],
+                featured: false,
+                bestSeller: false,
+                newArrival: false
+            },
+            {
+                id: 'prod-35',
+                name: 'Nexus Phantom Entry Gaming PC - RTX 4060',
+                brand: 'Nexus Systems',
+                category: 'Gaming',
+                subcategory: 'Gaming PCs',
+                price: 899.00,
+                originalPrice: 999.00,
+                discount: 10,
+                rating: 4.7,
+                reviewCount: 165,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Nexus+Phantom+RTX+4060'],
+                description: 'Entry-level powerhouse featuring AMD Ryzen 5 5600X, NVIDIA GeForce RTX 4060 8GB, 16GB DDR4 RGB, and 1TB NVMe SSD.',
+                specifications: { CPU: 'AMD Ryzen 5 5600X', GPU: 'NVIDIA RTX 4060 8GB', RAM: '16GB DDR4', Storage: '1TB NVMe' },
+                tags: ['prebuilt', 'bestSeller'],
+                featured: false,
+                bestSeller: true,
+                newArrival: false
+            },
+            {
+                id: 'prod-36',
+                name: 'Keychron Q1 Max Wireless Custom Mechanical Keyboard',
+                brand: 'Corsair',
+                category: 'Peripherals',
+                subcategory: 'Keyboards',
+                price: 209.99,
+                originalPrice: 229.99,
+                discount: 9,
+                rating: 4.9,
+                reviewCount: 210,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Keychron+Q1+Max'],
+                description: 'QMK/VIA wireless custom mechanical keyboard with gasket mount design, acoustic foams, and CNC aluminum body.',
+                specifications: { Layout: '75% Compact', Connectivity: '2.4GHz, Bluetooth, Wired', Switches: 'Gateron Jupiter' },
+                tags: ['peripherals'],
+                featured: false,
+                bestSeller: false,
+                newArrival: false
+            },
+            {
+                id: 'prod-37',
+                name: 'Logitech G502 X PLUS Wireless RGB Gaming Mouse',
+                brand: 'Logitech',
+                category: 'Gaming',
+                subcategory: 'Gaming Mice',
+                price: 139.99,
+                originalPrice: 159.99,
+                discount: 13,
+                rating: 4.8,
+                reviewCount: 540,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Logitech+G502+X+PLUS'],
+                description: 'The legendary gaming mouse meets LIGHTFORCE hybrid optical-mechanical switches and LIGHTSYNC RGB lighting.',
+                specifications: { Sensor: 'HERO 25K', Weight: '106g', Battery: 'Up to 130 hours (RGB off)' },
+                tags: ['peripherals', 'bestSeller'],
+                featured: false,
+                bestSeller: true,
+                newArrival: false
+            },
+            {
+                id: 'prod-38',
+                name: 'ASUS TUF Gaming VG27AQ 27" 165Hz 1440P Monitor',
+                brand: 'ASUS',
+                category: 'Displays',
+                subcategory: 'Gaming Monitors',
+                price: 299.99,
+                originalPrice: 349.99,
+                discount: 14,
+                rating: 4.7,
+                reviewCount: 680,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=ASUS+TUF+27+165Hz'],
+                description: '27-inch WQHD (2560 x 1440) IPS gaming monitor with ultrafast 165Hz refresh rate designed for professional gamers.',
+                specifications: { Size: '27 inch IPS', Resolution: '2560 x 1440', 'Refresh Rate': '165Hz' },
+                tags: ['monitor', 'bestSeller'],
+                featured: false,
+                bestSeller: true,
+                newArrival: false
+            },
+            {
+                id: 'prod-39',
+                name: 'Intel Core i5-14600K Desktop Processor',
+                brand: 'Intel',
+                category: 'PC Components',
+                subcategory: 'CPUs',
+                price: 289.00,
+                originalPrice: 319.00,
+                discount: 9,
+                rating: 4.8,
+                reviewCount: 290,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Intel+Core+i5-14600K'],
+                description: '14 cores (6 P-cores + 8 E-cores) and up to 5.3 GHz clock speed for blistering gaming and everyday productivity.',
+                specifications: { Socket: 'LGA1700', Cores: '14', Threads: '20', 'Boost Clock': '5.3 GHz' },
+                tags: ['cpu'],
+                featured: false,
+                bestSeller: false,
+                newArrival: false
+            },
+            {
+                id: 'prod-40',
+                name: 'Gigabyte Z790 AORUS Elite AX Motherboard',
+                brand: 'Gigabyte',
+                category: 'PC Components',
+                subcategory: 'Motherboards',
+                price: 239.99,
+                originalPrice: 269.99,
+                discount: 11,
+                rating: 4.8,
+                reviewCount: 140,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Z790+AORUS+Elite'],
+                description: 'Intel LGA 1700 motherboard supporting 14th, 13th, and 12th Gen processors with DDR5, PCIe 5.0, Wi-Fi 6E.',
+                specifications: { Socket: 'LGA1700', Chipset: 'Intel Z790', FormFactor: 'ATX' },
+                tags: ['motherboard'],
+                featured: false,
+                bestSeller: false,
+                newArrival: false
+            },
+            {
+                id: 'prod-41',
+                name: 'Corsair RM850x Shift 850W 80+ Gold Side-Cable PSU',
+                brand: 'Corsair',
+                category: 'PC Components',
+                subcategory: 'Power Supplies',
+                price: 139.99,
+                originalPrice: 159.99,
+                discount: 12,
+                rating: 4.9,
+                reviewCount: 230,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=RM850x+Shift'],
+                description: 'Revolutionary side-mounted modular cable interface makes connecting cables easier and cleaner than ever.',
+                specifications: { Wattage: '850W', Efficiency: '80+ Gold', Modular: 'Full Side-Connector' },
+                tags: ['psu', 'bestSeller'],
+                featured: false,
+                bestSeller: true,
+                newArrival: false
+            },
+            {
+                id: 'prod-42',
+                name: 'Razer BlackWidow V4 Pro Mechanical Keyboard',
+                brand: 'Razer',
+                category: 'Gaming',
+                subcategory: 'Gaming Keyboards',
+                price: 229.99,
+                originalPrice: 249.99,
+                discount: 8,
+                rating: 4.7,
+                reviewCount: 195,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Razer+BlackWidow+V4+Pro'],
+                description: 'Full-featured mechanical gaming keyboard with Razer Command Dial, 8 dedicated macro keys, and immersive per-key RGB.',
+                specifications: { Switches: 'Razer Green / Yellow', Lighting: '3-side underglow & per-key RGB' },
+                tags: ['peripherals'],
+                featured: false,
+                bestSeller: false,
+                newArrival: false
+            },
+            {
+                id: 'prod-43',
+                name: 'Thermalright Peerless Assassin 120 SE CPU Cooler',
+                brand: 'DeepCool',
+                category: 'PC Components',
+                subcategory: 'CPU Coolers',
+                price: 38.90,
+                originalPrice: 45.90,
+                discount: 15,
+                rating: 4.9,
+                reviewCount: 1450,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Peerless+Assassin+120'],
+                description: 'Unbeatable value dual-tower CPU air cooler delivering cooling performance that rivals high-end AIO water coolers.',
+                specifications: { Type: 'Dual Tower Air Cooler', Heatpipes: '6 heatpipes', Fans: '2x 120mm PWM' },
+                tags: ['cooler', 'bestSeller'],
+                featured: false,
+                bestSeller: true,
+                newArrival: false
+            },
+            {
+                id: 'prod-44',
+                name: 'Crucial T700 2TB Gen5 NVMe M.2 SSD Up to 12,400 MB/s',
+                brand: 'Samsung',
+                category: 'Storage',
+                subcategory: 'NVMe SSD',
+                price: 249.99,
+                originalPrice: 299.99,
+                discount: 16,
+                rating: 4.8,
+                reviewCount: 110,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Crucial+T700+Gen5+SSD'],
+                description: 'Blazing PCIe Gen5 speeds reaching up to 12,400 MB/s read speeds for extreme storage throughput.',
+                specifications: { Capacity: '2TB', Interface: 'PCIe Gen5 x4', 'Read Speed': '12,400 MB/s' },
+                tags: ['ssd', 'newArrival'],
+                featured: false,
+                bestSeller: false,
+                newArrival: true
+            },
+            {
+                id: 'prod-45',
+                name: 'Logitech G Pro X 2 1080p Streaming Webcam',
+                brand: 'Logitech',
+                category: 'Peripherals',
+                subcategory: 'Webcams',
+                price: 199.99,
+                originalPrice: 219.99,
+                discount: 9,
+                rating: 4.7,
+                reviewCount: 85,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Logitech+Stream+Webcam'],
+                description: 'Broadcast-grade 1080p 60fps streaming webcam with large sensor, HDR support, and custom mount options.',
+                specifications: { Resolution: '1080p at 60fps', Sensor: 'Large premium sensor', FOV: '90-degree adjustable' },
+                tags: ['streaming'],
+                featured: false,
+                bestSeller: false,
+                newArrival: false
+            },
+            {
+                id: 'prod-46',
+                name: 'Nexus Infinity Pro Streaming PC RTX 4070 Ti',
+                brand: 'Nexus Systems',
+                category: 'Gaming',
+                subcategory: 'Streaming PCs',
+                price: 2299.00,
+                originalPrice: 2499.00,
+                discount: 8,
+                rating: 4.9,
+                reviewCount: 78,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Nexus+Infinity+Streaming+PC'],
+                description: 'Optimized for simultaneous high-framerate gaming and professional streaming. Ryzen 7 7800X3D, RTX 4070 Ti Super, 32GB DDR5.',
+                specifications: { CPU: 'AMD Ryzen 7 7800X3D', GPU: 'NVIDIA RTX 4070 Ti Super', RAM: '32GB DDR5' },
+                tags: ['prebuilt', 'featured'],
+                featured: true,
+                bestSeller: false,
+                newArrival: false
+            },
+            {
+                id: 'prod-47',
+                name: 'Antec C8 Wood Glass Full-Tower Case',
+                brand: 'Antec',
+                category: 'PC Components',
+                subcategory: 'PC Cases',
+                price: 139.99,
+                originalPrice: 159.99,
+                discount: 12,
+                rating: 4.8,
+                reviewCount: 62,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Antec+C8+Wood'],
+                description: 'Seamless tempered glass full-tower case with elegant wooden accent trim on the top bezel and exceptional liquid cooling support.',
+                specifications: { Type: 'Full-Tower', Motherboard: 'Up to E-ATX', Radiator: 'Dual 360mm support' },
+                tags: ['case', 'newArrival'],
+                featured: false,
+                bestSeller: false,
+                newArrival: true
+            },
+            {
+                id: 'prod-48',
+                name: 'ASUS ROG Swift OLED PG32UCDM 32" 4K 240Hz Monitor',
+                brand: 'ASUS',
+                category: 'Displays',
+                subcategory: 'Gaming Monitors',
+                price: 1299.99,
+                originalPrice: 1399.00,
+                discount: 7,
+                rating: 5.0,
+                reviewCount: 94,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=ROG+Swift+OLED+32+4K'],
+                description: 'The ultimate 32-inch 4K QD-OLED gaming monitor with 240Hz refresh rate, 0.03ms response time, and custom heatsink.',
+                specifications: { Size: '32" 4K QD-OLED', Resolution: '3840 x 2160 4K', 'Refresh Rate': '240Hz' },
+                tags: ['featured', 'monitor', 'newArrival'],
+                featured: true,
+                bestSeller: true,
+                newArrival: true
+            },
+            {
+                id: 'prod-49',
+                name: 'Corsair K70 MAX RGB Magnetic Mechanical Keyboard',
+                brand: 'Corsair',
+                category: 'Gaming',
+                subcategory: 'Gaming Keyboards',
+                price: 229.99,
+                originalPrice: 249.99,
+                discount: 8,
+                rating: 4.7,
+                reviewCount: 132,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Corsair+K70+MAX'],
+                description: 'MGX adjustable magnetic mechanical switches allow you to set the actuation point of every single key from 0.4mm to 3.6mm.',
+                specifications: { Switches: 'CORSAIR MGX Magnetic', Polling: '8000Hz Axon' },
+                tags: ['peripherals'],
+                featured: false,
+                bestSeller: false,
+                newArrival: false
+            },
+            {
+                id: 'prod-50',
+                name: 'Nexus Beast Extreme Workstation RTX 6000 Ada',
+                brand: 'Nexus Systems',
+                category: 'Laptops & Computers',
+                subcategory: 'Workstations',
+                price: 6999.00,
+                originalPrice: 7499.00,
+                discount: 6,
+                rating: 5.0,
+                reviewCount: 18,
+                stock: 'In Stock',
+                images: ['https://placehold.co/600x600/1e293b/ffffff?text=Nexus+Beast+Workstation'],
+                description: 'Maximum performance machine for deep learning AI labs and enterprise cinematic rendering. Dual RTX 6000 Ada 48GB, 256GB ECC RAM.',
+                specifications: { CPU: 'AMD Threadripper PRO 7995WX', GPU: 'NVIDIA RTX 6000 Ada 48GB', RAM: '256GB ECC' },
+                tags: ['workstation', 'featured'],
+                featured: true,
+                bestSeller: false,
+                newArrival: false
+            }
+        ];
+
+        // --- APPLICATION STATE ---
+        let cart = JSON.parse(localStorage.getItem('nexus_cart')) || [];
+        let wishlist = JSON.parse(localStorage.getItem('nexus_wishlist')) || [];
+        let compareList = JSON.parse(localStorage.getItem('nexus_compare')) || [];
+        let savedBuilds = JSON.parse(localStorage.getItem('nexus_builds')) || [];
+        let currentRoute = 'home';
+        let routeParams = {};
+        let activeTheme = localStorage.getItem('nexus_theme') || 'light';
+
+        // PC Builder State
+        let currentBuild = JSON.parse(localStorage.getItem('nexus_current_build')) || {
+            CPU: null,
+            GPU: null,
+            Motherboard: null,
+            RAM: null,
+            Storage: null,
+            PSU: null,
+            Case: null,
+            'CPU Cooler': null
+        };
+
+        // Initialize Theme on Load
+        if (activeTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        function toggleDarkMode() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                activeTheme = 'light';
+            } else {
+                document.documentElement.classList.add('dark');
+                activeTheme = 'dark';
+            }
+            localStorage.setItem('nexus_theme', activeTheme);
+        }
+
+        // --- TOAST NOTIFICATIONS ---
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `px-4 py-3 rounded-2xl shadow-xl text-sm font-medium flex items-center gap-3 text-white pointer-events-auto transition-all transform translate-y-2 opacity-0 animate-fade-in ${type === 'error' ? 'bg-rose-600' : 'bg-slate-900 border border-slate-800'}`;
+            toast.innerHTML = `
+                <i data-lucide="${type === 'error' ? 'alert-circle' : 'check-circle'}" class="w-4 h-4 text-emerald-400"></i>
+                <span>${message}</span>
+            `;
+            container.appendChild(toast);
+            lucide.createIcons();
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(10px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // --- ROUTER SYSTEM ---
+        const router = {
+            navigate: (route, params = {}) => {
+                currentRoute = route;
+                routeParams = params;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                renderCurrentView();
+                updateActiveNavLinks();
+            }
+        };
+
+        function updateActiveNavLinks() {
+            document.querySelectorAll('.nav-link').forEach(el => {
+                if (el.getAttribute('data-route') === currentRoute) {
+                    el.classList.add('text-indigo-600', 'dark:text-indigo-400', 'font-semibold');
+                } else {
+                    el.classList.remove('text-indigo-600', 'dark:text-indigo-400', 'font-semibold');
+                }
+            });
+        }
+
+        function updateBadges() {
+            const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const cartBadge = document.getElementById('cart-badge');
+            if (cartCount > 0) {
+                cartBadge.innerText = cartCount;
+                cartBadge.classList.remove('hidden');
+            } else {
+                cartBadge.classList.add('hidden');
+            }
+
+            const wishlistBadge = document.getElementById('wishlist-badge');
+            if (wishlist.length > 0) {
+                wishlistBadge.innerText = wishlist.length;
+                wishlistBadge.classList.remove('hidden');
+            } else {
+                wishlistBadge.classList.add('hidden');
+            }
+
+            const compareBadge = document.getElementById('compare-badge');
+            if (compareList.length > 0) {
+                compareBadge.innerText = compareList.length;
+                compareBadge.classList.remove('hidden');
+            } else {
+                compareBadge.classList.add('hidden');
+            }
+
+            localStorage.setItem('nexus_cart', JSON.stringify(cart));
+            localStorage.setItem('nexus_wishlist', JSON.stringify(wishlist));
+            localStorage.setItem('nexus_compare', JSON.stringify(compareList));
+        }
+
+        // --- CART ACTIONS ---
+        function addToCart(productId, quantity = 1) {
+            const product = productsData.find(p => p.id === productId);
+            if (!product) return;
+            const existing = cart.find(item => item.id === productId);
+            if (existing) {
+                existing.quantity += quantity;
+            } else {
+                cart.push({ ...product, quantity });
+            }
+            updateBadges();
+            showToast(`Added "${product.name}" to cart.`);
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateBadges();
+            renderCurrentView();
+            showToast('Product removed from cart.');
+        }
+
+        function updateCartQuantity(productId, delta) {
+            const item = cart.find(i => i.id === productId);
+            if (item) {
+                item.quantity += delta;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateBadges();
+                    renderCurrentView();
+                }
+            }
+        }
+
+        // --- WISHLIST ACTIONS ---
+        function toggleWishlist(productId) {
+            const index = wishlist.indexOf(productId);
+            if (index > -1) {
+                wishlist.splice(index, 1);
+                showToast('Removed from wishlist.');
+            } else {
+                wishlist.push(productId);
+                showToast('Added to wishlist.');
+            }
+            updateBadges();
+            renderCurrentView();
+        }
+
+        // --- COMPARE ACTIONS ---
+        function toggleCompare(productId) {
+            const index = compareList.indexOf(productId);
+            if (index > -1) {
+                compareList.splice(index, 1);
+                showToast('Removed from comparison.');
+            } else {
+                if (compareList.length >= 4) {
+                    showToast('You can compare up to 4 products at once.', 'error');
+                    return;
+                }
+                compareList.push(productId);
+                showToast('Added to product comparison.');
+            }
+            updateBadges();
+            renderCurrentView();
+        }
+
+        // --- VIEW RENDERING DISPATCHER ---
+        function renderCurrentView() {
+            const container = document.getElementById('app-container');
+            container.innerHTML = '';
+
+            switch (currentRoute) {
+                case 'home':
+                    container.innerHTML = renderHomeView();
+                    break;
+                case 'products':
+                    container.innerHTML = renderProductsView(routeParams);
+                    break;
+                case 'product-detail':
+                    container.innerHTML = renderProductDetailView(routeParams.id);
+                    break;
+                case 'categories':
+                    container.innerHTML = renderCategoriesView();
+                    break;
+                case 'cart':
+                    container.innerHTML = renderCartView();
+                    break;
+                case 'checkout':
+                    container.innerHTML = renderCheckoutView();
+                    break;
+                case 'wishlist':
+                    container.innerHTML = renderWishlistView();
+                    break;
+                case 'compare':
+                    container.innerHTML = renderCompareView();
+                    break;
+                case 'deals':
+                    container.innerHTML = renderDealsView();
+                    break;
+                case 'builder':
+                    container.innerHTML = renderBuilderView();
+                    break;
+                case 'prebuilts':
+                    container.innerHTML = renderPrebuiltsView();
+                    break;
+                case 'about':
+                    container.innerHTML = renderAboutView();
+                    break;
+                case 'contact':
+                    container.innerHTML = renderContactView();
+                    break;
+                case 'account':
+                    container.innerHTML = renderAccountView();
+                    break;
+                default:
+                    container.innerHTML = renderHomeView();
+            }
+
+            lucide.createIcons();
+        }
+
+        // --- VIEW TEMPLATES ---
+
+        // 1. HOME VIEW
+        function renderHomeView() {
+            const bestSellers = productsData.filter(p => p.bestSeller).slice(0, 4);
+            const newArrivals = productsData.filter(p => p.newArrival).slice(0, 4);
+            const featured = productsData.filter(p => p.featured).slice(0, 4);
+
+            return `
+                <div class="space-y-20 pb-20">
+                    <!-- Hero Section -->
+                    <section class="relative overflow-hidden bg-gradient-to-b from-indigo-900/10 via-transparent to-transparent pt-12 pb-20 border-b border-slate-200 dark:border-slate-800">
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                                <div class="lg:col-span-7 space-y-6">
+                                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-800 text-indigo-600 dark:text-indigo-400 text-xs font-semibold">
+                                        <i data-lucide="zap" class="w-3.5 h-3.5"></i> Power Your Technology. Build Without Limits.
+                                    </div>
+                                    <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.1]">
+                                        Build Better.<br><span class="bg-gradient-to-r from-indigo-600 to-sky-500 bg-clip-text text-transparent">Perform Faster.</span>
+                                    </h1>
+                                    <p class="text-lg text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed">
+                                        Premium computer hardware, components, peripherals and technology solutions for gamers, creators, professionals and businesses.
+                                    </p>
+                                    <div class="flex flex-wrap gap-4 pt-2">
+                                        <button onclick="router.navigate('products')" class="px-7 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold shadow-lg shadow-indigo-600/25 transition flex items-center gap-2">
+                                            Shop Products <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                        </button>
+                                        <button onclick="router.navigate('deals')" class="px-7 py-3.5 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 font-semibold transition flex items-center gap-2">
+                                            Explore Deals
+                                        </button>
+                                    </div>
+                                    <div class="grid grid-cols-3 gap-6 pt-8 border-t border-slate-200 dark:border-slate-800 text-sm">
+                                        <div>
+                                            <span class="font-bold text-xl text-slate-900 dark:text-white block">10,000+</span>
+                                            <span class="text-slate-500 text-xs">Hardware Products</span>
+                                        </div>
+                                        <div>
+                                            <span class="font-bold text-xl text-slate-900 dark:text-white block">5,000+</span>
+                                            <span class="text-slate-500 text-xs">Satisfied Builders</span>
+                                        </div>
+                                        <div>
+                                            <span class="font-bold text-xl text-slate-900 dark:text-white block">24/7</span>
+                                            <span class="text-slate-500 text-xs">Expert Support</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="lg:col-span-5 relative">
+                                    <div class="absolute -inset-1 rounded-3xl bg-gradient-to-tr from-indigo-600 to-sky-400 opacity-20 blur-xl"></div>
+                                    <div class="relative bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-2xl space-y-6">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-xs font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Featured System</span>
+                                            <span class="px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 text-xs font-bold">In Stock</span>
+                                        </div>
+                                        <img src="https://placehold.co/600x400/1e293b/ffffff?text=Nexus+Apex+Ultra+System" alt="Featured PC" class="w-full h-64 object-cover rounded-2xl">
+                                        <div>
+                                            <h3 class="font-bold text-lg mb-1">Nexus Apex Ultra RTX 4090 PC</h3>
+                                            <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">i9-14900KS • RTX 4090 24GB • 64GB DDR5</p>
+                                            <div class="flex items-center justify-between">
+                                                <div>
+                                                    <span class="text-xs text-slate-400 block">Price</span>
+                                                    <span class="text-xl font-bold text-indigo-600 dark:text-indigo-400">$3,299.00</span>
+                                                </div>
+                                                <button onclick="router.navigate('product-detail', {id: 'prod-1'})" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold transition">
+                                                    View Details
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Quick Categories Ribbon -->
+                    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="flex items-center justify-between mb-8">
+                            <h2 class="text-2xl font-bold tracking-tight">Top Hardware Categories</h2>
+                            <button onclick="router.navigate('categories')" class="text-sm font-semibold text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1">View All <i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+                        </div>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+                            ${renderCategoryCard('PC Components', 'cpu', 'PC Components')}
+                            ${renderCategoryCard('Graphics Cards', 'monitor-play', 'Graphics Cards')}
+                            ${renderCategoryCard('Processors', 'cpu', 'CPUs')}
+                            ${renderCategoryCard('Memory & RAM', 'hard-drive', 'RAM')}
+                            ${renderCategoryCard('Storage & SSD', 'database', 'Storage')}
+                            ${renderCategoryCard('Gaming Gear', 'gamepad-2', 'Gaming')}
+                        </div>
+                    </section>
+
+                    <!-- Best Sellers Section -->
+                    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="flex items-center justify-between mb-8">
+                            <div>
+                                <h2 class="text-2xl font-bold tracking-tight">Best Selling Hardware</h2>
+                                <p class="text-sm text-slate-500 dark:text-slate-400">Most popular components chosen by enthusiasts.</p>
+                            </div>
+                            <button onclick="router.navigate('products')" class="text-sm font-semibold text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1">Browse All <i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                            ${bestSellers.map(p => renderProductCard(p)).join('')}
+                        </div>
+                    </section>
+
+                    <!-- Banner / PC Builder Promo -->
+                    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="rounded-3xl bg-gradient-to-r from-indigo-900 via-indigo-800 to-slate-900 text-white p-8 sm:p-12 relative overflow-hidden shadow-2xl">
+                            <div class="absolute right-0 top-0 bottom-0 w-1/2 opacity-20 bg-[radial-gradient(#6366f1_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                            <div class="relative z-10 max-w-xl space-y-6">
+                                <span class="px-3.5 py-1 rounded-full bg-indigo-500/30 text-indigo-300 text-xs font-bold uppercase tracking-wider">Interactive Tool</span>
+                                <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Custom PC Builder with Live Compatibility</h2>
+                                <p class="text-slate-300 text-sm leading-relaxed">
+                                    Choose your CPU, GPU, motherboard, and power supply. Our intelligent assistant ensures 100% hardware compatibility and wattage checks in real-time.
+                                </p>
+                                <button onclick="router.navigate('builder')" class="px-7 py-3.5 rounded-xl bg-white text-indigo-900 font-bold hover:bg-slate-100 transition shadow-lg flex items-center gap-2">
+                                    Start Building Now <i data-lucide="wrench" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- New Arrivals -->
+                    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="flex items-center justify-between mb-8">
+                            <div>
+                                <h2 class="text-2xl font-bold tracking-tight">New Hardware Arrivals</h2>
+                                <p class="text-sm text-slate-500 dark:text-slate-400">Latest releases straight from top manufacturers.</p>
+                            </div>
+                            <button onclick="router.navigate('products')" class="text-sm font-semibold text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1">Browse All <i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                            ${newArrivals.map(p => renderProductCard(p)).join('')}
+                        </div>
+                    </section>
+
+                    <!-- Brand Logos Grid -->
+                    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="text-center mb-10">
+                            <h2 class="text-xl font-bold tracking-tight mb-2">Authorized Partner Brands</h2>
+                            <p class="text-sm text-slate-500">We partner with the world's leading technology and hardware innovators.</p>
+                        </div>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-6">
+                            ${['Intel', 'AMD', 'NVIDIA', 'ASUS', 'MSI', 'Gigabyte', 'Corsair', 'Samsung', 'Razer', 'Kingston', 'Western Digital', 'TP-Link'].map(brand => `
+                                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 flex items-center justify-center font-bold text-slate-700 dark:text-slate-300 shadow-sm hover:border-indigo-500 transition cursor-pointer" onclick="router.navigate('products', {brand: '${brand}'})">
+                                    ${brand}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </section>
+                </div>
+            `;
+        }
+
+        function renderCategoryCard(title, icon, categoryName) {
+            return `
+                <div onclick="router.navigate('products', {category: '${categoryName}'})" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 text-center hover:border-indigo-500 dark:hover:border-indigo-500 transition cursor-pointer group shadow-sm">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition duration-300">
+                        <i data-lucide="${icon}" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-semibold text-sm text-slate-800 dark:text-slate-200">${title}</h3>
+                </div>
+            `;
+        }
+
+        function renderProductCard(p) {
+            const isWishlisted = wishlist.includes(p.id);
+            const isCompared = compareList.includes(p.id);
+            return `
+                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col justify-between group shadow-sm hover:shadow-xl transition-all duration-300">
+                    <div class="relative overflow-hidden bg-slate-100 dark:bg-slate-800">
+                        ${p.discount ? `<span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-lg bg-rose-500 text-white text-[11px] font-bold shadow-md">-${p.discount}%</span>` : ''}
+                        <button onclick="toggleWishlist('${p.id}')" class="absolute top-3 right-3 z-10 p-2 rounded-xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-md text-slate-600 dark:text-slate-300 hover:text-rose-500 transition shadow-md">
+                            <i data-lucide="heart" class="w-4 h-4 ${isWishlisted ? 'fill-rose-500 text-rose-500' : ''}"></i>
+                        </button>
+                        <img src="${p.images[0]}" alt="${p.name}" class="w-full h-56 object-cover group-hover:scale-105 transition duration-500 cursor-pointer" onclick="router.navigate('product-detail', {id: '${p.id}'})">
+                    </div>
+                    <div class="p-5 flex flex-col flex-grow justify-between space-y-4">
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between text-xs text-slate-400">
+                                <span class="uppercase font-semibold tracking-wider text-indigo-600 dark:text-indigo-400">${p.brand}</span>
+                                <div class="flex items-center gap-1 text-amber-500 font-semibold">
+                                    <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-500"></i>
+                                    <span>${p.rating} (${p.reviewCount})</span>
+                                </div>
+                            </div>
+                            <h3 font-semibold class="font-bold text-sm text-slate-900 dark:text-white line-clamp-2 cursor-pointer hover:text-indigo-600 transition" onclick="router.navigate('product-detail', {id: '${p.id}'})">${p.name}</h3>
+                        </div>
+                        <div class="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                            <div>
+                                <span class="text-xs text-slate-400 line-through block">$${p.originalPrice.toFixed(2)}</span>
+                                <span class="text-lg font-extrabold text-slate-900 dark:text-white">$${p.price.toFixed(2)}</span>
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                <button onclick="toggleCompare('${p.id}')" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition ${isCompared ? 'bg-indigo-50 border-indigo-500 text-indigo-600' : ''}" title="Compare">
+                                    <i data-lucide="scale" class="w-4 h-4"></i>
+                                </button>
+                                <button onclick="addToCart('${p.id}')" class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs transition flex items-center gap-1.5 shadow-md shadow-indigo-600/20">
+                                    <i data-lucide="shopping-cart" class="w-3.5 h-3.5"></i> Add
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 2. PRODUCTS VIEW (Catalog & Filtering)
+        function renderProductsView(params = {}) {
+            const selectedCategory = params.category || 'All';
+            const selectedBrand = params.brand || 'All';
+            const searchQuery = params.search || '';
+
+            let filtered = productsData.filter(p => {
+                if (selectedCategory !== 'All' && p.category !== selectedCategory && p.subcategory !== selectedCategory) return false;
+                if (selectedBrand !== 'All' && p.brand !== selectedBrand) return false;
+                if (searchQuery && !p.name.toLowerCase().includes(searchQuery.toLowerCase()) && !p.brand.toLowerCase().includes(searchQuery.toLowerCase())) return false;
+                return true;
+            });
+
+            return `
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+                    <!-- Breadcrumbs -->
+                    <div class="flex items-center gap-2 text-xs text-slate-500">
+                        <span class="cursor-pointer hover:underline" onclick="router.navigate('home')">Home</span>
+                        <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                        <span class="font-semibold text-slate-800 dark:text-slate-200">Products Catalog</span>
+                    </div>
+
+                    <div class="flex flex-col lg:flex-row gap-8">
+                        <!-- Sidebar Filters -->
+                        <div class="w-full lg:w-72 space-y-6 shrink-0">
+                            <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-6 shadow-sm">
+                                <div class="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-800">
+                                    <h3 class="font-bold text-base">Filters</h3>
+                                    <button onclick="router.navigate('products')" class="text-xs text-indigo-600 font-semibold hover:underline">Reset All</button>
+                                </div>
+
+                                <!-- Categories Filter -->
+                                <div class="space-y-3">
+                                    <h4 class="text-xs font-semibold uppercase tracking-wider text-slate-400">Categories</h4>
+                                    <div class="space-y-1.5 text-sm">
+                                        ${['All', 'PC Components', 'Gaming', 'Storage', 'Peripherals', 'Displays', 'Networking', 'Laptops & Computers'].map(cat => `
+                                            <button onclick="router.navigate('products', {category: '${cat}'})" class="w-full text-left px-3 py-2 rounded-xl transition ${selectedCategory === cat ? 'bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 font-semibold' : 'hover:bg-slate-100 dark:hover:bg-slate-800'}">
+                                                ${cat}
+                                            </button>
+                                        `).join('')}
+                                    </div>
+                                </div>
+
+                                <!-- Brand Filter -->
+                                <div class="space-y-3">
+                                    <h4 class="text-xs font-semibold uppercase tracking-wider text-slate-400">Brands</h4>
+                                    <div class="space-y-1.5 text-sm max-h-48 overflow-y-auto">
+                                        ${['All', 'Intel', 'AMD', 'NVIDIA', 'ASUS', 'MSI', 'Corsair', 'Samsung', 'Razer', 'Logitech'].map(brand => `
+                                            <button onclick="router.navigate('products', {brand: '${brand}', category: '${selectedCategory}'})" class="w-full text-left px-3 py-1.5 rounded-xl transition ${selectedBrand === brand ? 'bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 font-semibold' : 'hover:bg-slate-100 dark:hover:bg-slate-800'}">
+                                                ${brand}
+                                            </button>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product Grid Area -->
+                        <div class="flex-grow space-y-6">
+                            <div class="bg-white dark:bg-slate-900 p-4 sm:p-6 rounded-2xl border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
+                                <span class="text-sm font-medium text-slate-500">Showing <strong class="text-slate-900 dark:text-white">${filtered.length}</strong> products</span>
+                                <div class="flex items-center gap-3 w-full sm:w-auto">
+                                    <span class="text-xs text-slate-400 whitespace-nowrap">Sort By:</span>
+                                    <select onchange="handleSortProducts(this.value)" class="bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-sm font-medium focus:outline-none w-full sm:w-auto">
+                                        <option value="featured">Relevance / Featured</option>
+                                        <option value="price-low">Price: Low to High</option>
+                                        <option value="price-high">Price: High to Low</option>
+                                        <option value="rating">Best Rated</option>
+                                        <option value="discount">Biggest Discount</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            ${filtered.length === 0 ? `
+                                <div class="bg-white dark:bg-slate-900 rounded-3xl p-12 text-center border border-slate-200 dark:border-slate-800 space-y-4">
+                                    <div class="w-16 h-16 rounded-2xl bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 flex items-center justify-center mx-auto">
+                                        <i data-lucide="search-x" class="w-8 h-8"></i>
+                                    </div>
+                                    <h3 class="font-bold text-lg">No hardware found</h3>
+                                    <p class="text-sm text-slate-500 max-w-md mx-auto">We couldn't find any items matching your filter criteria. Try resetting filters or searching for something else.</p>
+                                    <button onclick="router.navigate('products')" class="px-6 py-2.5 rounded-xl bg-indigo-600 text-white font-semibold text-sm">Clear Filters</button>
+                                </div>
+                            ` : `
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    ${filtered.map(p => renderProductCard(p)).join('')}
+                                </div>
+                            `}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function handleSortProducts(val) {
+            if (val === 'price-low') productsData.sort((a, b) => a.price - b.price);
+            if (val === 'price-high') productsData.sort((a, b) => b.price - a.price);
+            if (val === 'rating') productsData.sort((a, b) => b.rating - a.rating);
+            if (val === 'discount') productsData.sort((a, b) => b.discount - a.discount);
+            renderCurrentView();
+        }
+
+        // 3. PRODUCT DETAILS VIEW
+        function renderProductDetailView(productId) {
+            const p = productsData.find(item => item.id === productId) || productsData[0];
+            const isWishlisted = wishlist.includes(p.id);
+            const related = productsData.filter(item => item.category === p.category && item.id !== p.id).slice(0, 4);
+
+            return `
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
+                    <!-- Breadcrumbs -->
+                    <div class="flex items-center gap-2 text-xs text-slate-500">
+                        <span class="cursor-pointer hover:underline" onclick="router.navigate('home')">Home</span>
+                        <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                        <span class="cursor-pointer hover:underline" onclick="router.navigate('products', {category: '${p.category}'})">${p.category}</span>
+                        <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                        <span class="font-semibold text-slate-800 dark:text-slate-200 truncate max-w-xs">${p.name}</span>
+                    </div>
+
+                    <!-- Main Detail Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                        <!-- Gallery -->
+                        <div class="lg:col-span-7 space-y-4">
+                            <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden p-6 flex items-center justify-center shadow-sm">
+                                <img src="${p.images[0]}" alt="${p.name}" class="w-full h-96 object-contain">
+                            </div>
+                        </div>
+
+                        <!-- Info & Actions -->
+                        <div class="lg:col-span-5 space-y-6">
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 text-xs font-bold uppercase tracking-wider">${p.brand}</span>
+                                    <div class="flex items-center gap-1.5 text-amber-500 font-bold text-sm">
+                                        <i data-lucide="star" class="w-4 h-4 fill-amber-500"></i>
+                                        <span>${p.rating}</span>
+                                        <span class="text-slate-400 font-normal">(${p.reviewCount} customer reviews)</span>
+                                    </div>
+                                </div>
+                                <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white leading-tight">${p.name}</h1>
+                            </div>
+
+                            <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3 shadow-sm">
+                                <div class="flex items-baseline gap-3">
+                                    <span class="text-3xl font-extrabold text-indigo-600 dark:text-indigo-400">$${p.price.toFixed(2)}</span>
+                                    <span class="text-base text-slate-400 line-through">$${p.originalPrice.toFixed(2)}</span>
+                                    <span class="px-2.5 py-1 rounded-lg bg-rose-500 text-white text-xs font-bold">Save ${p.discount}%</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-emerald-600 text-sm font-semibold">
+                                    <i data-lucide="check-circle" class="w-4 h-4"></i> ${p.stock} - Ships within 24 hours
+                                </div>
+                            </div>
+
+                            <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                                ${p.description}
+                            </p>
+
+                            <!-- Quantity & Cart Actions -->
+                            <div class="space-y-4 pt-4 border-t border-slate-200 dark:border-slate-800">
+                                <div class="flex items-center gap-4">
+                                    <div class="flex items-center border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden bg-white dark:bg-slate-900">
+                                        <button onclick="adjustDetailQty(-1)" class="px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-800 transition">-</button>
+                                        <span id="detail-qty" class="px-6 font-bold text-sm">1</span>
+                                        <button onclick="adjustDetailQty(1)" class="px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-800 transition">+</button>
+                                    </div>
+                                    <button onclick="addCurrentProductToCart('${p.id}')" class="flex-grow py-3.5 px-6 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm shadow-lg shadow-indigo-600/25 transition flex items-center justify-center gap-2">
+                                        <i data-lucide="shopping-cart" class="w-4 h-4"></i> Add to Cart
+                                    </button>
+                                </div>
+                                <div class="flex gap-4">
+                                    <button onclick="toggleWishlist('${p.id}')" class="flex-1 py-3 px-4 rounded-xl border border-slate-200 dark:border-slate-700 font-semibold text-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center justify-center gap-2">
+                                        <i data-lucide="heart" class="w-4 h-4 ${isWishlisted ? 'fill-rose-500 text-rose-500' : ''}"></i> Wishlist
+                                    </button>
+                                    <button onclick="router.navigate('checkout')" class="flex-1 py-3 px-4 rounded-xl bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white font-semibold text-sm transition text-center">
+                                        Buy Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Technical Specifications Section -->
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-200 dark:border-slate-800 space-y-6 shadow-sm">
+                        <h3 class="text-xl font-bold">Technical Specifications</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                            ${Object.entries(p.specifications).map(([key, val]) => `
+                                <div class="flex justify-between py-3 px-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
+                                    <span class="font-semibold text-slate-500">${key}</span>
+                                    <span class="font-bold text-slate-900 dark:text-white">${val}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Related Products -->
+                    <div class="space-y-6">
+                        <h3 class="text-2xl font-bold tracking-tight">Compatible & Related Products</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                            ${related.map(item => renderProductCard(item)).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        let detailQtyCount = 1;
+        function adjustDetailQty(delta) {
+            detailQtyCount = Math.max(1, detailQtyCount + delta);
+            const el = document.getElementById('detail-qty');
+            if (el) el.innerText = detailQtyCount;
+        }
+
+        function addCurrentProductToCart(productId) {
+            addToCart(productId, detailQtyCount);
+            detailQtyCount = 1;
+            const el = document.getElementById('detail-qty');
+            if (el) el.innerText = '1';
+        }
+
+        // 4. CATEGORIES VIEW
+        function renderCategoriesView() {
+            const categoriesList = [
+                { name: 'PC Components', icon: 'cpu', desc: 'CPUs, GPUs, Motherboards, RAM, Storage & Power Supplies', count: '24 Items' },
+                { name: 'Gaming', icon: 'gamepad-2', desc: 'High-end gaming PCs, laptops, monitors & controllers', count: '18 Items' },
+                { name: 'Storage', icon: 'database', desc: 'Blazing fast Gen4/Gen5 NVMe SSDs, SATA drives & external storage', count: '12 Items' },
+                { name: 'Peripherals', icon: 'keyboard', desc: 'Mechanical keyboards, lightweight mice, webcams & microphones', count: '15 Items' },
+                { name: 'Displays', icon: 'monitor', desc: 'OLED gaming monitors, 4K professional displays & monitor arms', count: '9 Items' },
+                { name: 'Networking', icon: 'wifi', desc: 'Wi-Fi 7 routers, network switches, adapters & ethernet cables', count: '8 Items' },
+                { name: 'Laptops & Computers', icon: 'laptop', desc: 'Portable powerhouses, workstations & mini PCs', count: '10 Items' },
+                { name: 'Accessories', icon: 'headphones', desc: 'UPS power backup, cooling pads, thermal accessories & tools', count: '14 Items' }
+            ];
+
+            return `
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+                    <div class="text-center max-w-2xl mx-auto space-y-3">
+                        <h1 class="text-3xl font-extrabold tracking-tight">Hardware Categories</h1>
+                        <p class="text-sm text-slate-500">Explore our comprehensive catalog of professional computer hardware, peripherals, and technology solutions.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        ${categoriesList.map(cat => `
+                            <div onclick="router.navigate('products', {category: '${cat.name}'})" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 space-y-4 hover:border-indigo-500 transition cursor-pointer group shadow-sm">
+                                <div class="w-14 h-14 rounded-2xl bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center group-hover:scale-110 transition duration-300">
+                                    <i data-lucide="${cat.icon}" class="w-7 h-7"></i>
+                                </div>
+                                <div class="space-y-1">
+                                    <h3 class="font-bold text-lg">${cat.name}</h3>
+                                    <p class="text-xs text-slate-500 leading-relaxed">${cat.desc}</p>
+                                </div>
+                                <div class="pt-2 flex items-center justify-between text-xs font-semibold text-indigo-600 dark:text-indigo-400">
+                                    <span>${cat.count}</span>
+                                    <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // 5. SHOPPING CART VIEW
+        function renderCartView() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const shipping = subtotal > 150 ? 0 : 15.00;
+            const tax = subtotal * 0.08;
+            const total = subtotal + shipping + tax;
+
+            return `
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+                    <h1 class="text-3xl font-extrabold tracking-tight">Shopping Cart</h1>
+
+                    ${cart.length === 0 ? `
+                        <div class="bg-white dark:bg-slate-900 rounded-3xl p-16 text-center border border-slate-200 dark:border-slate-800 space-y-4 shadow-sm">
+                            <div class="w-20 h-20 rounded-3xl bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 flex items-center justify-center mx-auto">
+                                <i data-lucide="shopping-bag" class="w-10 h-10"></i>
+                            </div>
+                            <h3 class="text-xl font-bold">Your cart is empty</h3>
+                            <p class="text-sm text-slate-500 max-w-md mx-auto">You haven't added any computer components or hardware to your cart yet. Explore our catalog and start building!</p>
+                            <button onclick="router.navigate('products')" class="px-7 py-3 rounded-xl bg-indigo-600 text-white font-semibold text-sm">Explore Products</button>
+                        </div>
+                    ` : `
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                            <!-- Items List -->
+                            <div class="lg:col-span-8 space-y-4">
+                                ${cart.map(item => `
+                                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-sm">
+                                        <div class="flex items-center gap-4 w-full sm:w-auto">
+                                            <img src="${item.images[0]}" alt="${item.name}" class="w-20 h-20 object-cover rounded-xl bg-slate-100 dark:bg-slate-800 shrink-0">
+                                            <div>
+                                                <span class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 uppercase">${item.brand}</span>
+                                                <h3 class="font-bold text-sm text-slate-900 dark:text-white line-clamp-1">${item.name}</h3>
+                                                <span class="text-base font-extrabold text-slate-900 dark:text-white mt-1 block">$${item.price.toFixed(2)}</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center justify-between sm:justify-end gap-6 w-full sm:w-auto">
+                                            <div class="flex items-center border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden bg-slate-50 dark:bg-slate-800">
+                                                <button onclick="updateCartQuantity('${item.id}', -1)" class="px-3 py-1.5 hover:bg-slate-200 dark:hover:bg-slate-700 transition">-</button>
+                                                <span class="px-4 font-bold text-sm">${item.quantity}</span>
+                                                <button onclick="updateCartQuantity('${item.id}', 1)" class="px-3 py-1.5 hover:bg-slate-200 dark:hover:bg-slate-700 transition">+</button>
+                                            </div>
+                                            <button onclick="removeFromCart('${item.id}')" class="p-2 rounded-xl text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition">
+                                                <i data-lucide="trash-2" class="w-5 h-5"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+
+                            <!-- Order Summary -->
+                            <div class="lg:col-span-4">
+                                <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 space-y-6 shadow-sm sticky top-28">
+                                    <h3 class="font-bold text-lg">Order Summary</h3>
+                                    <div class="space-y-3 text-sm">
+                                        <div class="flex justify-between text-slate-500">
+                                            <span>Subtotal</span>
+                                            <span class="font-semibold text-slate-900 dark:text-white">$${subtotal.toFixed(2)}</span>
+                                        </div>
+                                        <div class="flex justify-between text-slate-500">
+                                            <span>Estimated Shipping</span>
+                                            <span class="font-semibold text-slate-900 dark:text-white">${shipping === 0 ? 'FREE' : '$' + shipping.toFixed(2)}</span>
+                                        </div>
+                                        <div class="flex justify-between text-slate-500">
+                                            <span>Estimated Tax (8%)</span>
+                                            <span class="font-semibold text-slate-900 dark:text-white">$${tax.toFixed(2)}</span>
+                                        </div>
+                                        <div class="pt-4 border-t border-slate-200 dark:border-slate-800 flex justify-between text-base font-extrabold text-slate-900 dark:text-white">
+                                            <span>Total</span>
+                                            <span class="text-indigo-600 dark:text-indigo-400">$${total.toFixed(2)}</span>
+                                        </div>
+                                    </div>
+                                    <button onclick="router.navigate('checkout')" class="w-full py-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm shadow-lg shadow-indigo-600/25 transition">
+                                        Proceed to Checkout
+                                    </button>
+                                    <button onclick="router.navigate('products')" class="w-full py-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 font-semibold text-sm transition">
+                                        Continue Shopping
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `}
+                </div>
+            `;
+        }
+
+        // 6. CHECKOUT VIEW
+        function renderCheckoutView() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const shipping = subtotal > 150 ? 0 : 15.00;
+            const tax = subtotal * 0.08;
+            const total = subtotal + shipping + tax;
+
+            return `
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+                    <h1 class="text-3xl font-extrabold tracking-tight">Secure Checkout</h1>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                        <!-- Form Steps -->
+                        <div class="lg:col-span-8 space-y-6">
+                            <div class="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-200 dark:border-slate-800 space-y-6 shadow-sm">
+                                <h3 class="font-bold text-lg flex items-center gap-2"><span class="w-7 h-7 rounded-full bg-indigo-600 text-white text-xs flex items-center justify-center">1</span> Customer Information</h3>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-400 mb-2 uppercase">Full Name</label>
+                                        <input type="text" id="chk-name" value="Alex Vance" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-400 mb-2 uppercase">Email Address</label>
+                                        <input type="email" id="chk-email" value="alex.vance@nexus.tech" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-200 dark:border-slate-800 space-y-6 shadow-sm">
+                                <h3 class="font-bold text-lg flex items-center gap-2"><span class="w-7 h-7 rounded-full bg-indigo-600 text-white text-xs flex items-center justify-center">2</span> Shipping Address</h3>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div class="sm:col-span-2">
+                                        <label class="block text-xs font-semibold text-slate-400 mb-2 uppercase">Street Address</label>
+                                        <input type="text" value="742 Silicon Valley Blvd, Suite 400" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-400 mb-2 uppercase">City</label>
+                                        <input type="text" value="San Francisco" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-400 mb-2 uppercase">State / Province</label>
+                                        <input type="text" value="California" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-400 mb-2 uppercase">Postal Code</label>
+                                        <input type="text" value="94107" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-400 mb-2 uppercase">Country</label>
+                                        <input type="text" value="United States" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-200 dark:border-slate-800 space-y-6 shadow-sm">
+                                <h3 class="font-bold text-lg flex items-center gap-2"><span class="w-7 h-7 rounded-full bg-indigo-600 text-white text-xs flex items-center justify-center">3</span> Payment Method</h3>
+                                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                                    <label class="border-2 border-indigo-600 bg-indigo-50/50 dark:bg-indigo-950/30 p-4 rounded-2xl flex flex-col items-center justify-center gap-2 cursor-pointer text-center">
+                                        <input type="radio" name="payment" checked class="accent-indigo-600">
+                                        <span class="font-semibold text-xs">Credit Card</span>
+                                    </label>
+                                    <label class="border border-slate-200 dark:border-slate-700 p-4 rounded-2xl flex flex-col items-center justify-center gap-2 cursor-pointer text-center hover:border-slate-400">
+                                        <input type="radio" name="payment" class="accent-indigo-600">
+                                        <span class="font-semibold text-xs">UPI / Wallet</span>
+                                    </label>
+                                    <label class="border border-slate-200 dark:border-slate-700 p-4 rounded-2xl flex flex-col items-center justify-center gap-2 cursor-pointer text-center hover:border-slate-400">
+                                        <input type="radio" name="payment" class="accent-indigo-600">
+                                        <span class="font-semibold text-xs">Net Banking</span>
+                                    </label>
+                                    <label class="border border-slate-200 dark:border-slate-700 p-4 rounded-2xl flex flex-col items-center justify-center gap-2 cursor-pointer text-center hover:border-slate-400">
+                                        <input type="radio" name="payment" class="accent-indigo-600">
+                                        <span class="font-semibold text-xs">Cash on Delivery</span>
+                                    </label>
+                                </div>
+                                <div class="space-y-4 pt-4">
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-400 mb-2 uppercase">Card Number</label>
+                                        <input type="text" placeholder="4532 •••• •••• 8920" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm">
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-xs font-semibold text-slate-400 mb-2 uppercase">Expiry Date</label>
+                                            <input type="text" placeholder="MM/YY" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm">
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs font-semibold text-slate-400 mb-2 uppercase">CVV</label>
+                                            <input type="password" placeholder="•••" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Summary & Place Order -->
+                        <div class="lg:col-span-4">
+                            <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 space-y-6 shadow-sm sticky top-28">
+                                <h3 class="font-bold text-lg">Order Summary (${cart.length} items)</h3>
+                                <div class="space-y-3 max-h-60 overflow-y-auto">
+                                    ${cart.map(item => `
+                                        <div class="flex justify-between items-center text-sm">
+                                            <span class="text-slate-500 truncate max-w-[180px]">${item.quantity}x ${item.name}</span>
+                                            <span class="font-semibold">$${(item.price * item.quantity).toFixed(2)}</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                <div class="space-y-3 pt-4 border-t border-slate-200 dark:border-slate-800 text-sm">
+                                    <div class="flex justify-between text-slate-500">
+                                        <span>Subtotal</span>
+                                        <span class="font-semibold">$${subtotal.toFixed(2)}</span>
+                                    </div>
+                                    <div class="flex justify-between text-slate-500">
+                                        <span>Shipping</span>
+                                        <span class="font-semibold">${shipping === 0 ? 'FREE' : '$' + shipping.toFixed(2)}</span>
+                                    </div>
+                                    <div class="flex justify-between text-slate-500">
+                                        <span>Tax</span>
+                                        <span class="font-semibold">$${tax.toFixed(2)}</span>
+                                    </div>
+                                    <div class="pt-4 border-t border-slate-200 dark:border-slate-800 flex justify-between text-base font-extrabold">
+                                        <span>Total</span>
+                                        <span class="text-indigo-600 dark:text-indigo-400">$${total.toFixed(2)}</span>
+                                    </div>
+                                </div>
+                                <button onclick="handlePlaceOrder()" class="w-full py-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm shadow-lg shadow-indigo-600/25 transition">
+                                    Place Order Securely
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function handlePlaceOrder() {
+            if (cart.length === 0) {
+                showToast('Your cart is empty!', 'error');
+                return;
+            }
+            cart = [];
+            updateBadges();
+            router.navigate('account');
+            showToast('Order placed successfully! Thank you for shopping with Nexus.');
+        }
+
+        // 7. WISHLIST VIEW
+        function renderWishlistView() {
+            const items = productsData.filter(p => wishlist.includes(p.id));
+
+            return `
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+                    <h1 class="text-3xl font-extrabold tracking-tight">My Wishlist (${items.length})</h1>
+
+                    ${items.length === 0 ? `
+                        <div class="bg-white dark:bg-slate-900 rounded-3xl p-16 text-center border border-slate-200 dark:border-slate-800 space-y-4 shadow-sm">
+                            <div class="w-16 h-16 rounded-2xl bg-rose-50 text-rose-500 flex items-center justify-center mx-auto">
+                                <i data-lucide="heart" class="w-8 h-8"></i>
+                            </div>
+                            <h3 class="font-bold text-lg">Your wishlist is empty</h3>
+                            <p class="text-sm text-slate-500">Save items you love by clicking the heart icon on any product card.</p>
+                            <button onclick="router.navigate('products')" class="px-6 py-2.5 rounded-xl bg-indigo-600 text-white font-semibold text-sm">Explore Products</button>
+                        </div>
+                    ` : `
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                            ${items.map(p => renderProductCard(p)).join('')}
+                        </div>
+                    `}
+                </div>
+            `;
+        }
+
+        // 8. PRODUCT COMPARISON VIEW
+        function renderCompareView() {
+            const items = productsData.filter(p => compareList.includes(p.id));
+
+            return `
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h1 class="text-3xl font-extrabold tracking-tight">Hardware Comparison</h1>
+                            <p class="text-sm text-slate-500">Compare specifications, clock speeds, VRAM, and price side-by-side.</p>
+                        </div>
+                        ${items.length > 0 ? `<button onclick="compareList=[]; updateBadges(); renderCurrentView();" class="text-xs text-rose-500 font-semibold hover:underline">Clear Comparison</button>` : ''}
+                    </div>
+
+                    ${items.length === 0 ? `
+                        <div class="bg-white dark:bg-slate-900 rounded-3xl p-16 text-center border border-slate-200 dark:border-slate-800 space-y-4 shadow-sm">
+                            <div class="w-16 h-16 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mx-auto">
+                                <i data-lucide="scale" class="w-8 h-8"></i>
+                            </div>
+                            <h3 class="font-bold text-lg">No products selected for comparison</h3>
+                            <p class="text-sm text-slate-500">Click the scale icon on any product card to add it to your comparison table (up to 4 items).</p>
+                            <button onclick="router.navigate('products')" class="px-6 py-2.5 rounded-xl bg-indigo-600 text-white font-semibold text-sm">Explore Products</button>
+                        </div>
+                    ` : `
+                        <div class="overflow-x-auto bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                            <table class="w-full border-collapse">
+                               <thead>
+                                    <tr class="border-b border-slate-200 dark:border-slate-800">
+                                        <th class="p-6 text-left text-xs font-semibold text-slate-400 uppercase w-48">Feature</th>
+                                        ${items.map(p => `
+                                            <th class="p-6 text-center min-w-[240px]">
+                                                <img src="${p.images[0]}" alt="${p.name}" class="w-32 h-32 object-cover mx-auto rounded-xl mb-3 bg-slate-100 dark:bg-slate-800">
+                                                <span class="text-xs text-indigo-600 font-bold uppercase block">${p.brand}</span>
+                                                <h4 class="font-bold text-sm line-clamp-2 mt-1">${p.name}</h4>
+                                            </th>
+                                        `).join('')}
+                                    </tr>
+                               </thead>
+                               <tbody class="divide-y divide-slate-200 dark:divide-slate-800 text-sm">
+                                    <tr>
+                                        <td class="p-6 font-semibold text-slate-400">Price</td>
+                                        ${items.map(p => `<td class="p-6 text-center font-extrabold text-indigo-600">$${p.price.toFixed(2)}</td>`).join('')}
+                                    </tr>
+                                    <tr>
+                                        <td class="p-6 font-semibold text-slate-400">Rating</td>
+                                        ${items.map(p => `<td class="p-6 text-center font-semibold">⭐ ${p.rating} / 5.0</td>`).join('')}
+                                    </tr>
+                                    <tr>
+                                        <td class="p-6 font-semibold text-slate-400">Category</td>
+                                        ${items.map(p => `<td class="p-6 text-center">${p.category}</td>`).join('')}
+                                    </tr>
+                                    <tr>
+                                        <td class="p-6 font-semibold text-slate-400">Stock Status</td>
+                                        ${items.map(p => `<td class="p-6 text-center text-emerald-600 font-semibold">${p.stock}</td>`).join('')}
+                                    </tr>
+                                    <tr>
+                                        <td class="p-6 font-semibold text-slate-400">Specifications</td>
+                                        ${items.map(p => `
+                                            <td class="p-6 text-center text-xs space-y-1">
+                                                ${Object.entries(p.specifications).map(([k, v]) => `<div><strong>${k}:</strong> ${v}</div>`).join('')}
+                                            </td>
+                                        `).join('')}
+                                    </tr>
+                                    <tr>
+                                        <td class="p-6 font-semibold text-slate-400">Action</td>
+                                        ${items.map(p => `
+                                            <td class="p-6 text-center">
+                                                <button onclick="addToCart('${p.id}')" class="px-5 py-2.5 rounded-xl bg-indigo-600 text-white font-semibold text-xs shadow-md">Add to Cart</button>
+                                            </td>
+                                        `).join('')}
+                                    </tr>
+                               </tbody>
+                            </table>
+                        </div>
+                    `}
+                </div>
+            `;
+        }
+
+        // 9. DEALS PAGE
+        function renderDealsView() {
+            const deals = productsData.filter(p => p.discount >= 12);
+
+            return `
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+                    <div class="rounded-3xl bg-gradient-to-r from-amber-500 to-rose-600 text-white p-8 sm:p-12 relative overflow-hidden shadow-2xl">
+                        <div class="relative z-10 max-w-xl space-y-4">
+                            <span class="px-3.5 py-1 rounded-full bg-white/20 text-white text-xs font-bold uppercase tracking-wider">Flash Deals & Clearances</span>
+                            <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight">Today's Extreme Hardware Discounts</h1>
+                            <p class="text-white/90 text-sm leading-relaxed">Save big on top-tier graphics cards, high-frequency RAM, NVMe SSDs, and gaming monitors. Limited time offers while stocks last.</p>
+                            <div class="flex items-center gap-4 pt-2 font-mono text-lg font-bold bg-black/20 w-fit px-5 py-2.5 rounded-2xl backdrop-blur-md">
+                                <i data-lucide="clock" class="w-5 h-5 text-amber-300"></i>
+                                <span id="countdown-timer">08h : 42m : 19s remaining</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <h2 class="text-2xl font-bold tracking-tight">Active Flash Deals</h2>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                            ${deals.map(p => renderProductCard(p)).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 10. PC BUILDER VIEW
+        function renderBuilderView() {
+            const slots = ['CPU', 'Motherboard', 'GPU', 'RAM', 'Storage', 'PSU', 'Case', 'CPU Cooler'];
+            let totalPrice = 0;
+            let totalPower = 0;
+            let issues = [];
+
+            // Compatibility Check
+            if (currentBuild['CPU'] && currentBuild['Motherboard']) {
+                if (currentBuild['CPU'].includes('Ryzen') && currentBuild['Motherboard'].includes('LGA1700')) {
+                    issues.push('⚠️ Compatibility Warning: AMD Ryzen CPU is incompatible with Intel LGA1700 Motherboard.');
+                }
+                if (currentBuild['CPU'].includes('Intel') && currentBuild['Motherboard'].includes('AM5')) {
+                    issues.push('⚠️ Compatibility Warning: Intel Core CPU is incompatible with AMD AM5 Motherboard.');
+                }
+            }
+            if (currentBuild['GPU']) {
+                if (currentBuild['GPU'].includes('4090') && currentBuild['PSU']) {
+                    if (!currentBuild['PSU'].includes('850W') && !currentBuild['PSU'].includes('1200W') && !currentBuild['PSU'].includes('1300W')) {
+                        issues.push('⚠️ Power Supply Warning: RTX 4090 requires at least an 850W+ power supply.');
+                    }
+                }
+            }
+
+            return `
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <span class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Interactive Assistant</span>
+                            <h1 class="text-3xl font-extrabold tracking-tight">Custom PC Builder</h1>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <button onclick="saveCurrentBuild()" class="px-5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 font-semibold text-sm hover:bg-slate-100 transition flex items-center gap-2">
+                                <i data-lucide="bookmark" class="w-4 h-4"></i> Save Build
+                            </button>
+                            <button onclick="addCompleteBuildToCart()" class="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm shadow-lg shadow-indigo-600/25 transition flex items-center gap-2">
+                                <i data-lucide="shopping-cart" class="w-4 h-4"></i> Add Complete Build ($<span id="build-total">0.00</span>)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Compatibility & Power status box -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 flex items-center justify-center">
+                                <i data-lucide="shield-check" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm">Compatibility Status</h4>
+                                <p class="text-xs text-slate-500">${issues.length === 0 ? 'All selected components are 100% compatible.' : issues.join(' | ')}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-6 text-sm">
+                            <div>
+                                <span class="text-xs text-slate-400 block">Estimated Power</span>
+                                <strong class="text-base text-slate-900 dark:text-white">450W - 650W</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slots Grid -->
+                    <div class="space-y-4">
+                        ${slots.map(slot => {
+                            const selectedName = currentBuild[slot];
+                            const selectedProd = productsData.find(p => p.name === selectedName);
+                            if (selectedProd) totalPrice += selectedProd.price;
+
+                            return `
+                                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-sm">
+                                    <div class="flex items-center gap-4 w-full sm:w-auto">
+                                        <div class="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 flex items-center justify-center shrink-0">
+                                            <i data-lucide="cpu" class="w-6 h-6"></i>
+                                        </div>
+                                        <div>
+                                            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">${slot}</span>
+                                            <h3 class="font-bold text-base text-slate-900 dark:text-white">${selectedProd ? selectedProd.name : 'No component selected'}</h3>
+                                            ${selectedProd ? `<span class="text-xs font-extrabold text-indigo-600 dark:text-indigo-400">$${selectedProd.price.toFixed(2)}</span>` : ''}
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-3 w-full sm:w-auto justify-end">
+                                        ${selectedProd ? `<button onclick="removeBuildSlot('${slot}')" class="px-4 py-2.5 rounded-xl border border-rose-200 text-rose-500 font-semibold text-xs hover:bg-rose-50 transition">Remove</button>` : ''}
+                                        <button onclick="openComponentSelector('${slot}')" class="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs shadow-md transition">
+                                            ${selectedProd ? 'Change' : 'Choose ' + slot}
+                                        </button>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+
+                <!-- Component Selection Modal -->
+                <div id="component-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-md hidden flex items-center justify-center p-4">
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl w-full max-w-2xl border border-slate-200 dark:border-slate-800 overflow-hidden max-h-[80vh] flex flex-col animate-fade-in">
+                        <div class="p-6 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                            <h3 id="modal-slot-title" class="font-bold text-lg">Select Component</h3>
+                            <button onclick="closeComponentSelector()" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800"><i data-lucide="x" class="w-5 h-5"></i></button>
+                        </div>
+                        <div id="modal-component-list" class="p-6 overflow-y-auto space-y-4 flex-grow">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        let activeBuilderSlot = null;
+        function openComponentSelector(slot) {
+            activeBuilderSlot = slot;
+            const modal = document.getElementById('component-modal');
+            const title = document.getElementById('modal-slot-title');
+            const list = document.getElementById('modal-component-list');
+            title.innerText = `Choose ${slot}`;
+
+            const compatible = productsData.filter(p => {
+                if (slot === 'CPU' && p.subcategory !== 'CPUs') return false;
+                if (slot === 'GPU' && p.subcategory !== 'Graphics Cards') return false;
+                if (slot === 'Motherboard' && p.subcategory !== 'Motherboards') return false;
+                if (slot === 'RAM' && p.subcategory !== 'RAM') return false;
+                if (slot === 'Storage' && !p.subcategory.includes('SSD')) return false;
+                if (slot === 'PSU' && p.subcategory !== 'Power Supplies') return false;
+                if (slot === 'Case' && p.subcategory !== 'PC Cases') return false;
+                if (slot === 'CPU Cooler' && p.subcategory !== 'CPU Coolers') return false;
+                return true;
+            });
+
+            list.innerHTML = compatible.map(p => `
+                <div onclick="selectBuilderComponent('${slot}', '${p.name}')" class="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-indigo-500 cursor-pointer flex items-center justify-between transition bg-slate-50 dark:bg-slate-800/50">
+                    <div class="flex items-center gap-4">
+                        <img src="${p.images[0]}" alt="${p.name}" class="w-14 h-14 object-cover rounded-xl bg-slate-200">
+                        <div>
+                            <span class="text-xs font-semibold text-indigo-600 uppercase">${p.brand}</span>
+                            <h4 class="font-bold text-sm">${p.name}</h4>
+                        </div>
+                    </div>
+                    <span class="font-extrabold text-base text-indigo-600">$${p.price.toFixed(2)}</span>
+                </div>
+            `).join('');
+
+            modal.classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function closeComponentSelector() {
+            document.getElementById('component-modal').classList.add('hidden');
+        }
+
+        function selectBuilderComponent(slot, name) {
+            currentBuild[slot] = name;
+            localStorage.setItem('nexus_current_build', JSON.stringify(currentBuild));
+            closeComponentSelector();
+            renderCurrentView();
+            showToast(`Added ${name} to build.`);
+        }
+
+        function removeBuildSlot(slot) {
+            currentBuild[slot] = null;
+            localStorage.setItem('nexus_current_build', JSON.stringify(currentBuild));
+            renderCurrentView();
+            showToast(`Removed ${slot} from build.`);
+        }
+
+        function saveCurrentBuild() {
+            savedBuilds.push({ ...currentBuild, date: new Date().toLocaleDateString() });
+            localStorage.setItem('nexus_builds', JSON.stringify(savedBuilds));
+            showToast('Your custom build has been saved successfully!');
+        }
+
+        function addCompleteBuildToCart() {
+            Object.values(currentBuild).forEach(name => {
+                if (name) {
+                    const prod = productsData.find(p => p.name === name);
+                    if (prod) addToCart(prod.id);
+                }
+            });
+            router.navigate('cart');
+            showToast('Added complete PC build to shopping cart.');
+        }
+
+        // 11. PRE-BUILT SYSTEMS VIEW
+        function renderPrebuiltsView() {
+            const prebuilts = productsData.filter(p => p.subcategory === 'Gaming PCs' || p.subcategory === 'Workstations' || p.tags.includes('prebuilt'));
+
+            return `
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+                    <div class="text-center max-w-2xl mx-auto space-y-3">
+                        <span class="px-3.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 text-xs font-bold uppercase tracking-wider">Expertly Engineered</span>
+                        <h1 class="text-3xl font-extrabold tracking-tight">Pre-Built Performance Systems</h1>
+                        <p class="text-sm text-slate-500">Rigorously tested, cable-managed, and benchmarked gaming desktops and creator workstations ready to plug and play.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        ${prebuilts.map(p => renderProductCard(p)).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // 12. ABOUT VIEW
+        function renderAboutView() {
+            return `
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
+                    <div class="text-center max-w-3xl mx-auto space-y-4">
+                        <span class="px-3.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 text-xs font-bold uppercase tracking-wider">Who We Are</span>
+                        <h1 class="text-4xl font-extrabold tracking-tight">Power Your Technology.<br>Build Without Limits.</h1>
+                        <p class="text-slate-600 dark:text-slate-300 text-base leading-relaxed">
+                            Nexus Hardware Solution is an established premier retailer and systems integrator specializing in high-performance computer components, gaming gear, peripherals, networking equipment, and enterprise workstations.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 text-center space-y-2 shadow-sm">
+                            <span class="text-3xl font-extrabold text-indigo-600 block">10,000+</span>
+                            <span class="text-sm text-slate-500 font-medium">Hardware Products</span>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 text-center space-y-2 shadow-sm">
+                            <span class="text-3xl font-extrabold text-indigo-600 block">5,000+</span>
+                            <span class="text-sm text-slate-500 font-medium">Satisfied Builders</span>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 text-center space-y-2 shadow-sm">
+                            <span class="text-3xl font-extrabold text-indigo-600 block">Fast</span>
+                            <span class="text-sm text-slate-500 font-medium">Insured Delivery</span>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 text-center space-y-2 shadow-sm">
+                            <span class="text-3xl font-extrabold text-indigo-600 block">100%</span>
+                            <span class="text-sm text-slate-500 font-medium">Trusted Hardware</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 13. CONTACT VIEW
+        function renderContactView() {
+            return `
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+                    <div class="text-center max-w-2xl mx-auto space-y-3">
+                        <h1 class="text-3xl font-extrabold tracking-tight">Get in Touch with Our Experts</h1>
+                        <p class="text-sm text-slate-500">Have questions regarding a custom PC build, hardware compatibility, or order status? We are here to help.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                        <div class="lg:col-span-7 bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-200 dark:border-slate-800 space-y-6 shadow-sm">
+                            <h3 class="font-bold text-xl">Send Us a Message</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-400 mb-2 uppercase">Your Name</label>
+                                    <input type="text" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-400 mb-2 uppercase">Email Address</label>
+                                    <input type="email" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 mb-2 uppercase">Subject</label>
+                                <input type="text" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 mb-2 uppercase">Message</label>
+                                <textarea rows="4" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm"></textarea>
+                            </div>
+                            <button onclick="showToast('Message sent successfully! We will get back to you soon.')" class="px-7 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm shadow-lg shadow-indigo-600/25 transition">
+                                Send Message
+                            </button>
+                        </div>
+                        <div class="lg:col-span-5 space-y-6">
+                            <div class="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-200 dark:border-slate-800 space-y-6 shadow-sm">
+                                <h3 class="font-bold text-xl">Store Headquarters</h3>
+                                <div class="space-y-4 text-sm text-slate-600 dark:text-slate-300">
+                                    <div class="flex items-start gap-3">
+                                        <i data-lucide="map-pin" class="w-5 h-5 text-indigo-600 shrink-0 mt-0.5"></i>
+                                        <span>742 Silicon Valley Boulevard, Tech Hub Suite 400, San Francisco, CA 94107</span>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <i data-lucide="phone" class="w-5 h-5 text-indigo-600 shrink-0"></i>
+                                        <span>+1 (800) 555-NEXUS</span>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <i data-lucide="mail" class="w-5 h-5 text-indigo-600 shrink-0"></i>
+                                        <span>support@nexushardware.tech</span>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <i data-lucide="clock" class="w-5 h-5 text-indigo-600 shrink-0 mt-0.5"></i>
+                                        <span>Monday – Saturday: 9:00 AM – 8:00 PM EST</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 14. ACCOUNT DASHBOARD VIEW
+        function renderAccountView() {
+            return `
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h1 class="text-3xl font-extrabold tracking-tight">Account Dashboard</h1>
+                            <p class="text-sm text-slate-500">Welcome back, Alex Vance.</p>
+                        </div>
+                        <button onclick="router.navigate('home')" class="px-5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 font-semibold text-sm">Logout</button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 space-y-3 shadow-sm">
+                            <span class="text-xs font-semibold text-indigo-600 uppercase">Recent Orders</span>
+                            <h3 class="font-bold text-lg">Order #NX-84920</h3>
+                            <p class="text-xs text-emerald-600 font-semibold">Status: Out for Delivery</p>
+                            <span class="text-xs text-slate-400 block">Placed on August 16, 2026</span>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 space-y-3 shadow-sm">
+                            <span class="text-xs font-semibold text-indigo-600 uppercase">Saved Custom Builds</span>
+                            <h3 class="font-bold text-lg">${savedBuilds.length} Builds Saved</h3>
+                            <p class="text-xs text-slate-500">Manage your custom PC configurations.</p>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 space-y-3 shadow-sm">
+                            <span class="text-xs font-semibold text-indigo-600 uppercase">Saved Addresses</span>
+                            <h3 class="font-bold text-lg">Silicon Valley HQ</h3>
+                            <p class="text-xs text-slate-500">San Francisco, CA 94107</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- SEARCH MODAL LOGIC ---
+        function openSearchModal() {
+            document.getElementById('search-modal').classList.remove('hidden');
+            document.getElementById('global-search-input').focus();
+        }
+
+        function closeSearchModal() {
+            document.getElementById('search-modal').classList.add('hidden');
+        }
+
+        function handleSearchInput(val) {
+            const container = document.getElementById('search-results-container');
+            if (!val.trim()) {
+                container.innerHTML = `
+                    <div>
+                        <h4 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">Popular Searches</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <button onclick="searchQuery('RTX 4090')" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-xl text-sm font-medium">RTX 4090</button>
+                            <button onclick="searchQuery('DDR5 32GB')" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-xl text-sm font-medium">DDR5 32GB</button>
+                            <button onclick="searchQuery('Ryzen 7 7800X3D')" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-xl text-sm font-medium">Ryzen 7 7800X3D</button>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            const results = productsData.filter(p => p.name.toLowerCase().includes(val.toLowerCase()) || p.brand.toLowerCase().includes(val.toLowerCase()));
+            container.innerHTML = results.length === 0 ? `<p class="text-sm text-slate-400 text-center py-4">No matching products found.</p>` : `
+                <div class="space-y-3">
+                    ${results.map(p => `
+                        <div onclick="closeSearchModal(); router.navigate('product-detail', {id: '${p.id}'})" class="flex items-center justify-between p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer transition">
+                            <div class="flex items-center gap-3">
+                                <img src="${p.images[0]}" alt="${p.name}" class="w-12 h-12 object-cover rounded-lg bg-slate-200">
+                                <div>
+                                    <h4 class="font-bold text-sm line-clamp-1">${p.name}</h4>
+                                    <span class="text-xs text-indigo-600 font-semibold">${p.brand}</span>
+                                </div>
+                            </div>
+                            <span class="font-extrabold text-sm">$${p.price.toFixed(2)}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function searchQuery(term) {
+            closeSearchModal();
+            router.navigate('products', { search: term });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Initialize App on Load
+        window.onload = function() {
+            renderCurrentView();
+            updateBadges();
+        };
+    </script>
+</body>
+</html>
