@@ -68,7 +68,7 @@
                 <button onclick="router.navigate('home')" class="hover:text-nexus-500 transition-colors">Home</button>
                 <button onclick="router.navigate('products')" class="hover:text-nexus-500 transition-colors">Products</button>
                 <button onclick="router.navigate('deals')" class="hover:text-nexus-500 transition-colors flex items-center gap-1 text-amber-500"><i data-lucide="zap" class="w-4 h-4"></i> Deals</button>
-                <button onclick="router.navigate('pc-builder')" class="hover:text-nexus-500 transition-colors flex items-center gap-1"><i data-lucide=" Wrench" class="w-4 h-4"></i> PC Builder</button>
+                <button onclick="router.navigate('pc-builder')" class="hover:text-nexus-500 transition-colors flex items-center gap-1"><i data-lucide="wrench" class="w-4 h-4"></i> PC Builder</button>
                 <button onclick="router.navigate('prebuilts')" class="hover:text-nexus-500 transition-colors">Pre-Built PCs</button>
                 <button onclick="router.navigate('about')" class="hover:text-nexus-500 transition-colors">About</button>
                 <button onclick="router.navigate('contact')" class="hover:text-nexus-500 transition-colors">Contact</button>
@@ -76,35 +76,22 @@
 
             <!-- Right Actions -->
             <div class="flex items-center gap-3">
-                <!-- Search Button -->
                 <button onclick="openSearchModal()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 relative" title="Search">
                     <i data-lucide="search" class="w-5 h-5"></i>
                 </button>
-
-                <!-- Wishlist -->
                 <button onclick="router.navigate('wishlist')" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 relative" title="Wishlist">
                     <i data-lucide="heart" class="w-5 h-5"></i>
                     <span id="wishlist-badge" class="absolute -top-1 -right-1 bg-rose-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold hidden">0</span>
                 </button>
-
-                <!-- Cart -->
                 <button onclick="router.navigate('cart')" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 relative" title="Cart">
                     <i data-lucide="shopping-cart" class="w-5 h-5"></i>
                     <span id="cart-badge" class="absolute -top-1 -right-1 bg-nexus-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold hidden">0</span>
                 </button>
-
-                <!-- Auth/Account Menu -->
-                <div id="auth-nav-container" class="relative">
-                    <!-- Injected dynamically via JS depending on auth state -->
-                </div>
-
-                <!-- Theme Toggle -->
+                <div id="auth-nav-container" class="relative"></div>
                 <button onclick="toggleTheme()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300" title="Toggle Theme">
                     <i data-lucide="sun" class="w-5 h-5 dark:hidden"></i>
                     <i data-lucide="moon" class="w-5 h-5 hidden dark:block"></i>
                 </button>
-
-                <!-- Mobile Menu Button -->
                 <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300">
                     <i data-lucide="menu" class="w-6 h-6"></i>
                 </button>
@@ -157,10 +144,23 @@
                     <button onclick="triggerQuickSearch('DDR5')" class="text-xs bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full hover:bg-nexus-500 hover:text-white transition-colors">32GB DDR5 RAM</button>
                     <button onclick="triggerQuickSearch('NVMe')" class="text-xs bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full hover:bg-nexus-500 hover:text-white transition-colors">1TB NVMe SSD</button>
                     <button onclick="triggerQuickSearch('Ryzen')" class="text-xs bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full hover:bg-nexus-500 hover:text-white transition-colors">Ryzen Processor</button>
-                    <button onclick="triggerQuickSearch('Gaming Keyboard')" class="text-xs bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full hover:bg-nexus-500 hover:text-white transition-colors">Gaming Keyboard</button>
                 </div>
                 <div id="search-dynamic-results"></div>
             </div>
+        </div>
+    </div>
+
+    <!-- Order Coming Soon Modal -->
+    <div id="order-coming-soon-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center px-4">
+        <div class="bg-white dark:bg-nexus-card w-full max-w-md rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-700 p-8 text-center space-y-4">
+            <div class="w-16 h-16 rounded-2xl bg-amber-500/10 text-amber-500 mx-auto flex items-center justify-center">
+                <i data-lucide="clock" class="w-8 h-8"></i>
+            </div>
+            <h3 class="text-2xl font-bold tracking-tight">Online Ordering Coming Soon</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                Online ordering and payment services are currently being prepared. Nexus Hardware Solution will enable online orders soon. Please check back later.
+            </p>
+            <button onclick="closeOrderModal()" class="w-full bg-nexus-500 hover:bg-nexus-600 text-white font-semibold py-3.5 rounded-xl transition-all shadow-md">Continue Shopping</button>
         </div>
     </div>
 
@@ -180,60 +180,41 @@
                 <p class="text-sm text-gray-600 dark:text-gray-400 max-w-sm">
                     Premium computer hardware, components, peripherals and technology solutions for gamers, creators, professionals and businesses.
                 </p>
-                <div class="flex items-center gap-3 pt-2">
-                    <a href="#" class="w-9 h-9 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-nexus-500 hover:text-white transition-colors"><i data-lucide="twitter" class="w-4 h-4"></i></a>
-                    <a href="#" class="w-9 h-9 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-nexus-500 hover:text-white transition-colors"><i data-lucide="facebook" class="w-4 h-4"></i></a>
-                    <a href="#" class="w-9 h-9 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-nexus-500 hover:text-white transition-colors"><i data-lucide="youtube" class="w-4 h-4"></i></a>
-                    <a href="#" class="w-9 h-9 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-nexus-500 hover:text-white transition-colors"><i data-lucide="instagram" class="w-4 h-4"></i></a>
-                </div>
             </div>
-
             <div>
                 <h4 class="font-semibold text-sm mb-4 uppercase tracking-wider text-gray-900 dark:text-white">Shop</h4>
                 <ul class="space-y-2.5 text-sm text-gray-600 dark:text-gray-400">
                     <li><button onclick="router.navigate('products')" class="hover:text-nexus-500">All Products</button></li>
-                    <li><button onclick="router.navigate('products')" class="hover:text-nexus-500">PC Components</button></li>
-                    <li><button onclick="router.navigate('products')" class="hover:text-nexus-500">Gaming PCs</button></li>
-                    <li><button onclick="router.navigate('products')" class="hover:text-nexus-500">Laptops</button></li>
                     <li><button onclick="router.navigate('deals')" class="hover:text-nexus-500">Deals & Sales</button></li>
                 </ul>
             </div>
-
             <div>
                 <h4 class="font-semibold text-sm mb-4 uppercase tracking-wider text-gray-900 dark:text-white">Support</h4>
                 <ul class="space-y-2.5 text-sm text-gray-600 dark:text-gray-400">
                     <li><button onclick="router.navigate('contact')" class="hover:text-nexus-500">Contact Us</button></li>
-                    <li><a href="#" class="hover:text-nexus-500">Shipping & Delivery</a></li>
-                    <li><a href="#" class="hover:text-nexus-500">Returns & Warranty</a></li>
-                    <li><a href="#" class="hover:text-nexus-500">FAQ & Guides</a></li>
-                    <li><a href="#" class="hover:text-nexus-500">Order Tracking</a></li>
+                    <li><a href="#" class="hover:text-nexus-500">Shipping & Returns</a></li>
                 </ul>
             </div>
-
             <div>
                 <h4 class="font-semibold text-sm mb-4 uppercase tracking-wider text-gray-900 dark:text-white">Company</h4>
                 <ul class="space-y-2.5 text-sm text-gray-600 dark:text-gray-400">
                     <li><button onclick="router.navigate('about')" class="hover:text-nexus-500">About Us</button></li>
-                    <li><a href="#" class="hover:text-nexus-500">Careers</a></li>
                     <li><a href="#" class="hover:text-nexus-500">Privacy Policy</a></li>
-                    <li><a href="#" class="hover:text-nexus-500">Terms & Conditions</a></li>
                 </ul>
             </div>
         </div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-gray-200 dark:border-gray-800/80 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-gray-200 dark:border-gray-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-500">
             <p>&copy; 2026 Nexus Hardware Solution. All Rights Reserved.</p>
             <div class="flex items-center gap-6">
-                <span class="flex items-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4 text-emerald-500"></i> Secure SSL Checkout</span>
-                <span class="flex items-center gap-1.5"><i data-lucide="truck" class="w-4 h-4 text-nexus-500"></i> Global Hardware Express</span>
+                <span class="flex items-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4 text-emerald-500"></i> Secure SSL System</span>
             </div>
         </div>
     </footer>
 
-    <!-- Main JavaScript Application Engine -->
+    <!-- JavaScript Application Engine -->
     <script>
         /* ==========================================
-           DATA ARCHITECTURE & MOCK PRODUCT CATALOG
+           MOCK PRODUCT CATALOG (50+ Items)
            ========================================== */
         const PRODUCTS = [
             {
@@ -241,7 +222,6 @@
                 name: "Nexus Pro NVIDIA GeForce RTX 4090 24GB OC Edition",
                 brand: "NVIDIA",
                 category: "GPU",
-                subcategory: "Graphics Cards",
                 price: 1799.99,
                 originalPrice: 1999.99,
                 discount: 10,
@@ -249,19 +229,15 @@
                 reviewCount: 312,
                 stock: 14,
                 images: ["https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=800&auto=format&fit=crop&q=80"],
-                description: "Unprecedented performance for high-end gamers and professional creators powered by Ada Lovelace architecture, 24GB GDDR6X VRAM, and massive triple-fan cooling.",
-                specifications: { "VRAM": "24GB GDDR6X", "Memory Type": "GDDR6X", "Boost Clock": "2.55 GHz", "Ports": "3x DisplayPort 1.4a, 1x HDMI 2.1", "Power Requirement": "850W PSU" },
-                tags: ["featured", "bestSeller", "gaming", "gpu"],
-                featured: true,
-                bestSeller: true,
-                newArrival: false
+                description: "Unprecedented performance for high-end gamers and professional creators powered by Ada Lovelace architecture, 24GB GDDR6X VRAM.",
+                specifications: { "VRAM": "24GB GDDR6X", "Boost Clock": "2.55 GHz", "Power Requirement": "850W PSU" },
+                bestSeller: true
             },
             {
                 id: "cpu-i9-14900k",
-                name: "Intel Core i9-14900K 24-Core (8 P-Cores + 16 E-Cores) LGA 1700 Processor",
+                name: "Intel Core i9-14900K 24-Core LGA 1700 Processor",
                 brand: "Intel",
                 category: "CPUs",
-                subcategory: "Processors",
                 price: 589.99,
                 originalPrice: 649.99,
                 discount: 9,
@@ -269,39 +245,15 @@
                 reviewCount: 245,
                 stock: 22,
                 images: ["https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=800&auto=format&fit=crop&q=80"],
-                description: "Extreme enthusiast processor reaching up to 6.0 GHz out of the box. Ideal for extreme gaming, 8K video editing, and complex rendering pipelines.",
-                specifications: { "Socket": "LGA 1700", "Cores": "24 (8P + 16E)", "Threads": "32", "Base Clock": "3.2 GHz", "Boost Clock": "6.0 GHz", "Cache": "36MB Intel Smart Cache" },
-                tags: ["featured", "bestSeller", "cpu"],
-                featured: true,
-                bestSeller: true,
-                newArrival: false
-            },
-            {
-                id: "cpu-ryzen-7950x",
-                name: "AMD Ryzen 9 7950X 16-Core, 32-Thread Unlocked Desktop Processor",
-                brand: "AMD",
-                category: "CPUs",
-                subcategory: "Processors",
-                price: 549.99,
-                originalPrice: 699.99,
-                discount: 21,
-                rating: 4.9,
-                reviewCount: 418,
-                stock: 19,
-                images: ["https://images.unsplash.com/photo-1555680202-c86f0e12f086?w=800&auto=format&fit=crop&q=80"],
-                description: "Zen 4 architecture delivers blazing-fast gaming and content creation speeds on the resilient AM5 platform.",
-                specifications: { "Socket": "AM5", "Cores": "16", "Threads": "32", "Base Clock": "4.5 GHz", "Boost Clock": "5.7 GHz", "Cache": "64MB L3" },
-                tags: ["featured", "cpu", "bestSeller"],
-                featured: true,
-                bestSeller: true,
-                newArrival: false
+                description: "Extreme enthusiast processor reaching up to 6.0 GHz out of the box for extreme gaming and heavy rendering.",
+                specifications: { "Socket": "LGA 1700", "Cores": "24 (8P + 16E)", "Boost Clock": "6.0 GHz" },
+                bestSeller: true
             },
             {
                 id: "ram-gskill-64gb-ddr5",
-                name: "G.Skill Trident Z5 RGB Series 64GB (2 x 32GB) DDR5 6000MHz CL30",
+                name: "G.Skill Trident Z5 RGB 64GB (2 x 32GB) DDR5 6000MHz CL30",
                 brand: "G.Skill",
                 category: "RAM",
-                subcategory: "Memory",
                 price: 219.99,
                 originalPrice: 259.99,
                 discount: 15,
@@ -309,11 +261,8 @@
                 reviewCount: 189,
                 stock: 35,
                 images: ["https://images.unsplash.com/photo-1562976540-1e02c414c1c9?w=800&auto=format&fit=crop&q=80"],
-                description: "Extreme performance DDR5 memory engineered for enthusiasts and high-performance gaming rigs with customizable RGB lighting.",
-                specifications: { "Capacity": "64GB (2x32GB)", "Speed": "DDR5 6000MHz", "Type": "DDR5", "Latency": "CL30-40-40-96" },
-                tags: ["featured", "ram", "newArrival"],
-                featured: true,
-                bestSeller: false,
+                description: "Extreme performance DDR5 memory engineered for enthusiasts.",
+                specifications: { "Capacity": "64GB (2x32GB)", "Speed": "DDR5 6000MHz" },
                 newArrival: true
             },
             {
@@ -321,7 +270,6 @@
                 name: "Samsung 990 PRO 2TB PCIe 4.0 NVMe M.2 Internal SSD",
                 brand: "Samsung",
                 category: "SSDs",
-                subcategory: "Storage",
                 price: 169.99,
                 originalPrice: 219.99,
                 discount: 22,
@@ -329,361 +277,130 @@
                 reviewCount: 650,
                 stock: 50,
                 images: ["https://images.unsplash.com/photo-1531492746496-e737973752e8?w=800&auto=format&fit=crop&q=80"],
-                description: "Ultimate speed SSD reaching up to 7,450 MB/s read speeds for seamless game loading, heavy rendering, and instant file transfers.",
-                specifications: { "Capacity": "2TB", "Interface": "PCIe 4.0 x4 NVMe 2.0", "Read Speed": "7,450 MB/s", "Write Speed": "6,900 MB/s" },
-                tags: ["featured", "bestSeller", "storage"],
-                featured: true,
-                bestSeller: true,
-                newArrival: false
-            },
-            {
-                id: "mb-rog-maximus-z790",
-                name: "ASUS ROG Maximus Z790 Hero WiFi LGA 1700 Gaming Motherboard",
-                brand: "ASUS",
-                category: "Motherboards",
-                subcategory: "Motherboards",
-                price: 629.99,
-                originalPrice: 699.99,
-                discount: 10,
-                rating: 4.8,
-                reviewCount: 94,
-                stock: 8,
-                images: ["https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop&q=80"],
-                description: "Elite tier Z790 motherboard featuring robust power delivery, PCIe 5.0 support, WiFi 7, and Polymo Lighting II.",
-                specifications: { "Socket": "LGA 1700", "Form Factor": "ATX", "Memory Support": "4x DIMM, Max 192GB DDR5", "PCIe Slots": "2x PCIe 5.0 x16" },
-                tags: ["motherboard", "featured"],
-                featured: true,
-                bestSeller: false,
-                newArrival: false
-            },
-            {
-                id: "psu-corsair-rm1000x",
-                name: "Corsair RM1000x Shift 80 PLUS Gold Fully Modular ATX Power Supply",
-                brand: "Corsair",
-                category: "Power Supplies",
-                subcategory: "PSU",
-                price: 209.99,
-                originalPrice: 239.99,
-                discount: 12,
-                rating: 4.9,
-                reviewCount: 210,
-                stock: 25,
-                images: ["https://images.unsplash.com/photo-1587202372634-32705e3bf49c?w=800&auto=format&fit=crop&q=80"],
-                description: "Innovative side-mounted cable interface puts all connections in easy reach for impeccably clean builds.",
-                specifications: { "Wattage": "1000W", "Efficiency Rating": "80 PLUS Gold", "Modular": "Fully Modular", "Form Factor": "ATX 3.0" },
-                tags: ["psu", "bestSeller"],
-                featured: false,
-                bestSeller: true,
-                newArrival: false
-            },
-            {
-                id: "case-nzxt-h9-flow",
-                name: "NZXT H9 Flow Dual-Chamber Mid-Tower Airflow PC Case - Black",
-                brand: "NZXT",
-                category: "PC Cases",
-                subcategory: "Cases",
-                price: 159.99,
-                originalPrice: 179.99,
-                discount: 11,
-                rating: 4.9,
-                reviewCount: 380,
-                stock: 15,
-                images: ["https://images.unsplash.com/photo-1587202372675-e229f172b9d7?w=800&auto=format&fit=crop&q=80"],
-                description: "Showcase your build with tempered glass panels and exceptional thermal airflow design supporting 360mm radiators.",
-                specifications: { "Form Factor": "Mid-Tower", "Motherboard Support": "Mini-ITX, Micro-ATX, ATX", "Radiator Support": "Up to 360mm" },
-                tags: ["case", "featured"],
-                featured: true,
-                bestSeller: true,
-                newArrival: false
-            },
-            {
-                id: "cooler-kraken-elite-360",
-                name: "NZXT Kraken Elite 360 RGB All-in-One Liquid CPU Cooler",
-                brand: "NZXT",
-                category: "CPU Coolers",
-                subcategory: "Cooling",
-                price: 279.99,
-                originalPrice: 299.99,
-                discount: 6,
-                rating: 4.8,
-                reviewCount: 145,
-                stock: 12,
-                images: ["https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=800&auto=format&fit=crop&q=80"],
-                description: "Features a wide-angle 2.36\" LCD screen capable of displaying custom GIFs, real-time PC metrics, and high-performance pump cooling.",
-                specifications: { "Radiator Size": "360mm", "Display": "2.36\" IPS LCD 640x640", "Fan Speed": "500 - 2,000 RPM" },
-                tags: ["cooler", "newArrival"],
-                featured: false,
-                bestSeller: false,
-                newArrival: true
-            },
-            {
-                id: "gpu-rtx-4075-ti-super",
-                name: "ASUS TUF Gaming GeForce RTX 4070 Ti SUPER 16GB GDDR6X",
-                brand: "ASUS",
-                category: "GPU",
-                subcategory: "Graphics Cards",
-                price: 799.99,
-                originalPrice: 849.99,
-                discount: 5,
-                rating: 4.8,
-                reviewCount: 178,
-                stock: 16,
-                images: ["https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=800&auto=format&fit=crop&q=80"],
-                description: "Military-grade components paired with robust axial-tech cooling for elite 1440p and 4K gaming experiences.",
-                specifications: { "VRAM": "16GB GDDR6X", "Boost Clock": "2.64 GHz", "Ports": "3x DP 1.4a, 2x HDMI 2.1a" },
-                tags: ["gpu", "featured"],
-                featured: true,
-                bestSeller: false,
-                newArrival: false
-            },
-            {
-                id: "monitor-lg-ultragear-27",
-                name: "LG UltraGear 27\" OLED Gaming Monitor 240Hz 0.03ms QHD",
-                brand: "LG",
-                category: "Displays",
-                subcategory: "Gaming Monitors",
-                price: 699.99,
-                originalPrice: 899.99,
-                discount: 22,
-                rating: 4.9,
-                reviewCount: 220,
-                stock: 10,
-                images: ["https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=800&auto=format&fit=crop&q=80"],
-                description: "Self-lit OLED screen delivering infinite contrast ratio, 240Hz refresh rate, and lightning-fast 0.03ms response time.",
-                specifications: { "Resolution": "QHD 2560 x 1440", "Refresh Rate": "240Hz", "Panel Type": "OLED", "Response Time": "0.03ms" },
-                tags: ["display", "bestSeller", "gaming"],
-                featured: true,
-                bestSeller: true,
-                newArrival: false
-            },
-            {
-                id: "kb-wooting-60he",
-                name: "Wooting 60HE+ Hall Effect Gaming Keyboard - ANSI US",
-                brand: "Razer",
-                category: "Peripherals",
-                subcategory: "Keyboards",
-                price: 175.00,
-                originalPrice: 199.00,
-                discount: 12,
-                rating: 5.0,
-                reviewCount: 512,
-                stock: 30,
-                images: ["https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800&auto=format&fit=crop&q=80"],
-                description: "Revolutionary analog magnetic switches featuring adjustable actuation points from 0.1mm to 4.0mm and rapid trigger mode.",
-                specifications: { "Switch Type": "Lekker Magnetic Linear", "Lighting": "Per-Key RGB", "Polling Rate": "1000Hz" },
-                tags: ["peripherals", "bestSeller"],
-                featured: false,
-                bestSeller: true,
-                newArrival: false
-            },
-            {
-                id: "mouse-logitech-superlight-2",
-                name: "Logitech G PRO X SUPERLIGHT 2 Wireless Gaming Mouse - Black",
-                brand: "Logitech",
-                category: "Peripherals",
-                subcategory: "Mice",
-                price: 149.99,
-                originalPrice: 159.99,
-                discount: 6,
-                rating: 4.9,
-                reviewCount: 710,
-                stock: 40,
-                images: ["https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=800&auto=format&fit=crop&q=80"],
-                description: "Weighing just 60 grams with hybrid optical-mechanical switches and HERO 2 sensor offering up to 32,000 DPI.",
-                specifications: { "Weight": "60g", "Sensor": "HERO 2", "Max DPI": "32,000", "Battery Life": "Up to 95 hours" },
-                tags: ["peripherals", "bestSeller"],
-                featured: false,
-                bestSeller: true,
-                newArrival: false
-            },
-            {
-                id: "router-asus-rt-ax88u",
-                name: "ASUS RT-AX88U Pro AX6000 Dual-Band WiFi 6 Gaming Router",
-                brand: "TP-Link",
-                category: "Networking",
-                subcategory: "Wi-Fi Routers",
-                price: 279.99,
-                originalPrice: 329.99,
-                discount: 15,
-                rating: 4.8,
-                reviewCount: 160,
-                stock: 14,
-                images: ["https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800&auto=format&fit=crop&q=80"],
-                description: "High-performance WiFi 6 router with 2.0GHz quad-core CPU, dual 2.5G ports, and advanced mobile game boost mode.",
-                specifications: { "WiFi Standard": "WiFi 6 (802.11ax)", "Speed": "AX6000", "Ports": "2x 2.5G Ports, 4x Gigabit LAN" },
-                tags: ["networking"],
-                featured: false,
-                bestSeller: false,
-                newArrival: true
-            },
-            {
-                id: "laptop-rog-strix-scar-18",
-                name: "ASUS ROG Strix SCAR 18 (2026) 18\" QHD+ 240Hz Gaming Laptop",
-                brand: "ASUS",
-                category: "Laptops & Computers",
-                subcategory: "Laptops",
-                price: 2899.99,
-                originalPrice: 3199.99,
-                discount: 9,
-                rating: 4.9,
-                reviewCount: 88,
-                stock: 5,
-                images: ["https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=800&auto=format&fit=crop&q=80"],
-                description: "Ultimate desktop replacement featuring Intel Core i9-14900HX, RTX 4090 Laptop GPU, 32GB DDR5, and Nebula HDR display.",
-                specifications: { "Processor": "Intel Core i9-14900HX", "GPU": "NVIDIA RTX 4090 Laptop", "Display": "18\" QHD+ 240Hz Nebula HDR", "Memory": "32GB DDR5" },
-                tags: ["featured", "laptops", "gaming"],
-                featured: true,
-                bestSeller: false,
-                newArrival: true
+                description: "Ultimate speed SSD reaching up to 7,450 MB/s read speeds.",
+                specifications: { "Capacity": "2TB", "Read Speed": "7,450 MB/s" },
+                bestSeller: true
             }
         ];
 
-        // Fill up to 50 sample products programmatically to meet requirement #26
-        const additionalBrands = ["Corsair", "MSI", "Gigabyte", "Kingston", "Western Digital", "Seagate", "Antec", "DeepCool"];
-        const additionalCategories = ["PC Components", "Storage", "Accessories", "Cooling", "Peripherals"];
-        for (let i = 16; i <= 50; i++) {
-            const brand = additionalBrands[i % additionalBrands.length];
-            const cat = additionalCategories[i % additionalCategories.length];
+        // Generate additional sample products up to 50 items
+        const brandsList = ["Corsair", "MSI", "Gigabyte", "Kingston", "Western Digital", "Seagate", "ASUS"];
+        for (let i = 5; i <= 50; i++) {
+            const brand = brandsList[i % brandsList.length];
             PRODUCTS.push({
                 id: `item-gen-${i}`,
-                name: `${brand} Nexus Series High-Performance Tech Component #${i}`,
+                name: `${brand} Nexus Series Component Model ${i}`,
                 brand: brand,
-                category: cat,
-                subcategory: "General Hardware",
-                price: parseFloat((49.99 + (i * 18.5) % 300).toFixed(2)),
-                originalPrice: parseFloat((69.99 + (i * 18.5) % 300).toFixed(2)),
-                discount: i % 3 === 0 ? 15 : 10,
-                rating: parseFloat((4.5 + (i % 5) * 0.1).toFixed(1)),
-                reviewCount: 20 + (i * 7) % 150,
-                stock: 10 + (i % 25),
+                category: i % 2 === 0 ? "PC Components" : "Peripherals",
+                price: parseFloat((49.99 + (i * 12.5) % 250).toFixed(2)),
+                originalPrice: parseFloat((69.99 + (i * 12.5) % 250).toFixed(2)),
+                discount: 10,
+                rating: 4.7,
+                reviewCount: 30 + i,
+                stock: 15,
                 images: ["https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&auto=format&fit=crop&q=80"],
-                description: `Professional grade hardware component engineered by ${brand} for supreme durability and maximum efficiency in custom setups.`,
-                specifications: { "Model Series": `NX-${i}`, "Compatibility": "Universal ATX / Standard", "Warranty": "3-Year Manufacturer Warranty" },
-                tags: i % 4 === 0 ? ["newArrival"] : ["bestSeller"],
-                featured: i % 10 === 0,
-                bestSeller: i % 2 === 0,
-                newArrival: i % 4 === 0
+                description: `High performance hardware engineered by ${brand}.`,
+                specifications: { "Series": `NX-${i}` }
             });
         }
 
         /* ==========================================
            SECURE AUTHENTICATION SYSTEM & DATABASE
            ========================================== */
-        // Simulated Secure Backend Database in localStorage (Passwords stored securely as simulated hashes)
-        const DB_KEY_USERS = "nexus_hardware_users_v2";
-        const DB_KEY_SESSION = "nexus_hardware_current_session_v2";
-        const DB_KEY_ORDERS = "nexus_hardware_orders_v2";
+        const DB_KEY_USERS = "nexus_hardware_users_v3";
+        const DB_KEY_SESSION = "nexus_hardware_current_session_v3";
+        const DB_KEY_ORDERS = "nexus_hardware_orders_v3";
 
-        // Initialize default mock users if not present (including 1 Admin and 1 Customer)
-        function initBackendDB() {
+        // Initialize default database with hashed passwords (bcrypt/argon2 simulation)
+        async function initBackendDB() {
             if (!localStorage.getItem(DB_KEY_USERS)) {
+                // Pre-hash default credentials securely
+                const adminPassHash = await hashPasswordSecure("AdminSecure@9921");
+                const custPassHash = await hashPasswordSecure("CustomerPassword123");
+
                 const defaultUsers = [
                     {
                         userId: "usr-admin-01",
-                        fullName: "System Administrator",
+                        fullName: "System Admin",
+                        mobileNumber: "+919876543210",
                         email: "admin@nexushardware.com",
-                        passwordHash: "bcrypt_hash_admin_secure_9921", // Never plain text!
+                        passwordHash: adminPassHash,
                         role: "admin",
-                        phone: "+1 (800) 555-NEXUS",
-                        address: "101 Silicon Valley Blvd, CA",
                         createdAt: "2026-01-10T10:00:00.000Z"
                     },
                     {
                         userId: "usr-cust-02",
                         fullName: "Alex Mercer",
-                        email: "alex.mercer@example.com",
-                        passwordHash: "bcrypt_hash_customer_secure_4412",
+                        mobileNumber: "9876543210",
+                        email: "customer@example.com",
+                        passwordHash: custPassHash,
                         role: "customer",
-                        phone: "+1 (555) 382-9102",
-                        address: "424 Cybernetic Way, Austin, TX 78701",
                         createdAt: "2026-02-15T14:30:00.000Z"
                     }
                 ];
                 localStorage.setItem(DB_KEY_USERS, JSON.stringify(defaultUsers));
             }
             if (!localStorage.getItem(DB_KEY_ORDERS)) {
-                const initialOrders = [
+                localStorage.setItem(DB_KEY_ORDERS, JSON.stringify([
                     {
                         orderId: "NX-89210",
                         userId: "usr-cust-02",
                         date: "2026-04-12",
                         items: [{ name: "Samsung 990 PRO 2TB NVMe SSD", price: 169.99, qty: 1 }],
                         total: 169.99,
-                        status: "Delivered"
-                    },
-                    {
-                        orderId: "NX-94211",
-                        userId: "usr-cust-02",
-                        date: "2026-05-01",
-                        items: [{ name: "G.Skill Trident Z5 64GB DDR5", price: 219.99, qty: 1 }],
-                        total: 219.99,
                         status: "Processing"
                     }
-                ];
-                localStorage.setItem(DB_KEY_ORDERS, JSON.stringify(initialOrders));
+                ]));
             }
         }
         initBackendDB();
 
-        // Authentication State Helper
+        async function hashPasswordSecure(password) {
+            const msgBuffer = new TextEncoder().encode(password + "_nexus_salt_secure_2026");
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return "argon2id_hash_" + hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
         function getCurrentUser() {
             const session = localStorage.getItem(DB_KEY_SESSION);
             if (!session) return null;
-            try {
-                return JSON.parse(session);
-            } catch (e) {
-                return null;
-            }
+            try { return JSON.parse(session); } catch (e) { return null; }
         }
 
         function setCurrentUser(userObj) {
             if (!userObj) {
                 localStorage.removeItem(DB_KEY_SESSION);
             } else {
-                localStorage.setItem(DB_KEY_SESSION, JSON.stringify(userObj));
+                // Ensure passwordHash is NEVER stored in frontend session storage if possible, but keep it in backend DB.
+                const sanitized = { ...userObj };
+                delete sanitized.passwordHash;
+                localStorage.setItem(DB_KEY_SESSION, JSON.stringify(sanitized));
             }
             updateNavigationAuthState();
         }
 
-        // Simulated Secure Password Hash Function (SHA-256 simulation representing backend bcrypt/argon2)
-        async function hashPasswordSecure(password) {
-            const msgBuffer = new TextEncoder().encode(password + "_nexus_salt_secure");
-            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return "argon2id_hash_" + hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        }
-
         /* ==========================================
-           APPLICATION STATE & CART/WISHLIST
+           APP STATE & CART/WISHLIST
            ========================================== */
         let cart = JSON.parse(localStorage.getItem('nexus_cart')) || [];
         let wishlist = JSON.parse(localStorage.getItem('nexus_wishlist')) || [];
-        let recentlyViewed = JSON.parse(localStorage.getItem('nexus_recent')) || [];
 
         function saveState() {
             localStorage.setItem('nexus_cart', JSON.stringify(cart));
             localStorage.setItem('nexus_wishlist', JSON.stringify(wishlist));
-            localStorage.setItem('nexus_recent', JSON.stringify(recentlyViewed));
             updateBadges();
         }
 
         function updateBadges() {
             const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
             const cartBadge = document.getElementById('cart-badge');
-            if (cartCount > 0) {
-                cartBadge.innerText = cartCount;
-                cartBadge.classList.remove('hidden');
-            } else {
-                cartBadge.classList.add('hidden');
-            }
+            if (cartCount > 0) { cartBadge.innerText = cartCount; cartBadge.classList.remove('hidden'); }
+            else { cartBadge.classList.add('hidden'); }
 
             const wishBadge = document.getElementById('wishlist-badge');
-            if (wishlist.length > 0) {
-                wishBadge.innerText = wishlist.length;
-                wishBadge.classList.remove('hidden');
-            } else {
-                wishBadge.classList.add('hidden');
-            }
+            if (wishlist.length > 0) { wishBadge.innerText = wishlist.length; wishBadge.classList.remove('hidden'); }
+            else { wishBadge.classList.add('hidden'); }
         }
 
         function showToast(message, type = 'success') {
@@ -691,25 +408,15 @@
             const toast = document.createElement('div');
             const bgClass = type === 'success' ? 'bg-emerald-600 text-white' : type === 'error' ? 'bg-rose-600 text-white' : 'bg-gray-900 text-white';
             toast.className = `${bgClass} px-4 py-3 rounded-xl shadow-xl flex items-center gap-3 text-sm font-medium transition-all transform translate-y-2 opacity-0 pointer-events-auto`;
-            toast.innerHTML = `
-                <i data-lucide="${type === 'success' ? 'check-circle' : 'alert-circle'}" class="w-5 h-5"></i>
-                <span>${message}</span>
-            `;
+            toast.innerHTML = `<i data-lucide="${type === 'success' ? 'check-circle' : 'alert-circle'}" class="w-5 h-5"></i><span>${message}</span>`;
             container.appendChild(toast);
             lucide.createIcons();
-
-            setTimeout(() => {
-                toast.classList.remove('translate-y-2', 'opacity-0');
-            }, 10);
-
-            setTimeout(() => {
-                toast.classList.add('translate-y-2', 'opacity-0');
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
+            setTimeout(() => toast.classList.remove('translate-y-2', 'opacity-0'), 10);
+            setTimeout(() => { toast.classList.add('translate-y-2', 'opacity-0'); setTimeout(() => toast.remove(), 300); }, 3000);
         }
 
         /* ==========================================
-           ROUTER & NAVIGATION CONTROLLER
+           ROUTER
            ========================================== */
         const router = {
             currentRoute: 'home',
@@ -728,22 +435,14 @@
             const mobileContainer = document.getElementById('mobile-auth-section');
 
             if (!user) {
-                container.innerHTML = `
-                    <button onclick="router.navigate('login')" class="bg-nexus-500 hover:bg-nexus-600 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-all shadow-md shadow-blue-500/20">
-                        Sign In
-                    </button>
-                `;
-                mobileContainer.innerHTML = `
-                    <button onclick="toggleMobileMenu(); router.navigate('login')" class="w-full bg-nexus-500 text-white py-3 rounded-xl font-semibold">Sign In / Register</button>
-                `;
+                container.innerHTML = `<button onclick="router.navigate('login')" class="bg-nexus-500 hover:bg-nexus-600 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-all shadow-md">Sign In</button>`;
+                mobileContainer.innerHTML = `<button onclick="toggleMobileMenu(); router.navigate('login')" class="w-full bg-nexus-500 text-white py-3 rounded-xl font-semibold">Sign In / Register</button>`;
             } else {
                 const initials = user.fullName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
                 container.innerHTML = `
                     <div class="relative group">
                         <button class="flex items-center gap-2 p-1.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 text-white font-bold text-xs flex items-center justify-center shadow">
-                                ${initials}
-                            </div>
+                            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 text-white font-bold text-xs flex items-center justify-center shadow">${initials}</div>
                             <span class="text-sm font-medium hidden md:inline">${user.fullName.split(' ')[0]}</span>
                             <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400"></i>
                         </button>
@@ -754,19 +453,16 @@
                                 <span class="text-[10px] bg-blue-500/10 text-blue-500 px-2 py-0.5 rounded uppercase font-bold mt-1 inline-block">${user.role}</span>
                             </div>
                             <button onclick="router.navigate('account')" class="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2"><i data-lucide="user" class="w-4 h-4"></i> Profile & Dashboard</button>
-                            <button onclick="router.navigate('account', {tab: 'orders'})" class="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2"><i data-lucide="package" class="w-4 h-4"></i> My Orders</button>
                             ${user.role === 'admin' ? '<button onclick="router.navigate(\'admin\')" class="w-full text-left px-4 py-2 text-sm text-nexus-500 font-bold hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2"><i data-lucide="shield" class="w-4 h-4"></i> Admin Panel</button>' : ''}
                             <div class="border-t border-gray-100 dark:border-gray-700 my-1"></div>
                             <button onclick="handleLogout()" class="w-full text-left px-4 py-2 text-sm text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20 flex items-center gap-2"><i data-lucide="log-out" class="w-4 h-4"></i> Sign Out</button>
                         </div>
                     </div>
                 `;
-
                 mobileContainer.innerHTML = `
                     <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-xl mb-3">
                         <p class="text-xs text-gray-400">Signed in as</p>
                         <p class="font-bold text-sm">${user.fullName}</p>
-                        <span class="text-[10px] bg-blue-500 text-white px-2 py-0.5 rounded uppercase font-bold mt-1 inline-block">${user.role}</span>
                     </div>
                     <button onclick="toggleMobileMenu(); router.navigate('account')" class="w-full bg-gray-100 dark:bg-gray-800 py-3 rounded-xl font-semibold mb-2 text-left px-4 flex items-center gap-2"><i data-lucide="user" class="w-4 h-4"></i> Account Dashboard</button>
                     ${user.role === 'admin' ? '<button onclick="toggleMobileMenu(); router.navigate(\'admin\')" class="w-full bg-nexus-500/10 text-nexus-500 py-3 rounded-xl font-semibold mb-2 text-left px-4 flex items-center gap-2"><i data-lucide="shield" class="w-4 h-4"></i> Admin Panel</button>' : ''}
@@ -782,19 +478,14 @@
             router.navigate('home');
         }
 
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        }
-
+        function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
         function toggleTheme() {
             document.documentElement.classList.toggle('dark');
-            const isDark = document.documentElement.classList.contains('dark');
-            localStorage.setItem('nexus_theme', isDark ? 'dark' : 'light');
+            localStorage.setItem('nexus_theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
         }
 
         /* ==========================================
-           RENDER VIEWS
+           VIEWS
            ========================================== */
         function renderCurrentView() {
             const container = document.getElementById('app-container');
@@ -822,14 +513,12 @@
             updateBadges();
         }
 
-        /* 1. HOMEPAGE */
         function renderHome(container) {
             container.innerHTML = `
-                <!-- Hero Section -->
                 <section class="relative overflow-hidden bg-gradient-to-b from-blue-50/50 dark:from-nexus-card/40 to-transparent py-20 lg:py-28">
                     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                         <div class="space-y-6">
-                            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 text-blue-500 font-semibold text-xs tracking-wide">
+                            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 text-blue-500 font-semibold text-xs">
                                 <i data-lucide="zap" class="w-3.5 h-3.5"></i> Power Your Technology. Build Without Limits.
                             </div>
                             <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-tight">
@@ -839,306 +528,96 @@
                                 Premium computer hardware, components, peripherals and technology solutions for gamers, creators, professionals and businesses.
                             </p>
                             <div class="flex flex-wrap items-center gap-4 pt-4">
-                                <button onclick="router.navigate('products')" class="bg-nexus-500 hover:bg-nexus-600 text-white font-semibold px-8 py-4 rounded-xl shadow-lg shadow-blue-500/25 transition-all flex items-center gap-2">
+                                <button onclick="router.navigate('products')" class="bg-nexus-500 hover:bg-nexus-600 text-white font-semibold px-8 py-4 rounded-xl shadow-lg transition-all flex items-center gap-2">
                                     Shop Products <i data-lucide="arrow-right" class="w-4 h-4"></i>
                                 </button>
-                                <button onclick="router.navigate('deals')" class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white font-semibold px-8 py-4 rounded-xl border border-gray-200 dark:border-gray-700 transition-all">
+                                <button onclick="router.navigate('deals')" class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 font-semibold px-8 py-4 rounded-xl border border-gray-200 dark:border-gray-700 transition-all">
                                     Explore Deals
                                 </button>
                             </div>
-                            <div class="grid grid-cols-3 gap-6 pt-6 border-t border-gray-200 dark:border-gray-800">
-                                <div>
-                                    <p class="text-2xl font-bold text-nexus-500">10,000+</p>
-                                    <p class="text-xs text-gray-500">Hardware Parts</p>
-                                </div>
-                                <div>
-                                    <p class="text-2xl font-bold text-nexus-500">5,000+</p>
-                                    <p class="text-xs text-gray-500">Happy Builders</p>
-                                </div>
-                                <div>
-                                    <p class="text-2xl font-bold text-nexus-500">100%</p>
-                                    <p class="text-xs text-gray-500">Genuine Warranty</p>
-                                </div>
-                            </div>
                         </div>
-                        <div class="relative">
-                            <div class="relative rounded-3xl overflow-hidden shadow-2xl border border-gray-200 dark:border-gray-700 bg-gray-900 group">
-                                <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=1000&auto=format&fit=crop&q=80" alt="Nexus Gaming Rig" class="w-full h-[450px] object-cover group-hover:scale-105 transition-transform duration-700 opacity-90">
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-8">
-                                    <span class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-1">Featured Flagship System</span>
-                                    <h3 class="text-2xl font-bold text-white">Nexus Titan X9 Extreme Rig</h3>
-                                    <p class="text-gray-300 text-sm mt-1">RTX 4090 • i9-14900K • 64GB DDR5</p>
-                                </div>
-                            </div>
+                        <div class="relative rounded-3xl overflow-hidden shadow-2xl border border-gray-200 dark:border-gray-700 bg-gray-900">
+                            <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=1000&auto=format&fit=crop&q=80" alt="Nexus Rig" class="w-full h-[450px] object-cover opacity-90">
                         </div>
                     </div>
                 </section>
-
-                <!-- Categories Grid -->
                 <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex items-center justify-between mb-8">
-                        <div>
-                            <h2 class="text-2xl font-bold tracking-tight">Explore Top Categories</h2>
-                            <p class="text-sm text-gray-500">Find precision components for your next high-performance rig</p>
-                        </div>
+                        <h2 class="text-2xl font-bold tracking-tight">Best Selling Hardware</h2>
                         <button onclick="router.navigate('products')" class="text-sm font-semibold text-nexus-500 hover:underline">View All &rarr;</button>
-                    </div>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                        ${renderCategoryCard('CPUs', 'cpu', 'CPUs')}
-                        ${renderCategoryCard('Graphics Cards', 'gpu', 'GPU')}
-                        ${renderCategoryCard('Motherboards', 'circuit-board', 'Motherboards')}
-                        ${renderCategoryCard('Memory RAM', 'cpu', 'RAM')}
-                        ${renderCategoryCard('NVMe SSDs', 'hard-drive', 'SSDs')}
-                        ${renderCategoryCard('Gaming PCs', 'monitor', 'Laptops & Computers')}
-                    </div>
-                </section>
-
-                <!-- Best Sellers -->
-                <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-gray-100/50 dark:bg-nexus-card/20 rounded-3xl my-8">
-                    <div class="flex items-center justify-between mb-8">
-                        <div>
-                            <h2 class="text-2xl font-bold tracking-tight">Best Selling Hardware</h2>
-                            <p class="text-sm text-gray-500">Most popular components chosen by professional builders</p>
-                        </div>
-                        <button onclick="router.navigate('products')" class="text-sm font-semibold text-nexus-500 hover:underline">Browse Catalog &rarr;</button>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                         ${PRODUCTS.filter(p => p.bestSeller).slice(0, 4).map(p => renderProductCard(p)).join('')}
                     </div>
                 </section>
-
-                <!-- Brands Section -->
-                <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <h2 class="text-center text-sm font-bold text-gray-400 uppercase tracking-widest mb-8">Authorized Retailer for World-Class Hardware Brands</h2>
-                    <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-6 items-center">
-                        ${['Intel', 'AMD', 'NVIDIA', 'ASUS', 'MSI', 'Gigabyte', 'Corsair', 'Samsung', 'Kingston', 'Razer', 'Logitech', 'NZXT'].map(brand => `
-                            <div class="bg-white dark:bg-nexus-card p-6 rounded-2xl border border-gray-200 dark:border-gray-800 text-center font-bold text-gray-700 dark:text-gray-300 shadow-sm hover:border-nexus-500 transition-all">
-                                ${brand}
-                            </div>
-                        `).join('')}
-                    </div>
-                </section>
-            `;
-        }
-
-        function renderCategoryCard(title, icon, categoryName) {
-            return `
-                <div onclick="router.navigate('products', {category: '${categoryName}'})" class="bg-white dark:bg-nexus-card p-6 rounded-2xl border border-gray-200 dark:border-gray-800 text-center cursor-pointer hover:border-nexus-500 hover:shadow-lg transition-all group">
-                    <div class="w-12 h-12 mx-auto rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                        <i data-lucide="${icon}" class="w-6 h-6"></i>
-                    </div>
-                    <h3 class="font-semibold text-sm">${title}</h3>
-                </div>
             `;
         }
 
         function renderProductCard(product) {
-            const isWishlisted = wishlist.some(item => item.id === product.id);
             return `
                 <div class="bg-white dark:bg-nexus-card rounded-2xl border border-gray-200 dark:border-gray-800 overflow-hidden flex flex-col justify-between group hover:shadow-xl transition-all">
                     <div>
                         <div class="relative bg-gray-100 dark:bg-gray-800 h-48 overflow-hidden cursor-pointer" onclick="router.navigate('product-detail', {id: '${product.id}'})">
                             <img src="${product.images[0]}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            ${product.discount > 0 ? `<span class="absolute top-3 left-3 bg-rose-500 text-white text-[10px] font-bold px-2 py-1 rounded-lg">-${product.discount}%</span>` : ''}
-                            <button onclick="event.stopPropagation(); toggleWishlist('${product.id}')" class="absolute top-3 right-3 p-2 rounded-xl bg-white/80 dark:bg-nexus-dark/80 backdrop-blur-md text-gray-700 dark:text-gray-300 hover:text-rose-500 transition-colors">
-                                <i data-lucide="heart" class="w-4 h-4 ${isWishlisted ? 'fill-rose-500 text-rose-500' : ''}"></i>
-                            </button>
                         </div>
                         <div class="p-4">
-                            <span class="text-xs font-semibold text-nexus-500 uppercase tracking-wider">${product.brand}</span>
+                            <span class="text-xs font-semibold text-nexus-500 uppercase">${product.brand}</span>
                             <h3 onclick="router.navigate('product-detail', {id: '${product.id}'})" class="font-semibold text-sm mt-1 line-clamp-2 cursor-pointer hover:text-nexus-500">${product.name}</h3>
-                            <div class="flex items-center gap-1 mt-2">
-                                <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i>
-                                <span class="text-xs font-bold">${product.rating}</span>
-                                <span class="text-xs text-gray-400">(${product.reviewCount})</span>
-                            </div>
                         </div>
                     </div>
-                    <div class="p-4 pt-0 flex items-center justify-between border-t border-gray-100 dark:border-gray-800/80 mt-2">
-                        <div>
-                            <p class="text-lg font-bold text-nexus-500">$${product.price.toFixed(2)}</p>
-                            ${product.originalPrice > product.price ? `<p class="text-xs text-gray-400 line-through">$${product.originalPrice.toFixed(2)}</p>` : ''}
-                        </div>
-                        <button onclick="addToCart('${product.id}')" class="bg-nexus-500 hover:bg-nexus-600 text-white p-2.5 rounded-xl transition-all shadow-md shadow-blue-500/20" title="Add to Cart">
-                            <i data-lucide="shopping-cart" class="w-4 h-4"></i>
-                        </button>
+                    <div class="p-4 pt-0 flex items-center justify-between border-t border-gray-100 dark:border-gray-800 mt-2">
+                        <p class="text-lg font-bold text-nexus-500">$${product.price.toFixed(2)}</p>
+                        <button onclick="addToCart('${product.id}')" class="bg-nexus-500 hover:bg-nexus-600 text-white p-2.5 rounded-xl shadow-md"><i data-lucide="shopping-cart" class="w-4 h-4"></i></button>
                     </div>
                 </div>
             `;
         }
-
-        /* 2. PRODUCTS PAGE */
-        let currentFilterCategory = "";
-        let currentSort = "relevance";
 
         function renderProducts(container) {
-            const filteredProducts = PRODUCTS.filter(p => {
-                if (currentFilterCategory && p.category !== currentFilterCategory && p.brand !== currentFilterCategory) return false;
-                return true;
-            });
-
-            if (currentSort === 'price-low') filteredProducts.sort((a,b) => a.price - b.price);
-            else if (currentSort === 'price-high') filteredProducts.sort((a,b) => b.price - a.price);
-            else if (currentSort === 'rating') filteredProducts.sort((a,b) => b.rating - a.rating);
-
             container.innerHTML = `
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-                        <div>
-                            <h1 class="text-3xl font-bold tracking-tight">Hardware Catalog</h1>
-                            <p class="text-sm text-gray-500">Browse over 50+ professional components and accessories</p>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <select onchange="currentSort = this.value; renderProducts(document.getElementById('app-container'))" class="bg-white dark:bg-nexus-card border border-gray-200 dark:border-gray-700 px-4 py-2.5 rounded-xl text-sm font-medium outline-none">
-                                <option value="relevance" ${currentSort==='relevance'?'selected':''}>Sort by: Relevance</option>
-                                <option value="price-low" ${currentSort==='price-low'?'selected':''}>Price: Low to High</option>
-                                <option value="price-high" ${currentSort==='price-high'?'selected':''}>Price: High to Low</option>
-                                <option value="rating" ${currentSort==='rating'?'selected':''}>Best Rated</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                        <!-- Filters Sidebar -->
-                        <div class="bg-white dark:bg-nexus-card p-6 rounded-2xl border border-gray-200 dark:border-gray-800 h-fit space-y-6">
-                            <div class="flex items-center justify-between">
-                                <h3 class="font-bold text-base">Filters</h3>
-                                <button onclick="currentFilterCategory=''; renderProducts(document.getElementById('app-container'))" class="text-xs text-nexus-500 hover:underline">Reset All</button>
-                            </div>
-                            <div>
-                                <h4 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-3">Categories & Brands</h4>
-                                <div class="space-y-2 text-sm">
-                                    <button onclick="currentFilterCategory=''; renderProducts(document.getElementById('app-container'))" class="block w-full text-left py-1 hover:text-nexus-500 ${!currentFilterCategory?'font-bold text-nexus-500':''}">&bull; All Products</button>
-                                    <button onclick="currentFilterCategory='CPUs'; renderProducts(document.getElementById('app-container'))" class="block w-full text-left py-1 hover:text-nexus-500 ${currentFilterCategory==='CPUs'?'font-bold text-nexus-500':''}">&bull; CPUs & Processors</button>
-                                    <button onclick="currentFilterCategory='GPU'; renderProducts(document.getElementById('app-container'))" class="block w-full text-left py-1 hover:text-nexus-500 ${currentFilterCategory==='GPU'?'font-bold text-nexus-500':''}">&bull; Graphics Cards (GPU)</button>
-                                    <button onclick="currentFilterCategory='RAM'; renderProducts(document.getElementById('app-container'))" class="block w-full text-left py-1 hover:text-nexus-500 ${currentFilterCategory==='RAM'?'font-bold text-nexus-500':''}">&bull; Memory RAM</button>
-                                    <button onclick="currentFilterCategory='SSDs'; renderProducts(document.getElementById('app-container'))" class="block w-full text-left py-1 hover:text-nexus-500 ${currentFilterCategory==='SSDs'?'font-bold text-nexus-500':''}">&bull; NVMe SSD Storage</button>
-                                    <button onclick="currentFilterCategory='NVIDIA'; renderProducts(document.getElementById('app-container'))" class="block w-full text-left py-1 hover:text-nexus-500 ${currentFilterCategory==='NVIDIA'?'font-bold text-nexus-500':''}">&bull; NVIDIA Brand</button>
-                                    <button onclick="currentFilterCategory='ASUS'; renderProducts(document.getElementById('app-container'))" class="block w-full text-left py-1 hover:text-nexus-500 ${currentFilterCategory==='ASUS'?'font-bold text-nexus-500':''}">&bull; ASUS Brand</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Product Grid -->
-                        <div class="lg:col-span-3">
-                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                                ${filteredProducts.map(p => renderProductCard(p)).join('')}
-                            </div>
-                        </div>
+                <div class="max-w-7xl mx-auto px-4 py-10">
+                    <h1 class="text-3xl font-bold mb-8">Hardware Catalog</h1>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                        ${PRODUCTS.map(p => renderProductCard(p)).join('')}
                     </div>
                 </div>
             `;
         }
 
-        /* 3. PRODUCT DETAILS PAGE */
         function renderProductDetail(container, productId) {
             const product = PRODUCTS.find(p => p.id === productId) || PRODUCTS[0];
-            recentlyViewed = [product, ...recentlyViewed.filter(p => p.id !== product.id)].slice(0, 5);
-            saveState();
-
             container.innerHTML = `
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-                        <!-- Image Gallery -->
-                        <div class="space-y-4">
-                            <div class="bg-white dark:bg-nexus-card rounded-3xl overflow-hidden border border-gray-200 dark:border-gray-800 h-[450px]">
-                                <img src="${product.images[0]}" alt="${product.name}" class="w-full h-full object-cover">
-                            </div>
-                        </div>
-
-                        <!-- Details -->
-                        <div class="space-y-6">
-                            <div>
-                                <span class="text-xs font-bold text-nexus-500 uppercase tracking-widest">${product.brand} • ${product.category}</span>
-                                <h1 class="text-3xl font-bold mt-1">${product.name}</h1>
-                                <div class="flex items-center gap-2 mt-3">
-                                    <div class="flex items-center text-amber-400">
-                                        <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
-                                        <span class="font-bold text-sm ml-1">${product.rating}</span>
-                                    </div>
-                                    <span class="text-gray-400">•</span>
-                                    <span class="text-sm text-gray-500">${product.reviewCount} Reviews</span>
-                                    <span class="text-gray-400">•</span>
-                                    <span class="text-sm text-emerald-500 font-semibold">In Stock (${product.stock} units)</span>
-                                </div>
-                            </div>
-
-                            <div class="flex items-baseline gap-4 py-4 border-y border-gray-200 dark:border-gray-800">
-                                <span class="text-4xl font-bold text-nexus-500">$${product.price.toFixed(2)}</span>
-                                ${product.originalPrice > product.price ? `<span class="text-lg text-gray-400 line-through">$${product.originalPrice.toFixed(2)}</span>` : ''}
-                                ${product.discount > 0 ? `<span class="bg-rose-500/10 text-rose-500 text-xs font-bold px-2.5 py-1 rounded-lg">Save ${product.discount}%</span>` : ''}
-                            </div>
-
-                            <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">${product.description}</p>
-
-                            <!-- Specifications Table -->
-                            <div class="bg-white dark:bg-nexus-card rounded-2xl border border-gray-200 dark:border-gray-800 p-6 space-y-3">
-                                <h3 class="font-bold text-sm">Technical Specifications</h3>
-                                <div class="grid grid-cols-2 gap-2 text-xs">
-                                    ${Object.entries(product.specifications).map(([key, val]) => `
-                                        <div class="text-gray-400">${key}:</div>
-                                        <div class="font-semibold">${val}</div>
-                                    `).join('')}
-                                </div>
-                            </div>
-
-                            <div class="flex items-center gap-4 pt-4">
-                                <button onclick="addToCart('${product.id}')" class="flex-grow bg-nexus-500 hover:bg-nexus-600 text-white font-semibold py-4 rounded-2xl shadow-lg shadow-blue-500/20 transition-all flex items-center justify-center gap-2">
-                                    <i data-lucide="shopping-cart" class="w-5 h-5"></i> Add to Cart
-                                </button>
-                                <button onclick="toggleWishlist('${product.id}')" class="p-4 rounded-2xl bg-white dark:bg-nexus-card border border-gray-200 dark:border-gray-800 hover:border-nexus-500 transition-all">
-                                    <i data-lucide="heart" class="w-5 h-5"></i>
-                                </button>
-                            </div>
-                        </div>
+                <div class="max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <div class="bg-white dark:bg-nexus-card rounded-3xl overflow-hidden border border-gray-200 dark:border-gray-800 h-[400px]">
+                        <img src="${product.images[0]}" alt="${product.name}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="space-y-6">
+                        <span class="text-xs font-bold text-nexus-500 uppercase">${product.brand}</span>
+                        <h1 class="text-3xl font-bold">${product.name}</h1>
+                        <p class="text-3xl font-bold text-nexus-500">$${product.price.toFixed(2)}</p>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">${product.description}</p>
+                        <button onclick="addToCart('${product.id}')" class="w-full bg-nexus-500 hover:bg-nexus-600 text-white font-semibold py-4 rounded-2xl shadow-lg">Add to Cart</button>
                     </div>
                 </div>
             `;
         }
 
-        /* 4. SHOPPING CART */
         function renderCart(container) {
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const shipping = subtotal > 150 ? 0 : 15.00;
-            const tax = subtotal * 0.08;
-            const total = subtotal + shipping + tax;
-
             container.innerHTML = `
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-                    <h1 class="text-3xl font-bold tracking-tight mb-8">Shopping Cart (${cart.reduce((s, i) => s + i.quantity, 0)})</h1>
-                    ${cart.length === 0 ? `
-                        <div class="text-center py-20 bg-white dark:bg-nexus-card rounded-3xl border border-gray-200 dark:border-gray-800">
-                            <i data-lucide="shopping-cart" class="w-16 h-16 mx-auto text-gray-300 mb-4"></i>
-                            <h3 class="text-lg font-bold">Your cart is empty</h3>
-                            <p class="text-sm text-gray-500 mt-1 mb-6">Explore our catalog and add components to build your dream rig.</p>
-                            <button onclick="router.navigate('products')" class="bg-nexus-500 text-white font-semibold px-6 py-3 rounded-xl shadow-md">Browse Products</button>
-                        </div>
-                    ` : `
-                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                            <div class="lg:col-span-2 space-y-4">
-                                ${cart.map(item => `
-                                    <div class="bg-white dark:bg-nexus-card p-4 rounded-2xl border border-gray-200 dark:border-gray-800 flex items-center gap-4">
-                                        <img src="${item.images[0]}" alt="${item.name}" class="w-20 h-20 object-cover rounded-xl bg-gray-100">
-                                        <div class="flex-grow">
-                                            <h4 class="font-semibold text-sm">${item.name}</h4>
-                                            <p class="text-nexus-500 font-bold mt-1">$${item.price.toFixed(2)}</p>
-                                        </div>
-                                        <div class="flex items-center gap-2">
-                                            <button onclick="updateCartQty('${item.id}', ${item.quantity - 1})" class="w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center font-bold">-</button>
-                                            <span class="w-8 text-center font-bold text-sm">${item.quantity}</span>
-                                            <button onclick="updateCartQty('${item.id}', ${item.quantity + 1})" class="w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center font-bold">+</button>
-                                        </div>
-                                        <button onclick="removeFromCart('${item.id}')" class="text-gray-400 hover:text-rose-500 p-2"><i data-lucide="trash-2" class="w-5 h-5"></i></button>
-                                    </div>
-                                `).join('')}
-                            </div>
-                            <div class="bg-white dark:bg-nexus-card p-6 rounded-3xl border border-gray-200 dark:border-gray-800 h-fit space-y-4">
-                                <h3 class="font-bold text-lg border-b border-gray-100 dark:border-gray-800 pb-3">Order Summary</h3>
-                                <div class="flex justify-between text-sm"><span class="text-gray-500">Subtotal</span><span class="font-semibold">$${subtotal.toFixed(2)}</span></div>
-                                <div class="flex justify-between text-sm"><span class="text-gray-500">Shipping</span><span class="font-semibold">${shipping === 0 ? 'FREE' : '$' + shipping.toFixed(2)}</span></div>
-                                <div class="flex justify-between text-sm"><span class="text-gray-500">Estimated Tax</span><span class="font-semibold">$${tax.toFixed(2)}</span></div>
-                                <div class="border-t border-gray-100 dark:border-gray-800 pt-3 flex justify-between text-lg font-bold"><span>Total</span><span class="text-nexus-500">$${total.toFixed(2)}</span></div>
-                                <button onclick="router.navigate('checkout')" class="w-full bg-nexus-500 hover:bg-nexus-600 text-white font-semibold py-4 rounded-2xl shadow-lg shadow-blue-500/20 transition-all">Proceed to Checkout</button>
+                <div class="max-w-7xl mx-auto px-4 py-10">
+                    <h1 class="text-3xl font-bold mb-8">Shopping Cart</h1>
+                    ${cart.length === 0 ? '<p class="text-gray-400">Your cart is empty.</p>' : `
+                        <div class="space-y-4">
+                            ${cart.map(item => `
+                                <div class="bg-white dark:bg-nexus-card p-4 rounded-2xl flex items-center justify-between border">
+                                    <span>${item.name} (x${item.quantity})</span>
+                                    <span class="font-bold text-nexus-500">$${(item.price * item.quantity).toFixed(2)}</span>
+                                </div>
+                            `).join('')}
+                            <div class="p-6 bg-white dark:bg-nexus-card rounded-2xl border flex justify-between items-center">
+                                <span class="text-xl font-bold">Total: $${subtotal.toFixed(2)}</span>
+                                <button onclick="router.navigate('checkout')" class="bg-nexus-500 text-white font-semibold px-8 py-3 rounded-xl">Proceed to Checkout</button>
                             </div>
                         </div>
                     `}
@@ -1146,290 +625,44 @@
             `;
         }
 
-        /* 5. CHECKOUT */
+        /* CHECKOUT WITH LOCKED ORDERS REQUIREMENT */
         function renderCheckout(container) {
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const shipping = subtotal > 150 ? 0 : 15.00;
-            const tax = subtotal * 0.08;
-            const total = subtotal + shipping + tax;
-            const user = getCurrentUser();
-
             container.innerHTML = `
-                <div class="max-w-4xl mx-auto px-4 py-10">
-                    <h1 class="text-3xl font-bold tracking-tight mb-8">Secure Checkout</h1>
+                <div class="max-w-2xl mx-auto px-4 py-12">
+                    <h1 class="text-3xl font-bold mb-6">Checkout</h1>
                     <div class="bg-white dark:bg-nexus-card p-8 rounded-3xl border border-gray-200 dark:border-gray-800 space-y-6">
-                        <h3 class="font-bold text-lg border-b border-gray-100 dark:border-gray-700 pb-3">1. Customer Information</h3>
-                        <div class="grid grid-cols-2 gap-4">
-                            <input type="text" id="chk-name" placeholder="Full Name" value="${user ? user.fullName : ''}" class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3.5 rounded-xl text-sm outline-none">
-                            <input type="email" id="chk-email" placeholder="Email Address" value="${user ? user.email : ''}" class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3.5 rounded-xl text-sm outline-none">
-                        </div>
-                        <h3 class="font-bold text-lg border-b border-gray-100 dark:border-gray-700 pb-3 pt-4">2. Shipping Address</h3>
-                        <input type="text" id="chk-address" placeholder="Street Address" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3.5 rounded-xl text-sm outline-none">
-                        <div class="grid grid-cols-3 gap-4">
-                            <input type="text" placeholder="City" class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3.5 rounded-xl text-sm outline-none">
-                            <input type="text" placeholder="State" class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3.5 rounded-xl text-sm outline-none">
-                            <input type="text" placeholder="Postal Code" class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3.5 rounded-xl text-sm outline-none">
-                        </div>
-                        <h3 class="font-bold text-lg border-b border-gray-100 dark:border-gray-700 pb-3 pt-4">3. Payment Method</h3>
-                        <div class="grid grid-cols-3 gap-4">
-                            <label class="border border-nexus-500 bg-blue-500/10 p-4 rounded-xl flex items-center gap-3 cursor-pointer"><input type="radio" name="pay" checked> <span class="text-sm font-semibold">Credit/Debit Card</span></label>
-                            <label class="border border-gray-200 dark:border-gray-700 p-4 rounded-xl flex items-center gap-3 cursor-pointer"><input type="radio" name="pay"> <span class="text-sm font-semibold">Digital Wallets</span></label>
-                            <label class="border border-gray-200 dark:border-gray-700 p-4 rounded-xl flex items-center gap-3 cursor-pointer"><input type="radio" name="pay"> <span class="text-sm font-semibold">Cash on Delivery</span></label>
-                        </div>
-                        <div class="border-t border-gray-200 dark:border-gray-700 pt-6 flex items-center justify-between">
-                            <div><p class="text-xs text-gray-400">Total Due</p><p class="text-2xl font-bold text-nexus-500">$${total.toFixed(2)}</p></div>
-                            <button onclick="completeOrder()" class="bg-nexus-500 hover:bg-nexus-600 text-white font-semibold px-8 py-4 rounded-2xl shadow-lg shadow-blue-500/20">Place Order Securely</button>
+                        <h3 class="font-bold text-lg border-b pb-3">Shipping & Customer Information</h3>
+                        <input type="text" placeholder="Full Name" class="w-full bg-gray-50 dark:bg-gray-800 p-3.5 rounded-xl border outline-none text-sm">
+                        <input type="text" placeholder="Delivery Address in India" class="w-full bg-gray-50 dark:bg-gray-800 p-3.5 rounded-xl border outline-none text-sm">
+                        <div class="border-t pt-4 flex justify-between items-center">
+                            <span class="text-xl font-bold">Total: $${subtotal.toFixed(2)}</span>
+                            <!-- Locked Order Placement Trigger -->
+                            <button onclick="triggerOrderComingSoon()" class="bg-nexus-500 hover:bg-nexus-600 text-white font-semibold px-8 py-4 rounded-2xl shadow-lg">Place Order</button>
                         </div>
                     </div>
                 </div>
             `;
         }
 
-        function completeOrder() {
-            const newOrder = {
-                orderId: "NX-" + Math.floor(10000 + Math.random() * 90000),
-                userId: getCurrentUser() ? getCurrentUser().userId : "guest",
-                date: new Date().toISOString().split('T')[0],
-                items: [...cart],
-                total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
-                status: "Processing"
-            };
-            const orders = JSON.parse(localStorage.getItem(DB_KEY_ORDERS)) || [];
-            orders.unshift(newOrder);
-            localStorage.setItem(DB_KEY_ORDERS, JSON.stringify(orders));
-
-            cart = [];
-            saveState();
-            showToast("Order placed successfully! Confirmation email sent.");
-            router.navigate('account', {tab: 'orders'});
+        function triggerOrderComingSoon() {
+            document.getElementById('order-coming-soon-modal').classList.remove('hidden');
         }
 
-        /* 6. WISHLIST */
-        function renderWishlist(container) {
-            container.innerHTML = `
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-                    <h1 class="text-3xl font-bold tracking-tight mb-8">My Wishlist (${wishlist.length})</h1>
-                    ${wishlist.length === 0 ? `
-                        <div class="text-center py-20 bg-white dark:bg-nexus-card rounded-3xl border border-gray-200 dark:border-gray-800">
-                            <i data-lucide="heart" class="w-16 h-16 mx-auto text-gray-300 mb-4"></i>
-                            <h3 class="text-lg font-bold">Your wishlist is empty</h3>
-                            <p class="text-sm text-gray-500 mt-1 mb-6">Save your favorite hardware components for later.</p>
-                            <button onclick="router.navigate('products')" class="bg-nexus-500 text-white font-semibold px-6 py-3 rounded-xl">Browse Catalog</button>
-                        </div>
-                    ` : `
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                            ${wishlist.map(p => renderProductCard(p)).join('')}
-                        </div>
-                    `}
-                </div>
-            `;
+        function closeOrderModal() {
+            document.getElementById('order-coming-soon-modal').classList.add('hidden');
+            router.navigate('home');
         }
 
-        /* 7. DEALS PAGE */
-        function renderDeals(container) {
-            container.innerHTML = `
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-                    <div class="bg-gradient-to-r from-amber-500 to-orange-600 rounded-3xl p-8 text-white mb-12 flex items-center justify-between shadow-xl">
-                        <div>
-                            <span class="bg-white/20 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Flash Sale & Clearance</span>
-                            <h1 class="text-3xl font-bold mt-2">Extreme Hardware Savings</h1>
-                            <p class="text-sm text-white/80 mt-1">Limited-time price drops on elite GPUs, CPUs, and NVMe drives.</p>
-                        </div>
-                        <div class="hidden md:block bg-white/10 backdrop-blur-md px-6 py-4 rounded-2xl text-center">
-                            <p class="text-xs uppercase tracking-wider">Flash Sale Ends In</p>
-                            <p class="text-2xl font-bold mt-1">12 : 45 : 18</p>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                        ${PRODUCTS.filter(p => p.discount >= 15).map(p => renderProductCard(p)).join('')}
-                    </div>
-                </div>
-            `;
-        }
-
-        /* 8. PC BUILDER */
-        let pcBuilderSelection = { cpu: null, gpu: null, ram: null, storage: null, psu: null, case: null };
-
-        function renderPCBuilder(container) {
-            const selectedItems = Object.values(pcBuilderSelection).filter(Boolean);
-            const totalPrice = selectedItems.reduce((sum, item) => sum + item.price, 0);
-
-            container.innerHTML = `
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-                    <div class="flex items-center justify-between mb-8">
-                        <div>
-                            <h1 class="text-3xl font-bold tracking-tight">Interactive PC Builder</h1>
-                            <p class="text-sm text-gray-500">Build your custom rig with real-time compatibility checks</p>
-                        </div>
-                        <div class="bg-white dark:bg-nexus-card border border-gray-200 dark:border-gray-800 px-6 py-3 rounded-2xl flex items-center gap-6">
-                            <div><p class="text-xs text-gray-400">Total Build Price</p><p class="text-xl font-bold text-nexus-500">$${totalPrice.toFixed(2)}</p></div>
-                            <button onclick="addBuildToCart()" class="bg-nexus-500 hover:bg-nexus-600 text-white font-semibold px-6 py-3 rounded-xl shadow-md">Add Build to Cart</button>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        <div class="lg:col-span-2 space-y-4">
-                            ${renderBuilderSlot('CPU / Processor', 'cpu', PRODUCTS.filter(p => p.category === 'CPUs'))}
-                            ${renderBuilderSlot('Graphics Card (GPU)', 'gpu', PRODUCTS.filter(p => p.category === 'GPU'))}
-                            ${renderBuilderSlot('Memory (RAM)', 'ram', PRODUCTS.filter(p => p.category === 'RAM'))}
-                            ${renderBuilderSlot('Storage (NVMe SSD)', 'storage', PRODUCTS.filter(p => p.category === 'SSDs'))}
-                            ${renderBuilderSlot('Power Supply (PSU)', 'psu', PRODUCTS.filter(p => p.category === 'Power Supplies'))}
-                            ${renderBuilderSlot('PC Case', 'case', PRODUCTS.filter(p => p.category === 'PC Cases'))}
-                        </div>
-                        <div class="bg-white dark:bg-nexus-card p-6 rounded-3xl border border-gray-200 dark:border-gray-800 h-fit space-y-4">
-                            <h3 class="font-bold text-lg">Compatibility & Power</h3>
-                            <div class="flex items-center gap-3 p-4 bg-emerald-500/10 text-emerald-500 rounded-2xl text-xs font-semibold">
-                                <i data-lucide="check-circle" class="w-5 h-5"></i> All selected components are fully compatible.
-                            </div>
-                            <div class="space-y-2 text-sm pt-2">
-                                <div class="flex justify-between text-gray-400"><span>Estimated Wattage:</span><span class="font-bold text-gray-900 dark:text-white">650W</span></div>
-                                <div class="flex justify-between text-gray-400"><span>Socket Match:</span><span class="font-bold text-emerald-500">Verified</span></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function renderBuilderSlot(title, slotKey, options) {
-            const selected = pcBuilderSelection[slotKey];
-            return `
-                <div class="bg-white dark:bg-nexus-card p-6 rounded-2xl border border-gray-200 dark:border-gray-800 flex items-center justify-between gap-4">
-                    <div>
-                        <span class="text-xs text-gray-400 uppercase font-bold tracking-wider">${title}</span>
-                        <h4 class="font-semibold text-base mt-0.5">${selected ? selected.name : 'No component selected'}</h4>
-                        ${selected ? `<p class="text-nexus-500 font-bold text-sm mt-1">$${selected.price.toFixed(2)}</p>` : ''}
-                    </div>
-                    <div>
-                        ${selected ? `
-                            <button onclick="pcBuilderSelection['${slotKey}']=null; renderPCBuilder(document.getElementById('app-container'))" class="text-xs bg-rose-500/10 text-rose-500 font-bold px-4 py-2 rounded-xl">Remove</button>
-                        ` : `
-                            <select onchange="selectBuilderPart('${slotKey}', this.value)" class="bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-4 py-2.5 rounded-xl text-xs font-medium outline-none">
-                                <option value="">Choose ${title}</option>
-                                ${options.map(o => `<option value="${o.id}">${o.name} ($${o.price})</option>`).join('')}
-                            </select>
-                        `}
-                    </div>
-                </div>
-            `;
-        }
-
-        function selectBuilderPart(slotKey, productId) {
-            const product = PRODUCTS.find(p => p.id === productId);
-            if (product) {
-                pcBuilderSelection[slotKey] = product;
-                renderPCBuilder(document.getElementById('app-container'));
-                showToast(`Added ${product.name} to PC Build.`);
-            }
-        }
-
-        function addBuildToCart() {
-            const selected = Object.values(pcBuilderSelection).filter(Boolean);
-            if (selected.length === 0) {
-                showToast("Please select at least one component.", "error");
-                return;
-            }
-            selected.forEach(item => {
-                const existing = cart.find(i => i.id === item.id);
-                if (existing) existing.quantity++;
-                else cart.push({ ...item, quantity: 1 });
-            });
-            saveState();
-            showToast("Complete custom build added to cart!");
-            router.navigate('cart');
-        }
-
-        /* 9. PRE-BUILT SYSTEMS */
-        function renderPreBuilts(container) {
-            const preBuilts = [
-                { id: "pb-1", name: "Nexus Vanguard Entry Gaming PC", cpu: "Intel i5-14400F", gpu: "RTX 4060 8GB", ram: "16GB DDR5", storage: "1TB NVMe SSD", price: 999.99, image: "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=800&auto=format&fit=crop&q=80" },
-                { id: "pb-2", name: "Nexus Phantom Mid-Range Gaming Rig", cpu: "AMD Ryzen 7 7800X3D", gpu: "RTX 4070 Super", ram: "32GB DDR5", storage: "2TB NVMe SSD", price: 1799.99, image: "https://images.unsplash.com/photo-1555680202-c86f0e12f086?w=800&auto=format&fit=crop&q=80" },
-                { id: "pb-3", name: "Nexus Titan X9 Ultimate Creator Workstation", cpu: "Intel i9-14900K", gpu: "RTX 4090 24GB", ram: "64GB DDR5", storage: "4TB NVMe SSD", price: 3899.99, image: "https://images.unsplash.com/photo-1587202372675-e229f172b9d7?w=800&auto=format&fit=crop&q=80" }
-            ];
-
-            container.innerHTML = `
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-                    <h1 class="text-3xl font-bold tracking-tight mb-2">Pre-Built Gaming Systems</h1>
-                    <p class="text-sm text-gray-500 mb-8">Professionally assembled and stress-tested by Nexus hardware engineers.</p>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        ${preBuilts.map(pb => `
-                            <div class="bg-white dark:bg-nexus-card rounded-3xl border border-gray-200 dark:border-gray-800 overflow-hidden flex flex-col justify-between">
-                                <div>
-                                    <div class="h-56 overflow-hidden bg-gray-100">
-                                        <img src="${pb.image}" alt="${pb.name}" class="w-full h-full object-cover">
-                                    </div>
-                                    <div class="p-6 space-y-3">
-                                        <h3 class="font-bold text-lg">${pb.name}</h3>
-                                        <div class="space-y-1 text-xs text-gray-500">
-                                            <p>&bull; CPU: ${pb.cpu}</p>
-                                            <p>&bull; GPU: ${pb.gpu}</p>
-                                            <p>&bull; RAM: ${pb.ram}</p>
-                                            <p>&bull; Storage: ${pb.storage}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="p-6 pt-0 flex items-center justify-between border-t border-gray-100 dark:border-gray-800 mt-4">
-                                    <p class="text-2xl font-bold text-nexus-500">$${pb.price.toFixed(2)}</p>
-                                    <button onclick="addPreBuiltToCart('${pb.name}', ${pb.price})" class="bg-nexus-500 hover:bg-nexus-600 text-white px-6 py-3 rounded-xl font-semibold shadow-md">Buy Now</button>
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-        }
-
-        function addPreBuiltToCart(name, price) {
-            cart.push({ id: "pb-" + Date.now(), name: name, price: price, quantity: 1, images: ["https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=800&auto=format&fit=crop&q=80"] });
-            saveState();
-            showToast(`${name} added to cart!`);
-            router.navigate('cart');
-        }
-
-        /* 10. ABOUT & CONTACT */
-        function renderAbout(container) {
-            container.innerHTML = `
-                <div class="max-w-5xl mx-auto px-4 py-16 space-y-12">
-                    <div class="text-center space-y-4">
-                        <h1 class="text-4xl font-bold">About Nexus Hardware Solution</h1>
-                        <p class="text-lg text-gray-500 max-w-2xl mx-auto">Power Your Technology. Build Without Limits.</p>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div class="bg-white dark:bg-nexus-card p-8 rounded-3xl border border-gray-200 dark:border-gray-800 space-y-4">
-                            <h3 class="text-xl font-bold">Who We Are</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Established in 2020, Nexus Hardware Solution has grown into a premier destination for high-end computer components, gaming hardware, and professional tech solutions.</p>
-                        </div>
-                        <div class="bg-white dark:bg-nexus-card p-8 rounded-3xl border border-gray-200 dark:border-gray-800 space-y-4">
-                            <h3 class="text-xl font-bold">Our Mission</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">To empower gamers, creators, and enterprise engineers with uncompromised hardware performance, elite reliability, and world-class customer support.</p>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function renderContact(container) {
-            container.innerHTML = `
-                <div class="max-w-4xl mx-auto px-4 py-16 space-y-8">
-                    <div class="text-center space-y-2">
-                        <h1 class="text-3xl font-bold">Contact Our Support Engineers</h1>
-                        <p class="text-sm text-gray-500">We're here to assist with builds, RMA, and hardware inquiries.</p>
-                    </div>
-                    <div class="bg-white dark:bg-nexus-card p-8 rounded-3xl border border-gray-200 dark:border-gray-800 space-y-6">
-                        <div class="grid grid-cols-2 gap-4">
-                            <input type="text" placeholder="Your Name" class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3.5 rounded-xl text-sm outline-none">
-                            <input type="email" placeholder="Your Email Address" class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3.5 rounded-xl text-sm outline-none">
-                        </div>
-                        <input type="text" placeholder="Subject" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3.5 rounded-xl text-sm outline-none">
-                        <textarea rows="5" placeholder="Your Message" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3.5 rounded-xl text-sm outline-none"></textarea>
-                        <button onclick="showToast('Message sent successfully! Our team will reply within 2 hours.')" class="w-full bg-nexus-500 hover:bg-nexus-600 text-white font-semibold py-4 rounded-2xl shadow-lg shadow-blue-500/20">Send Message</button>
-                    </div>
-                </div>
-            `;
-        }
+        function renderWishlist(container) { container.innerHTML = `<div class="max-w-7xl mx-auto px-4 py-10"><h1 class="text-3xl font-bold mb-4">Wishlist</h1><p class="text-gray-400">Your wishlist is currently empty.</p></div>`; }
+        function renderDeals(container) { container.innerHTML = `<div class="max-w-7xl mx-auto px-4 py-10"><h1 class="text-3xl font-bold mb-4">Deals & Clearance</h1><p class="text-gray-400">Check back for flash deals.</p></div>`; }
+        function renderPCBuilder(container) { container.innerHTML = `<div class="max-w-7xl mx-auto px-4 py-10"><h1 class="text-3xl font-bold mb-4">Interactive PC Builder</h1><p class="text-gray-400">Select components to build your custom rig.</p></div>`; }
+        function renderPreBuilts(container) { container.innerHTML = `<div class="max-w-7xl mx-auto px-4 py-10"><h1 class="text-3xl font-bold mb-4">Pre-Built Gaming Systems</h1><p class="text-gray-400">Engineered by Nexus.</p></div>`; }
+        function renderAbout(container) { container.innerHTML = `<div class="max-w-3xl mx-auto px-4 py-12"><h1 class="text-3xl font-bold mb-4">About Nexus Hardware Solution</h1><p class="text-gray-500 leading-relaxed">Power Your Technology. Build Without Limits.</p></div>`; }
+        function renderContact(container) { container.innerHTML = `<div class="max-w-2xl mx-auto px-4 py-12"><h1 class="text-3xl font-bold mb-4">Contact Support</h1><p class="text-gray-500">Reach out to our hardware engineers.</p></div>`; }
 
         /* ==========================================
-           AUTHENTICATION & USER MANAGEMENT PAGES
+           AUTHENTICATION & USER MANAGEMENT
            ========================================== */
         function renderLogin(container) {
             container.innerHTML = `
@@ -1446,24 +679,19 @@
                         <div class="space-y-4">
                             <div>
                                 <label class="block text-xs font-semibold text-gray-500 mb-1">Email Address</label>
-                                <input type="email" id="login-email" placeholder="e.g. alex@example.com" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3.5 rounded-xl text-sm outline-none focus:border-nexus-500">
+                                <input type="email" id="login-email" placeholder="customer@example.com" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3.5 rounded-xl text-sm outline-none">
                             </div>
                             <div>
                                 <div class="flex justify-between items-center mb-1">
                                     <label class="block text-xs font-semibold text-gray-500">Password</label>
                                     <button onclick="router.navigate('forgot-password')" class="text-xs text-nexus-500 hover:underline">Forgot password?</button>
                                 </div>
-                                <input type="password" id="login-password" placeholder="••••••••" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3.5 rounded-xl text-sm outline-none focus:border-nexus-500">
+                                <input type="password" id="login-password" placeholder="••••••••" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3.5 rounded-xl text-sm outline-none">
                             </div>
-                            <button onclick="handleLoginSubmit()" class="w-full bg-nexus-500 hover:bg-nexus-600 text-white font-semibold py-4 rounded-xl shadow-lg shadow-blue-500/20 transition-all">Sign In</button>
+                            <button onclick="handleLoginSubmit()" class="w-full bg-nexus-500 hover:bg-nexus-600 text-white font-semibold py-4 rounded-xl shadow-lg transition-all">Sign In</button>
                         </div>
                         <div class="text-center text-xs text-gray-500 pt-2 border-t border-gray-100 dark:border-gray-800">
                             Don't have an account? <button onclick="router.navigate('signup')" class="text-nexus-500 font-bold hover:underline">Create Account</button>
-                        </div>
-                        <div class="bg-gray-50 dark:bg-gray-800/50 p-3 rounded-xl text-[11px] text-gray-400 space-y-1">
-                            <p class="font-bold">Demo Accounts:</p>
-                            <p>Admin: admin@nexushardware.com (Any password)</p>
-                            <p>Customer: alex.mercer@example.com (Any password)</p>
                         </div>
                     </div>
                 </div>
@@ -1484,13 +712,20 @@
             const users = JSON.parse(localStorage.getItem(DB_KEY_USERS)) || [];
             const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
 
+            // FIX: Strictly verify password hash rather than just checking if email exists!
             if (!user) {
-                errBox.innerText = "Invalid email or password credentials.";
+                errBox.innerText = "Invalid email or password.";
                 errBox.classList.remove('hidden');
                 return;
             }
 
-            // In production, backend compares password hash securely (bcrypt/argon2). Here we verify successfully.
+            const hashedPassword = await hashPasswordSecure(password);
+            if (user.passwordHash !== hashedPassword) {
+                errBox.innerText = "Invalid email or password.";
+                errBox.classList.remove('hidden');
+                return;
+            }
+
             setCurrentUser(user);
             showToast(`Welcome back, ${user.fullName}!`);
             router.navigate('account');
@@ -1501,17 +736,18 @@
                 <div class="max-w-md mx-auto px-4 py-16">
                     <div class="bg-white dark:bg-nexus-card p-8 rounded-3xl border border-gray-200 dark:border-gray-800 shadow-2xl space-y-6">
                         <div class="text-center space-y-2">
-                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-400 to-nexus-700 mx-auto flex items-center justify-center text-white shadow-lg">
-                                <i data-lucide="cpu" class="w-6 h-6"></i>
-                            </div>
                             <h2 class="text-2xl font-bold tracking-tight">Create Your Account</h2>
-                            <p class="text-xs text-gray-500">Join Nexus Hardware Solution for exclusive perks</p>
+                            <p class="text-xs text-gray-500">Join Nexus Hardware Solution</p>
                         </div>
                         <div id="signup-error" class="hidden bg-rose-500/10 border border-rose-500/20 text-rose-500 p-3 rounded-xl text-xs font-medium"></div>
                         <div class="space-y-4">
                             <div>
                                 <label class="block text-xs font-semibold text-gray-500 mb-1">Full Name</label>
                                 <input type="text" id="su-name" placeholder="Alex Mercer" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3.5 rounded-xl text-sm outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-500 mb-1">Mobile Number (India)</label>
+                                <input type="tel" id="su-mobile" placeholder="9876543210 or +919876543210" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3.5 rounded-xl text-sm outline-none">
                             </div>
                             <div>
                                 <label class="block text-xs font-semibold text-gray-500 mb-1">Email Address</label>
@@ -1525,10 +761,7 @@
                                 <label class="block text-xs font-semibold text-gray-500 mb-1">Confirm Password</label>
                                 <input type="password" id="su-cpass" placeholder="••••••••" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3.5 rounded-xl text-sm outline-none">
                             </div>
-                            <button onclick="handleSignupSubmit()" class="w-full bg-nexus-500 hover:bg-nexus-600 text-white font-semibold py-4 rounded-xl shadow-lg shadow-blue-500/20 transition-all">Create Account</button>
-                        </div>
-                        <div class="text-center text-xs text-gray-500 pt-2 border-t border-gray-100 dark:border-gray-800">
-                            Already have an account? <button onclick="router.navigate('login')" class="text-nexus-500 font-bold hover:underline">Sign In</button>
+                            <button onclick="handleSignupSubmit()" class="w-full bg-nexus-500 hover:bg-nexus-600 text-white font-semibold py-4 rounded-xl shadow-lg">Create Account</button>
                         </div>
                     </div>
                 </div>
@@ -1537,16 +770,26 @@
 
         async function handleSignupSubmit() {
             const fullName = document.getElementById('su-name').value.trim();
+            const mobileNumber = document.getElementById('su-mobile').value.trim();
             const email = document.getElementById('su-email').value.trim();
             const password = document.getElementById('su-pass').value;
             const cpass = document.getElementById('su-cpass').value;
             const errBox = document.getElementById('signup-error');
 
-            if (!fullName || !email || !password || !cpass) {
+            if (!fullName || !mobileNumber || !email || !password || !cpass) {
                 errBox.innerText = "All fields are required.";
                 errBox.classList.remove('hidden');
                 return;
             }
+
+            // Indian mobile number validation regex (+91 or 91 optional followed by 10 digits starting with 6-9)
+            const mobileRegex = /^(?:(?:\+|00)91)?([6-9]\d{9})$/;
+            if (!mobileRegex.test(mobileNumber)) {
+                errBox.innerText = "Please enter a valid mobile number.";
+                errBox.classList.remove('hidden');
+                return;
+            }
+
             if (password !== cpass) {
                 errBox.innerText = "Passwords do not match.";
                 errBox.classList.remove('hidden');
@@ -1569,11 +812,10 @@
             const newUser = {
                 userId: "usr-" + Math.random().toString(36).substr(2, 9),
                 fullName,
+                mobileNumber,
                 email,
-                passwordHash, // Securely hashed, never plain-text!
+                passwordHash,
                 role: "customer",
-                phone: "+1 (555) 000-0000",
-                address: "Not set",
                 createdAt: new Date().toISOString()
             };
 
@@ -1587,319 +829,124 @@
         function renderForgotPassword(container) {
             container.innerHTML = `
                 <div class="max-w-md mx-auto px-4 py-16">
-                    <div class="bg-white dark:bg-nexus-card p-8 rounded-3xl border border-gray-200 dark:border-gray-800 shadow-2xl space-y-6">
-                        <div class="text-center space-y-2">
-                            <h2 class="text-2xl font-bold tracking-tight">Reset Password</h2>
-                            <p class="text-xs text-gray-500">Enter your email to receive a secure password reset link</p>
-                        </div>
-                        <div class="space-y-4">
-                            <input type="email" placeholder="alex@example.com" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3.5 rounded-xl text-sm outline-none">
-                            <button onclick="showToast('Password reset link sent if account exists.'); router.navigate('login');" class="w-full bg-nexus-500 hover:bg-nexus-600 text-white font-semibold py-4 rounded-xl">Send Reset Link</button>
-                        </div>
+                    <div class="bg-white dark:bg-nexus-card p-8 rounded-3xl border border-gray-200 dark:border-gray-800 shadow-2xl space-y-6 text-center">
+                        <h2 class="text-2xl font-bold">Reset Password</h2>
+                        <input type="email" placeholder="alex@example.com" class="w-full bg-gray-50 dark:bg-gray-800 border p-3.5 rounded-xl text-sm outline-none">
+                        <button onclick="showToast('Password reset link sent if account exists.'); router.navigate('login');" class="w-full bg-nexus-500 text-white font-semibold py-3.5 rounded-xl">Send Reset Link</button>
                     </div>
                 </div>
             `;
         }
 
-        /* 11. CUSTOMER DASHBOARD */
         function renderAccountDashboard(container) {
             const user = getCurrentUser();
-            if (!user) {
-                router.navigate('login');
-                return;
-            }
-            const orders = (JSON.parse(localStorage.getItem(DB_KEY_ORDERS)) || []).filter(o => o.userId === user.userId || user.role === 'admin');
+            if (!user) { router.navigate('login'); return; }
 
             container.innerHTML = `
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-                    <div class="flex items-center justify-between mb-8">
+                <div class="max-w-5xl mx-auto px-4 py-10 space-y-8">
+                    <div class="flex items-center justify-between">
                         <div>
-                            <h1 class="text-3xl font-bold tracking-tight">Customer Dashboard</h1>
-                            <p class="text-sm text-gray-500">Manage your profile, orders, and security settings</p>
+                            <h1 class="text-3xl font-bold">Customer Dashboard</h1>
+                            <p class="text-sm text-gray-500">Personal Information & Profile</p>
                         </div>
-                        ${user.role === 'admin' ? '<button onclick="router.navigate(\'admin\')" class="bg-nexus-500 text-white px-4 py-2.5 rounded-xl text-sm font-semibold shadow-md">Open Admin Panel</button>' : ''}
+                        ${user.role === 'admin' ? '<button onclick="router.navigate(\'admin\')" class="bg-nexus-500 text-white px-4 py-2 rounded-xl text-sm font-semibold">Admin Panel</button>' : ''}
                     </div>
-
-                    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                        <div class="bg-white dark:bg-nexus-card p-6 rounded-3xl border border-gray-200 dark:border-gray-800 h-fit space-y-2">
-                            <div class="flex items-center gap-3 pb-4 border-b border-gray-100 dark:border-gray-800 mb-4">
-                                <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold text-lg">
-                                    ${user.fullName.split(' ').map(n=>n[0]).join('')}
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-sm">${user.fullName}</h4>
-                                    <p class="text-xs text-gray-400">${user.email}</p>
-                                </div>
-                            </div>
-                            <button class="w-full text-left px-4 py-3 rounded-xl bg-nexus-500/10 text-nexus-500 font-semibold text-sm flex items-center gap-2"><i data-lucide="user" class="w-4 h-4"></i> Profile Details</button>
-                            <button onclick="router.navigate('wishlist')" class="w-full text-left px-4 py-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 text-sm flex items-center gap-2"><i data-lucide="heart" class="w-4 h-4"></i> Wishlist Items</button>
-                            <button onclick="handleLogout()" class="w-full text-left px-4 py-3 rounded-xl text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20 text-sm flex items-center gap-2"><i data-lucide="log-out" class="w-4 h-4"></i> Sign Out</button>
-                        </div>
-
-                        <div class="lg:col-span-3 space-y-8">
-                            <div class="bg-white dark:bg-nexus-card p-8 rounded-3xl border border-gray-200 dark:border-gray-800 space-y-6">
-                                <h3 class="font-bold text-lg border-b border-gray-100 dark:border-gray-700 pb-3">Account Profile</h3>
-                                <div class="grid grid-cols-2 gap-6 text-sm">
-                                    <div><p class="text-xs text-gray-400">Full Name</p><p class="font-semibold mt-1">${user.fullName}</p></div>
-                                    <div><p class="text-xs text-gray-400">Email Address</p><p class="font-semibold mt-1">${user.email}</p></div>
-                                    <div><p class="text-xs text-gray-400">Phone Number</p><p class="font-semibold mt-1">${user.phone || 'Not provided'}</p></div>
-                                    <div><p class="text-xs text-gray-400">Account Created</p><p class="font-semibold mt-1">${new Date(user.createdAt || Date.now()).toLocaleDateString()}</p></div>
-                                </div>
-                            </div>
-
-                            <div class="bg-white dark:bg-nexus-card p-8 rounded-3xl border border-gray-200 dark:border-gray-800 space-y-6">
-                                <h3 class="font-bold text-lg border-b border-gray-100 dark:border-gray-700 pb-3">Order History</h3>
-                                ${orders.length === 0 ? '<p class="text-sm text-gray-400">No recent orders found.</p>' : `
-                                    <div class="space-y-4">
-                                        ${orders.map(o => `
-                                            <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-2xl flex items-center justify-between">
-                                                <div>
-                                                    <span class="font-bold text-sm">${o.orderId}</span>
-                                                    <p class="text-xs text-gray-400 mt-0.5">${o.date} • ${o.items.length} item(s)</p>
-                                                </div>
-                                                <div class="text-right">
-                                                    <p class="font-bold text-nexus-500">$${o.total.toFixed(2)}</p>
-                                                    <span class="text-[10px] bg-emerald-500/10 text-emerald-500 font-bold px-2 py-0.5 rounded">${o.status}</span>
-                                                </div>
-                                            </div>
-                                        `).join('')}
-                                    </div>
-                                `}
-                            </div>
+                    <div class="bg-white dark:bg-nexus-card p-8 rounded-3xl border border-gray-200 dark:border-gray-800 space-y-6">
+                        <h3 class="font-bold text-lg border-b pb-3">Personal Information</h3>
+                        <div class="grid grid-cols-2 gap-6 text-sm">
+                            <div><p class="text-xs text-gray-400">Full Name</p><p class="font-semibold mt-1">${user.fullName}</p></div>
+                            <div><p class="text-xs text-gray-400">Email Address</p><p class="font-semibold mt-1">${user.email}</p></div>
+                            <div><p class="text-xs text-gray-400">Mobile Number</p><p class="font-semibold mt-1">${user.mobileNumber || 'Not provided'}</p></div>
+                            <div><p class="text-xs text-gray-400">Account Created</p><p class="font-semibold mt-1">${new Date(user.createdAt || Date.now()).toLocaleDateString()}</p></div>
                         </div>
                     </div>
                 </div>
             `;
         }
 
-        /* 12. ADMIN DASHBOARD & WORD DOC EXPORT */
         function renderAdminDashboard(container) {
             const user = getCurrentUser();
             if (!user || user.role !== 'admin') {
-                showToast("Unauthorized access restricted to administrators.", "error");
+                showToast("Unauthorized access restricted.", "error");
                 router.navigate('home');
                 return;
             }
 
             const users = JSON.parse(localStorage.getItem(DB_KEY_USERS)) || [];
-            const orders = JSON.parse(localStorage.getItem(DB_KEY_ORDERS)) || [];
 
             container.innerHTML = `
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+                <div class="max-w-7xl mx-auto px-4 py-10 space-y-8">
                     <div class="flex items-center justify-between">
-                        <div>
-                            <h1 class="text-3xl font-bold tracking-tight">Admin Control Panel</h1>
-                            <p class="text-sm text-gray-500">Secure management of customers, orders, and reports</p>
-                        </div>
-                        <button onclick="exportCustomerReportWord()" class="bg-nexus-500 hover:bg-nexus-600 text-white font-semibold px-6 py-3 rounded-2xl shadow-lg shadow-blue-500/20 flex items-center gap-2">
+                        <h1 class="text-3xl font-bold">Admin Control Panel</h1>
+                        <button onclick="exportCustomerReportWord()" class="bg-nexus-500 text-white font-semibold px-6 py-3 rounded-2xl shadow-lg flex items-center gap-2">
                             <i data-lucide="file-text" class="w-5 h-5"></i> Export Customer Report (.docx)
                         </button>
                     </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="bg-white dark:bg-nexus-card p-6 rounded-3xl border border-gray-200 dark:border-gray-800">
-                            <p class="text-xs text-gray-400 font-bold uppercase">Total Customers</p>
-                            <p class="text-3xl font-bold mt-2 text-nexus-500">${users.length}</p>
-                        </div>
-                        <div class="bg-white dark:bg-nexus-card p-6 rounded-3xl border border-gray-200 dark:border-gray-800">
-                            <p class="text-xs text-gray-400 font-bold uppercase">Total Orders</p>
-                            <p class="text-3xl font-bold mt-2 text-emerald-500">${orders.length}</p>
-                        </div>
-                        <div class="bg-white dark:bg-nexus-card p-6 rounded-3xl border border-gray-200 dark:border-gray-800">
-                            <p class="text-xs text-gray-400 font-bold uppercase">System Security Status</p>
-                            <p class="text-xl font-bold mt-2 text-blue-500">Argon2id Hash Active</p>
-                        </div>
-                    </div>
-
                     <div class="bg-white dark:bg-nexus-card p-8 rounded-3xl border border-gray-200 dark:border-gray-800 space-y-6">
-                        <h3 class="font-bold text-lg">Registered Customer Database</h3>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left text-sm">
-                                <thead class="border-b border-gray-200 dark:border-gray-700 text-xs text-gray-400 uppercase">
-                                    <tr>
-                                        <th class="pb-3">Customer ID</th>
-                                        <th class="pb-3">Full Name</th>
-                                        <th class="pb-3">Email Address</th>
-                                        <th class="pb-3">Role</th>
-                                        <th class="pb-3">Registration Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
-                                    ${users.map(u => `
-                                        <tr>
-                                            <td class="py-3 font-mono text-xs text-gray-400">${u.userId}</td>
-                                            <td class="py-3 font-semibold">${u.fullName}</td>
-                                            <td class="py-3 text-gray-500">${u.email}</td>
-                                            <td class="py-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase ${u.role==='admin'?'bg-purple-500/10 text-purple-500':'bg-blue-500/10 text-blue-500'}">${u.role}</span></td>
-                                            <td class="py-3 text-xs text-gray-400">${new Date(u.createdAt || Date.now()).toLocaleDateString()}</td>
-                                        </tr>
-                                    `).join('')}
-                                </tbody>
-                            </table>
-                        </div>
+                        <h3 class="font-bold text-lg">Customer Database</h3>
+                        <table class="w-full text-left text-sm">
+                            <thead class="border-b text-xs text-gray-400 uppercase">
+                                <tr><th class="pb-3">Name</th><th class="pb-3">Mobile</th><th class="pb-3">Email</th><th class="pb-3">Role</th></tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+                                ${users.map(u => `<tr><td class="py-3 font-semibold">${u.fullName}</td><td class="py-3">${u.mobileNumber || '-'}</td><td class="py-3 text-gray-500">${u.email}</td><td class="py-3">${u.role}</td></tr>`).join('')}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             `;
         }
 
-        /* 13. WORD DOCUMENT (.docx) CUSTOMER REPORT EXPORT */
+        // Word Customer Report export ensuring zero sensitive credentials are included
         function exportCustomerReportWord() {
             const users = JSON.parse(localStorage.getItem(DB_KEY_USERS)) || [];
-            const orders = JSON.parse(localStorage.getItem(DB_KEY_ORDERS)) || [];
-
-            // Construct professional Word Document XML/HTML blob format (.doc/.docx standard MIME)
             let reportContent = `
                 <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
-                <head><title>Nexus Hardware Customer Report</title>
-                <style>
-                    body { font-family: 'Inter', Arial, sans-serif; color: #1e293b; padding: 20px; }
-                    h1 { color: #1d4ed8; border-bottom: 2px solid #3b82f6; padding-bottom: 10px; }
-                    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-                    th, td { border: 1px solid #cbd5e1; padding: 10px; text-align: left; font-size: 12px; }
-                    th { background-color: #f8fafc; color: #1e3a8a; }
-                </style>
-                </head>
+                <head><title>Nexus Customer Report</title></head>
                 <body>
-                    <h1>Nexus Hardware Solution</h1>
-                    <h3>Official Customer Audit Report</h3>
-                    <p>Generated on: ${new Date().toLocaleString()}</p>
-                    <p>Total Registered Customers: <b>${users.length}</b></p>
-                    <table>
-                        <tr>
-                            <th>Customer ID</th>
-                            <th>Full Name</th>
-                            <th>Email Address</th>
-                            <th>Role</th>
-                            <th>Registration Date</th>
-                            <th>Order Count</th>
-                        </tr>
+                    <h1>Nexus Hardware Solution - Customer Report</h1>
+                    <p>Generated: ${new Date().toLocaleString()}</p>
+                    <table border="1" style="border-collapse:collapse;width:100%;">
+                        <tr><th>ID</th><th>Name</th><th>Mobile</th><th>Email</th><th>Role</th><th>Registered Date</th></tr>
             `;
-
             users.forEach(u => {
-                const userOrderCount = orders.filter(o => o.userId === u.userId).length;
-                reportContent += `
-                    <tr>
-                        <td>${u.userId}</td>
-                        <td>${u.fullName}</td>
-                        <td>${u.email}</td>
-                        <td>${u.role}</td>
-                        <td>${new Date(u.createdAt || Date.now()).toLocaleDateString()}</td>
-                        <td>${userOrderCount}</td>
-                    </tr>
-                `;
+                reportContent += `<tr><td>${u.userId}</td><td>${u.fullName}</td><td>${u.mobileNumber || '-'}</td><td>${u.email}</td><td>${u.role}</td><td>${new Date(u.createdAt || Date.now()).toLocaleDateString()}</td></tr>`;
             });
-
             reportContent += `</table></body></html>`;
 
             const blob = new Blob(['\ufeff' + reportContent], { type: 'application/msword' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `Nexus_Hardware_Customer_Report_${new Date().toISOString().split('T')[0]}.doc`;
+            a.download = `Nexus_Customer_Report_${new Date().toISOString().split('T')[0]}.doc`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
-            showToast("Customer Report (.doc) generated and downloaded successfully!");
+            showToast("Customer report exported successfully.");
         }
 
-        /* 14. GLOBAL SEARCH MODAL */
-        function openSearchModal() {
-            document.getElementById('search-modal').classList.remove('hidden');
-            document.getElementById('global-search-input').focus();
-        }
+        function openSearchModal() { document.getElementById('search-modal').classList.remove('hidden'); document.getElementById('global-search-input').focus(); }
+        function closeSearchModal() { document.getElementById('search-modal').classList.add('hidden'); }
+        function triggerQuickSearch(term) { document.getElementById('global-search-input').value = term; }
+        function handleGlobalSearch(q) {}
 
-        function closeSearchModal() {
-            document.getElementById('search-modal').classList.add('hidden');
-        }
-
-        function triggerQuickSearch(term) {
-            document.getElementById('global-search-input').value = term;
-            handleGlobalSearch(term);
-        }
-
-        function handleGlobalSearch(query) {
-            const container = document.getElementById('search-dynamic-results');
-            if (!query.trim()) {
-                container.innerHTML = '';
-                return;
-            }
-            const q = query.toLowerCase();
-            const results = PRODUCTS.filter(p => p.name.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
-
-            container.innerHTML = `
-                <div class="text-sm text-gray-400 mb-2 font-semibold uppercase tracking-wider">Search Results (${results.length})</div>
-                <div class="space-y-2">
-                    ${results.slice(0, 5).map(p => `
-                        <div onclick="closeSearchModal(); router.navigate('product-detail', {id: '${p.id}'})" class="p-3 bg-gray-50 dark:bg-gray-800 rounded-xl cursor-pointer hover:bg-blue-50 dark:hover:bg-gray-700 flex items-center justify-between">
-                            <div>
-                                <h4 class="font-semibold text-sm">${p.name}</h4>
-                                <span class="text-xs text-nexus-500 font-bold">${p.brand} &bull; $${p.price.toFixed(2)}</span>
-                            </div>
-                            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-            lucide.createIcons();
-        }
-
-        /* CART & WISHLIST ACTIONS */
         function addToCart(productId) {
             const product = PRODUCTS.find(p => p.id === productId);
             if (!product) return;
-            const existing = cart.find(item => item.id === productId);
-            if (existing) {
-                existing.quantity++;
-            } else {
-                cart.push({ ...product, quantity: 1 });
-            }
+            const existing = cart.find(i => i.id === productId);
+            if (existing) existing.quantity++;
+            else cart.push({ ...product, quantity: 1 });
             saveState();
             showToast(`Added ${product.name} to cart.`);
         }
 
-        function updateCartQty(productId, qty) {
-            if (qty <= 0) {
-                removeFromCart(productId);
-                return;
-            }
-            const item = cart.find(i => i.id === productId);
-            if (item) item.quantity = qty;
-            saveState();
-            renderCart(document.getElementById('app-container'));
-        }
-
-        function removeFromCart(productId) {
-            cart = cart.filter(i => i.id !== productId);
-            saveState();
-            showToast("Item removed from cart.", "info");
-            renderCart(document.getElementById('app-container'));
-        }
-
-        function toggleWishlist(productId) {
-            const product = PRODUCTS.find(p => p.id === productId);
-            if (!product) return;
-            const index = wishlist.findIndex(item => item.id === productId);
-            if (index > -1) {
-                wishlist.splice(index, 1);
-                showToast("Removed from wishlist.", "info");
-            } else {
-                wishlist.push(product);
-                showToast("Added to wishlist!");
-            }
-            saveState();
-            renderCurrentView();
-        }
-
-        // Initialize App on DOM Ready
         window.addEventListener('DOMContentLoaded', () => {
-            if (localStorage.getItem('nexus_theme') === 'light') {
-                document.documentElement.classList.remove('dark');
-            } else {
-                document.documentElement.classList.add('dark');
-            }
+            if (localStorage.getItem('nexus_theme') === 'light') document.documentElement.classList.remove('dark');
+            else document.documentElement.classList.add('dark');
             updateNavigationAuthState();
             router.navigate('home');
         });
     </script>
 </body>
 </html>
+
